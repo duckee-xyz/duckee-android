@@ -1,0 +1,49 @@
+[versions]
+
+# Kotlin
+kotlin = "1.8.10"
+kotlin-coroutines = "1.6.4"
+
+# Compose
+compose = "1.4.0-beta01"
+composeCompiler = "1.4.2"
+
+[libraries]
+
+# Build tools / Languages
+plugin-androidBuildTools = "com.android.tools.build:gradle:7.3.1"
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+language-kotlinStdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+
+# Kotlin coroutines
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+kotlin-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlin-coroutines" }
+
+# Kotlin immutable collections
+kotlin-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
+
+# Compose
+compose-activity = "androidx.activity:activity-compose:1.6.1"
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-foundation-ui = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
+compose-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+compose-lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01"
+compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+
+# AndroidX
+androidx-core = "androidx.core:core-ktx:1.9.0"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+androidx-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+# Material 2
+material2 = { module = "androidx.compose.material:material", version.ref = "compose" }
+material2-android = "com.google.android.material:material:1.7.0"
+
+[bundles]
+
+coroutines = ["kotlin-coroutines", "kotlin-coroutines-jdk8"]
+compose = ["compose-activity", "compose-ui", "compose-ui-util", "compose-foundation", "compose-foundation-ui", "compose-viewmodel", "compose-lifecycle", "compose-ui-preview", "compose-ui-tooling"]
+androidx = ["androidx-core", "androidx-lifecycle", "androidx-viewmodel"]
