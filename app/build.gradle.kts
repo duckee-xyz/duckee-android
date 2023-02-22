@@ -16,6 +16,7 @@
 plugins {
     id("duckee.android.application")
     id("duckee.android.application.compose")
+    id("duckee.android.hilt")
 }
 
 android {
