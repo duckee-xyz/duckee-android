@@ -66,4 +66,6 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.material2.android)
     implementation(libs.material2)
+
+    implementation(project(":feature:explore"))
 }

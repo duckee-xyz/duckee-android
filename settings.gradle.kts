@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "duckee-android"
 include(":app")
+include(":feature:explore")
