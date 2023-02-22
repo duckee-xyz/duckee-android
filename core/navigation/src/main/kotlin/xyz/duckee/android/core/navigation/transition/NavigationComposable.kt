@@ -40,3 +40,46 @@ fun NavGraphBuilder.sharedXTransitionComposable(
         content = content,
     )
 }
+
+fun NavGraphBuilder.rootTransitionComposable(
+    routeCommand: NavigationCommand,
+    commands: List<NavigationCommand>,
+    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit,
+) {
+    composable(
+        route = routeCommand.destination,
+        enterTransition = {
+            when (initialState.destination.route) {
+                in commands.map { it.destination } ->
+                    materialSharedAxisXIn(forward = true, slideDistance = 50)
+
+                else -> null
+            }
+        },
+        popEnterTransition = {
+            when (initialState.destination.route) {
+                in commands.map { it.destination } ->
+                    materialSharedAxisXIn(forward = false, slideDistance = 50)
+
+                else -> null
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                in commands.map { it.destination } ->
+                    materialSharedAxisXOut(forward = true, slideDistance = 50)
+
+                else -> null
+            }
+        },
+        popExitTransition = {
+            when (targetState.destination.route) {
+                in commands.map { it.destination } ->
+                    materialSharedAxisXOut(forward = false, slideDistance = 50)
+
+                else -> null
+            }
+        },
+        content = content,
+    )
+}

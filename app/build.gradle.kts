@@ -69,5 +69,7 @@ dependencies {
     implementation(libs.navigation.materialMotion.compose)
 
     implementation(project(":core:designsystem"))
+    implementation(project(":core:navigation"))
+
     implementation(project(":feature:explore"))
 }
