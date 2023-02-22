@@ -52,6 +52,9 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 
+# Navigation
+navigation-materialMotion-compose = "io.github.fornewid:material-motion-compose-navigation:0.11.0-alpha"
+
 [bundles]
 
 coroutines = ["kotlin-coroutines", "kotlin-coroutines-jdk8"]
