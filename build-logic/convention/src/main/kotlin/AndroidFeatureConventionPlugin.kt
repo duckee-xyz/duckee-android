@@ -16,11 +16,14 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
+                "implementation"(project(":core:designsystem"))
                 "implementation"(project(":core:navigation"))
 
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
                 "implementation"(libs.findBundle("orbit").get())
+                "implementation"(libs.findLibrary("navigation.materialMotion.compose").get())
+                "implementation"(libs.findLibrary("androidx.hilt.navigation.compose").get())
             }
         }
     }
