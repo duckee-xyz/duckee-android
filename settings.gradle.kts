@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 rootProject.name = "duckee-android"
 include(":app")
 include(":core:designsystem")
+include(":core:navigation")
 include(":feature:explore")
