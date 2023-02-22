@@ -11,6 +11,9 @@ composeCompiler = "1.4.2"
 # Hilt
 hilt = "2.45"
 
+# Orbit MVI
+orbit = "4.5.0"
+
 [libraries]
 
 # Build tools / Languages
@@ -55,8 +58,13 @@ androidx-hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 # Navigation
 navigation-materialMotion-compose = "io.github.fornewid:material-motion-compose-navigation:0.11.0-alpha"
 
+# MVI
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
+
 [bundles]
 
 coroutines = ["kotlin-coroutines", "kotlin-coroutines-jdk8"]
 compose = ["compose-activity", "compose-ui", "compose-ui-util", "compose-foundation", "compose-foundation-ui", "compose-viewmodel", "compose-lifecycle", "compose-ui-preview", "compose-ui-tooling", "compose-googlefont"]
 androidx = ["androidx-core", "androidx-lifecycle", "androidx-viewmodel"]
+orbit = ["orbit-viewmodel", "orbit-compose"]

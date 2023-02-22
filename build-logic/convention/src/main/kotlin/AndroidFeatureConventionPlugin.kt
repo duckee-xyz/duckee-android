@@ -19,7 +19,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(project(":core:navigation"))
 
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
-                "implementation"(libs.findLibrary("navigation.materialMotion.compose").get())
+                "implementation"(libs.findLibrary("kotlin.coroutines").get())
+                "implementation"(libs.findBundle("orbit").get())
             }
         }
     }
