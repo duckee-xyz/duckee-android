@@ -67,5 +67,6 @@ dependencies {
     implementation(libs.material2.android)
     implementation(libs.material2)
 
+    implementation(project(":core:designsystem"))
     implementation(project(":feature:explore"))
 }
