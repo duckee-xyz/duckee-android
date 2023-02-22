@@ -36,5 +36,9 @@ gradlePlugin {
             id = "duckee.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+        register("androidHilt") {
+            id = "duckee.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
