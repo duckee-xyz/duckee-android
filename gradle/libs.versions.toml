@@ -36,6 +36,7 @@ compose-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 compose-lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01"
 compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-googlefont = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "compose" }
 
 # AndroidX
 androidx-core = "androidx.core:core-ktx:1.9.0"
@@ -54,5 +55,5 @@ androidx-hilt-navigation-compose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 [bundles]
 
 coroutines = ["kotlin-coroutines", "kotlin-coroutines-jdk8"]
-compose = ["compose-activity", "compose-ui", "compose-ui-util", "compose-foundation", "compose-foundation-ui", "compose-viewmodel", "compose-lifecycle", "compose-ui-preview", "compose-ui-tooling"]
+compose = ["compose-activity", "compose-ui", "compose-ui-util", "compose-foundation", "compose-foundation-ui", "compose-viewmodel", "compose-lifecycle", "compose-ui-preview", "compose-ui-tooling", "compose-googlefont"]
 androidx = ["androidx-core", "androidx-lifecycle", "androidx-viewmodel"]
