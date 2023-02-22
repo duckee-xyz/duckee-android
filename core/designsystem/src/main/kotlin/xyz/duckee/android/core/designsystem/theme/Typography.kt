@@ -39,6 +39,13 @@ val PromptFont = FontFamily(
     ),
 )
 
+val InterFont = FontFamily(
+    Font(
+        googleFont = GoogleFont("Inter"),
+        fontProvider = googleFontProvider,
+    ),
+)
+
 @Immutable
 object DuckeeTypography {
     val h1: TextStyle = TextStyle(
@@ -55,7 +62,7 @@ object DuckeeTypography {
         lineHeight = 40.sp,
         letterSpacing = (-0.01).sp,
     )
-    val paragraph3: TextStyle = TextStyle(
+    val title1: TextStyle = TextStyle(
         fontSize = 18.sp,
         fontFamily = PromptFont,
         fontWeight = FontWeight.Normal,
@@ -64,22 +71,9 @@ object DuckeeTypography {
     )
     val paragraph4: TextStyle = TextStyle(
         fontSize = 14.sp,
-        fontFamily = PromptFont,
+        fontFamily = InterFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 18.sp,
-        letterSpacing = (-0.01).sp,
-    )
-}
-
-private fun getGoogleFontFamily(
-    name: String,
-    provider: GoogleFont.Provider = googleFontProvider,
-    weights: List<FontWeight>,
-): FontFamily {
-    return FontFamily(
-        weights.map {
-            Font(GoogleFont(name), provider, it)
-        },
     )
 }
 

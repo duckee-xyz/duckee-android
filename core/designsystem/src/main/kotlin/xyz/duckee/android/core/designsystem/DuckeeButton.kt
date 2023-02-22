@@ -41,7 +41,7 @@ import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 fun DuckeeButton(
     modifier: Modifier = Modifier,
     label: String,
-    labelStyle: TextStyle = DuckeeTheme.typography.paragraph3,
+    labelStyle: TextStyle = DuckeeTheme.typography.title1,
     labelColor: Color = Color(0xff08090a),
     backgroundColor: Color = Color(0xffffffff),
     shape: Shape = RoundedCornerShape(24.dp),
