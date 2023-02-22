@@ -17,6 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
             dependencies {
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
+                "implementation"(libs.findLibrary("navigation.materialMotion.compose").get())
             }
         }
     }

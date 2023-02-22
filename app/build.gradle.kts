@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.material2.android)
     implementation(libs.material2)
+    implementation(libs.navigation.materialMotion.compose)
 
     implementation(project(":core:designsystem"))
     implementation(project(":feature:explore"))

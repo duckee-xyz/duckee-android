@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 The Duckee Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package xyz.duckee.android.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
@@ -21,7 +36,7 @@ val PromptFont = FontFamily(
     Font(
         googleFont = GoogleFont("Prompt"),
         fontProvider = googleFontProvider,
-    )
+    ),
 )
 
 @Immutable
@@ -31,28 +46,28 @@ object DuckeeTypography {
         fontFamily = PromptFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 44.sp,
-        letterSpacing = (-0.01).sp
+        letterSpacing = (-0.01).sp,
     )
     val h2: TextStyle = TextStyle(
         fontSize = 32.sp,
         fontFamily = PromptFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 40.sp,
-        letterSpacing = (-0.01).sp
+        letterSpacing = (-0.01).sp,
     )
     val paragraph3: TextStyle = TextStyle(
         fontSize = 18.sp,
         fontFamily = PromptFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 20.sp,
-        letterSpacing = (-0.01).sp
+        letterSpacing = (-0.01).sp,
     )
     val paragraph4: TextStyle = TextStyle(
         fontSize = 14.sp,
         fontFamily = PromptFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 18.sp,
-        letterSpacing = (-0.01).sp
+        letterSpacing = (-0.01).sp,
     )
 }
 
@@ -64,7 +79,7 @@ private fun getGoogleFontFamily(
     return FontFamily(
         weights.map {
             Font(GoogleFont(name), provider, it)
-        }
+        },
     )
 }
 
