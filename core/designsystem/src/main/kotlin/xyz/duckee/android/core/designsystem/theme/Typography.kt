@@ -10,18 +10,17 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
 import xyz.duckee.android.core.designsystem.R
 
-val PromptFont = getGoogleFontFamily(
-    name = "Prompt",
-    weights = listOf(
-        FontWeight.W100,
-        FontWeight.W200,
-        FontWeight.W300,
-        FontWeight.W400,
-        FontWeight.W500,
-        FontWeight.W600,
-        FontWeight.W700,
-        FontWeight.W800,
-        FontWeight.W900,
+private val googleFontProvider: GoogleFont.Provider =
+    GoogleFont.Provider(
+        providerAuthority = "com.google.android.gms.fonts",
+        providerPackage = "com.google.android.gms",
+        certificates = R.array.com_google_android_gms_fonts_certs,
+    )
+
+val PromptFont = FontFamily(
+    Font(
+        googleFont = GoogleFont("Prompt"),
+        fontProvider = googleFontProvider,
     )
 )
 
@@ -66,14 +65,6 @@ private fun getGoogleFontFamily(
         weights.map {
             Font(GoogleFont(name), provider, it)
         }
-    )
-}
-
-private val googleFontProvider: GoogleFont.Provider by lazy {
-    GoogleFont.Provider(
-        providerAuthority = "com.google.android.gms.fonts",
-        providerPackage = "com.google.android.gms",
-        certificates = R.array.com_google_android_gms_fonts_certs,
     )
 }
 
