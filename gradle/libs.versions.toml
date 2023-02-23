@@ -14,6 +14,9 @@ hilt = "2.45"
 # Orbit MVI
 orbit = "4.5.0"
 
+# Coil
+coil = "2.2.2"
+
 [libraries]
 
 # Build tools / Languages
@@ -61,6 +64,8 @@ navigation-materialMotion-compose = "io.github.fornewid:material-motion-compose-
 # MVI
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 [bundles]
 
