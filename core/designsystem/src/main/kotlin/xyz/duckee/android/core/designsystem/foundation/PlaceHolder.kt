@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 The Duckee Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package xyz.duckee.android.core.designsystem.foundation
 
 import androidx.compose.animation.core.FiniteAnimationSpec
@@ -45,7 +60,7 @@ fun Modifier.placeholder(
         properties["color"] = color
         properties["highlight"] = highlight
         properties["shape"] = shape
-    }
+    },
 ) {
     // Values used for caching purposes
     val lastSize = remember { Ref<Size>() }
@@ -64,12 +79,12 @@ fun Modifier.placeholder(
     val placeholderAlpha by transition.animateFloat(
         transitionSpec = placeholderFadeTransitionSpec,
         label = "placeholder_fade",
-        targetValueByState = { placeholderVisible -> if (placeholderVisible) 1f else 0f }
+        targetValueByState = { placeholderVisible -> if (placeholderVisible) 1f else 0f },
     )
     val contentAlpha by transition.animateFloat(
         transitionSpec = contentFadeTransitionSpec,
         label = "content_fade",
-        targetValueByState = { placeholderVisible -> if (placeholderVisible) 0f else 1f }
+        targetValueByState = { placeholderVisible -> if (placeholderVisible) 0f else 1f },
     )
 
     // Run the optional animation spec and update the progress if the placeholder is visible
@@ -188,4 +203,3 @@ private inline fun DrawScope.withLayer(
     drawBlock()
     canvas.restore()
 }
-

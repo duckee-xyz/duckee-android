@@ -1,9 +1,25 @@
+/*
+ * Copyright 2023 The Duckee Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package xyz.duckee.android.feature.explore.contract
 
 import androidx.compose.runtime.Immutable
-import java.util.UUID
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import java.util.UUID
 
 @Immutable
 internal data class ExploreState(
@@ -11,6 +27,16 @@ internal data class ExploreState(
     val searchValue: String = "",
     val randomImages: ImmutableList<String> = List(100) {
         val uuid = UUID.randomUUID().toString().replace("-", "").lowercase()
-        "https://picsum.photos/400/600?random=$uuid"
-    }.toPersistentList()
+        "https://picsum.photos/700/700?random=$uuid"
+    }.toPersistentList(),
+    val filters: ImmutableList<String> = persistentListOf(
+        "All",
+        "Anime",
+        "Portait",
+        "Object",
+        "Photo",
+        "Test1",
+        "Test2",
+    ),
+    val selectedFilter: String = "All",
 )

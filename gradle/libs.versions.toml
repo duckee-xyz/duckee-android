@@ -17,6 +17,9 @@ orbit = "4.5.0"
 # Coil
 coil = "2.2.2"
 
+# Accompanist
+accompanist = "0.29.1-alpha"
+
 [libraries]
 
 # Build tools / Languages
@@ -65,7 +68,11 @@ navigation-materialMotion-compose = "io.github.fornewid:material-motion-compose-
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 
+# Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+# Accompanist
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 
 [bundles]
 
