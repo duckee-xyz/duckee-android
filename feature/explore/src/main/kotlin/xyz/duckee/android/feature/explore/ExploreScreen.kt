@@ -29,10 +29,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import xyz.duckee.android.core.designsystem.DuckeeSearchBar
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.feature.explore.contract.ExploreState
 
 @Composable
 internal fun ExploreRoute(
@@ -40,12 +43,18 @@ internal fun ExploreRoute(
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
-    ExploreScreen()
+    ExploreScreen(
+        uiState = uiState,
+        onSearchValueChanged = viewModel::onSearchValueChanged,
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ExploreScreen() {
+internal fun ExploreScreen(
+    uiState: ExploreState,
+    onSearchValueChanged: (String) -> Unit,
+) {
     Scaffold {
         LazyColumn(
             modifier = Modifier
@@ -66,8 +75,24 @@ internal fun ExploreScreen() {
                         style = DuckeeTheme.typography.h1,
                         color = Color.White,
                     )
+                    DuckeeSearchBar(
+                        value = uiState.searchValue,
+                        onValueChanged = onSearchValueChanged,
+                        placeHolder = "Search anything",
+                    )
                 }
             }
         }
+    }
+}
+
+@Preview(name = "Explore screen")
+@Composable
+internal fun ExploreScreenPreview() {
+    DuckeeTheme {
+        ExploreScreen(
+            uiState = ExploreState(),
+            onSearchValueChanged = {},
+        )
     }
 }
