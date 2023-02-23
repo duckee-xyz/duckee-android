@@ -24,6 +24,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findBundle("orbit").get())
                 "implementation"(libs.findLibrary("navigation.materialMotion.compose").get())
                 "implementation"(libs.findLibrary("androidx.hilt.navigation.compose").get())
+                "implementation"(libs.findLibrary("coil.compose").get())
             }
         }
     }
