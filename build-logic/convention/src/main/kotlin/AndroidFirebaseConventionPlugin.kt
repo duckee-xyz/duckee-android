@@ -29,6 +29,7 @@ class AndroidFirebaseConventionPlugin : Plugin<Project> {
             dependencies {
                 "implementation"(platform(libs.findLibrary("firebase.bom").get()))
                 "implementation"(libs.findLibrary("firebase.auth").get())
+                "implementation"(libs.findLibrary("firebase.authUI").get())
             }
         }
     }
