@@ -44,5 +44,9 @@ gradlePlugin {
             id = "duckee.android.firebase"
             implementationClass = "AndroidFirebaseConventionPlugin"
         }
+        register("androidKotlinSerialization") {
+            id = "duckee.kotlin.serialization"
+            implementationClass = "AndroidSerializationConventionPlugin"
+        }
     }
 }
