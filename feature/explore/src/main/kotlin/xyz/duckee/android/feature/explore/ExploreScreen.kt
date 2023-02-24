@@ -49,6 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
+import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.feature.explore.component.ExploreImageBadge
 import xyz.duckee.android.feature.explore.contract.ExploreState
@@ -83,7 +84,7 @@ internal fun ExploreScreen(
             item {
                 Text(
                     text = "\uD83D\uDC24 Explore \uD83E\uDDE0 AI\n" +
-                            "Generated NFT \uD83D\uDCAB",
+                        "Generated NFT \uD83D\uDCAB",
                     style = DuckeeTheme.typography.h1,
                     color = Color.White,
                     modifier = Modifier
@@ -133,20 +134,21 @@ internal fun ExploreScreen(
                         .padding(horizontal = 24.dp)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(32.dp))
-                        .border(width = 1.dp, color = Color(0xFF7C8992), shape = RoundedCornerShape(32.dp))
+                        .border(width = 1.dp, color = Color(0xFF7C8992), shape = RoundedCornerShape(32.dp)),
                 ) {
                     DuckeeNetworkImage(
                         model = image,
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .clickableSingle { },
                     )
                     if (isOpenSource) {
                         ExploreImageBadge(
                             label = "Open Source",
                             modifier = Modifier
                                 .padding(16.dp)
-                                .align(Alignment.BottomStart)
+                                .align(Alignment.BottomStart),
                         )
                     } else {
                         ExploreImageBadge(
@@ -163,7 +165,7 @@ internal fun ExploreScreen(
                             },
                             modifier = Modifier
                                 .padding(16.dp)
-                                .align(Alignment.BottomStart)
+                                .align(Alignment.BottomStart),
                         )
                     }
                 }

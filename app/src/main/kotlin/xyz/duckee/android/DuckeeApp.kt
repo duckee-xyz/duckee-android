@@ -21,17 +21,23 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
+import xyz.duckee.android.core.designsystem.DuckeeBottomTab
 import xyz.duckee.android.core.navigation.ExploreDirections
+import xyz.duckee.android.core.navigation.exploreNavigationRoute
+import xyz.duckee.android.core.navigation.navigateToExploreTab
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
 
 @Composable
@@ -56,5 +62,18 @@ fun DuckeeApp() {
         ) {
             exploreScreen()
         }
+
+        DuckeeBottomTab(
+            currentRoute = currentRoute.orEmpty(),
+            onClick = {
+                when (it) {
+                    exploreNavigationRoute -> navController.navigateToExploreTab()
+                }
+            },
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .align(Alignment.BottomCenter)
+                .zIndex(2f),
+        )
     }
 }
