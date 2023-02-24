@@ -17,6 +17,7 @@ plugins {
     id("duckee.android.application")
     id("duckee.android.application.compose")
     id("duckee.android.hilt")
+    id("duckee.android.firebase")
 }
 
 android {
@@ -69,10 +70,14 @@ dependencies {
     implementation(libs.material2)
     implementation(libs.navigation.materialMotion.compose)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.startup)
+    implementation(libs.timber)
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
     implementation(project(":core:ui"))
+    implementation(project(":core:network:impl"))
+    implementation(project(":core:data:impl"))
 
     implementation(project(":feature:explore"))
     implementation(project(":feature:signin"))

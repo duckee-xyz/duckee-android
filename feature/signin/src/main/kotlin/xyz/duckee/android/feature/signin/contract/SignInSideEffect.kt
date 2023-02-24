@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-    id("duckee.android.firebase")
-}
+package xyz.duckee.android.feature.signin.contract
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.signin"
-    }
+import androidx.compose.runtime.Stable
+
+internal sealed interface SignInSideEffect {
+
+    @Stable
+    object OpenFirebaseGoogleLoginPrompt : SignInSideEffect
+
+    @Stable
+    object ShowErrorToast : SignInSideEffect
 }

@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-    id("duckee.android.firebase")
-}
+package xyz.duckee.android.feature.signin.contract
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.signin"
-    }
-}
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal data class SignInState(
+    val isLoading: Boolean = false,
+)

@@ -15,6 +15,8 @@
  */
 package xyz.duckee.android.feature.signin
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,29 +27,64 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
+import xyz.duckee.android.core.designsystem.DuckeeLoadingOverlay
 import xyz.duckee.android.core.designsystem.R
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.feature.signin.contract.SignInSideEffect
+import xyz.duckee.android.feature.signin.contract.SignInState
 
 @Composable
 internal fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
-    SignInScreen()
+    val context = LocalContext.current
+    val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+
+    val googleLoginLauncher = rememberLauncherForActivityResult(
+        contract = FirebaseAuthUIActivityResultContract(),
+        onResult = viewModel::onGoogleLoginResult,
+    )
+
+    viewModel.collectSideEffect {
+        if (it is SignInSideEffect.OpenFirebaseGoogleLoginPrompt) {
+            val signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(arrayListOf(AuthUI.IdpConfig.GoogleBuilder().build()))
+                .build()
+            googleLoginLauncher.launch(signInIntent)
+        } else if (it is SignInSideEffect.ShowErrorToast) {
+            Toast.makeText(context, "Sign with google failed.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    SignInScreen(
+        uiState = uiState,
+        onSignInGoogleButtonClick = viewModel::onSignInGoogleButtonClick,
+    )
 }
 
 @Composable
-internal fun SignInScreen() {
+internal fun SignInScreen(
+    uiState: SignInState,
+    onSignInGoogleButtonClick: () -> Unit,
+) {
     Scaffold {
         DuckeeAppBar()
         Column(
@@ -76,12 +113,16 @@ internal fun SignInScreen() {
                         modifier = Modifier.size(20.dp),
                     )
                 },
-                onClick = {},
+                onClick = onSignInGoogleButtonClick,
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .fillMaxWidth(),
             )
             Spacer(modifier = Modifier.weight(1f))
+        }
+
+        if (uiState.isLoading) {
+            DuckeeLoadingOverlay()
         }
     }
 }
@@ -90,6 +131,9 @@ internal fun SignInScreen() {
 @Composable
 internal fun SignInScreenPreview() {
     DuckeeTheme {
-        SignInScreen()
+        SignInScreen(
+            uiState = SignInState(),
+            onSignInGoogleButtonClick = {},
+        )
     }
 }
