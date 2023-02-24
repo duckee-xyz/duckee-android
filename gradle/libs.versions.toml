@@ -20,6 +20,9 @@ coil = "2.2.2"
 # Accompanist
 accompanist = "0.29.1-alpha"
 
+# Firebase
+firebase = "31.2.0"
+
 [libraries]
 
 # Build tools / Languages
@@ -74,6 +77,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 # Accompanist
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
+
+# Firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 
 [bundles]
 

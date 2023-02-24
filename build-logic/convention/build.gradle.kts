@@ -40,5 +40,9 @@ gradlePlugin {
             id = "duckee.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidFirebase") {
+            id = "duckee.android.firebase"
+            implementationClass = "AndroidFirebaseConventionPlugin"
+        }
     }
 }
