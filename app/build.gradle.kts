@@ -81,4 +81,5 @@ dependencies {
 
     implementation(project(":feature:explore"))
     implementation(project(":feature:signin"))
+    implementation(project(":feature:detail"))
 }
