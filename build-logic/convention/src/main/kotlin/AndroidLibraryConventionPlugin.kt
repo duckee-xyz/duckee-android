@@ -41,6 +41,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             dependencies {
                 "implementation"(libs.findBundle("coroutines").get())
                 "implementation"(libs.findLibrary("kotlin-immutable").get())
+                "implementation"(libs.findLibrary("timber").get())
             }
         }
     }
