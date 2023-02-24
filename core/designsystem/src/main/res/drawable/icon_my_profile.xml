@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2023 The Duckee Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+  <path
+      android:pathData="M16,0C7.171,0 0,7.171 0,16C0,24.829 7.171,32 16,32C24.829,32 32,24.829 32,16C32,7.171 24.829,0 16,0ZM8.927,27.52C10.535,25.206 13.177,23.795 16,23.795C18.823,23.795 21.465,25.19 23.089,27.52C21.021,28.8 18.609,29.538 16,29.538C13.391,29.538 10.995,28.8 8.927,27.52ZM25.042,26.043C22.958,23.089 19.61,21.333 16,21.333C12.39,21.333 9.026,23.122 6.958,26.043C4.201,23.565 2.462,19.988 2.462,16C2.462,8.533 8.533,2.462 16,2.462C23.467,2.462 29.538,8.533 29.538,16C29.538,19.988 27.799,23.565 25.042,26.043Z"
+      android:fillColor="#ACB7BF"/>
+  <path
+      android:pathData="M16,6.564C12.603,6.564 9.846,9.321 9.846,12.718C9.846,16.115 12.603,18.872 16,18.872C19.397,18.872 22.154,16.115 22.154,12.718C22.154,9.321 19.397,6.564 16,6.564ZM16,16.41C13.965,16.41 12.308,14.753 12.308,12.718C12.308,10.683 13.965,9.026 16,9.026C18.035,9.026 19.692,10.683 19.692,12.718C19.692,14.753 18.035,16.41 16,16.41Z"
+      android:fillColor="#ACB7BF"/>
+</vector>
