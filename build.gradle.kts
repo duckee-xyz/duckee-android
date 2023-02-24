@@ -7,6 +7,7 @@ buildscript {
         classpath(libs.plugin.androidBuildTools)
         classpath(libs.plugin.kotlin)
         classpath(libs.plugin.hilt)
+        classpath(libs.plugin.googleServices)
     }
 }
 
