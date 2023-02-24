@@ -32,18 +32,36 @@ private val googleFontProvider: GoogleFont.Provider =
         certificates = R.array.com_google_android_gms_fonts_certs,
     )
 
+val supportWeight = listOf(
+    FontWeight.W100,
+    FontWeight.W200,
+    FontWeight.W300,
+    FontWeight.W400,
+    FontWeight.W500,
+    FontWeight.W600,
+    FontWeight.W700,
+    FontWeight.W800,
+    FontWeight.W900,
+)
+
 val PromptFont = FontFamily(
-    Font(
-        googleFont = GoogleFont("Prompt"),
-        fontProvider = googleFontProvider,
-    ),
+    supportWeight.map {
+        Font(
+            googleFont = GoogleFont("Prompt"),
+            fontProvider = googleFontProvider,
+            weight = it,
+        )
+    },
 )
 
 val InterFont = FontFamily(
-    Font(
-        googleFont = GoogleFont("Inter"),
-        fontProvider = googleFontProvider,
-    ),
+    supportWeight.map {
+        Font(
+            googleFont = GoogleFont("Inter"),
+            fontProvider = googleFontProvider,
+            weight = it,
+        )
+    },
 )
 
 @Immutable
@@ -62,6 +80,27 @@ object DuckeeTypography {
         lineHeight = 40.sp,
         letterSpacing = (-0.01).sp,
     )
+    val h4: TextStyle = TextStyle(
+        fontSize = 24.sp,
+        fontFamily = PromptFont,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 30.sp,
+        letterSpacing = (-0.01).sp,
+    )
+    val h5: TextStyle = TextStyle(
+        fontSize = 20.sp,
+        fontFamily = PromptFont,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 30.sp,
+        letterSpacing = (-0.01).sp,
+    )
+    val h6: TextStyle = TextStyle(
+        fontSize = 16.sp,
+        fontFamily = PromptFont,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 20.sp,
+        letterSpacing = (-0.01).sp,
+    )
     val title1: TextStyle = TextStyle(
         fontSize = 18.sp,
         fontFamily = PromptFont,
@@ -71,6 +110,12 @@ object DuckeeTypography {
     )
     val paragraph4: TextStyle = TextStyle(
         fontSize = 14.sp,
+        fontFamily = InterFont,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 18.sp,
+    )
+    val paragraph5: TextStyle = TextStyle(
+        fontSize = 12.sp,
         fontFamily = InterFont,
         fontWeight = FontWeight.Normal,
         lineHeight = 18.sp,
