@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2023 The Duckee Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+  <group>
+    <clip-path
+        android:pathData="M18.542,8.333H10V11.875H14.917C14.458,14.125 12.542,15.417 10,15.417C7,15.417 4.583,13 4.583,10C4.583,7 7,4.583 10,4.583C11.292,4.583 12.458,5.042 13.375,5.792L16.042,3.125C14.417,1.708 12.333,0.833 10,0.833C4.917,0.833 0.833,4.917 0.833,10C0.833,15.083 4.917,19.167 10,19.167C14.583,19.167 18.75,15.833 18.75,10C18.75,9.458 18.667,8.875 18.542,8.333Z"/>
+    <path
+        android:pathData="M0,15.417V4.583L7.083,10L0,15.417Z"
+        android:fillColor="#FBBC05"/>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M18.542,8.333H10V11.875H14.917C14.458,14.125 12.542,15.417 10,15.417C7,15.417 4.583,13 4.583,10C4.583,7 7,4.583 10,4.583C11.292,4.583 12.458,5.042 13.375,5.792L16.042,3.125C14.417,1.708 12.333,0.833 10,0.833C4.917,0.833 0.833,4.917 0.833,10C0.833,15.083 4.917,19.167 10,19.167C14.583,19.167 18.75,15.833 18.75,10C18.75,9.458 18.667,8.875 18.542,8.333Z"/>
+    <path
+        android:pathData="M0,4.583L7.083,10L10,7.458L20,5.833V0H0V4.583Z"
+        android:fillColor="#EA4335"/>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M18.542,8.333H10V11.875H14.917C14.458,14.125 12.542,15.417 10,15.417C7,15.417 4.583,13 4.583,10C4.583,7 7,4.583 10,4.583C11.292,4.583 12.458,5.042 13.375,5.792L16.042,3.125C14.417,1.708 12.333,0.833 10,0.833C4.917,0.833 0.833,4.917 0.833,10C0.833,15.083 4.917,19.167 10,19.167C14.583,19.167 18.75,15.833 18.75,10C18.75,9.458 18.667,8.875 18.542,8.333Z"/>
+    <path
+        android:pathData="M0,15.417L12.5,5.833L15.792,6.25L20,0V20H0V15.417Z"
+        android:fillColor="#34A853"/>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M18.542,8.333H10V11.875H14.917C14.458,14.125 12.542,15.417 10,15.417C7,15.417 4.583,13 4.583,10C4.583,7 7,4.583 10,4.583C11.292,4.583 12.458,5.042 13.375,5.792L16.042,3.125C14.417,1.708 12.333,0.833 10,0.833C4.917,0.833 0.833,4.917 0.833,10C0.833,15.083 4.917,19.167 10,19.167C14.583,19.167 18.75,15.833 18.75,10C18.75,9.458 18.667,8.875 18.542,8.333Z"/>
+    <path
+        android:pathData="M20,20L7.083,10L5.417,8.75L20,4.583V20Z"
+        android:fillColor="#4285F4"/>
+  </group>
+</vector>
