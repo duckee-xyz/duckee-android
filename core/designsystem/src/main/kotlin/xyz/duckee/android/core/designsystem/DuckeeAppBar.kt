@@ -15,12 +15,13 @@
  */
 package xyz.duckee.android.core.designsystem
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +38,7 @@ import xyz.duckee.android.core.ui.LocalNavigationPopStack
 @Composable
 fun DuckeeAppBar(
     modifier: Modifier = Modifier,
+    isBackButtonDimEnabled: Boolean = false,
 ) {
     val backHandler = LocalNavigationPopStack.current
 
@@ -50,10 +52,17 @@ fun DuckeeAppBar(
         Icon(
             painter = painterResource(id = R.drawable.icon_back),
             contentDescription = "Back button",
-            tint = Color(0xFFACB7BF),
+            tint = Color(0xFFFBFBFB),
             modifier = Modifier
-                .clip(CircleShape)
-                .clickableSingle(onClick = backHandler),
+                .clip(RoundedCornerShape(8.dp))
+                .clickableSingle(onClick = backHandler)
+                .let { m ->
+                    if (isBackButtonDimEnabled) {
+                        m.background(Color(0xFF08090A).copy(alpha = 0.7f))
+                    } else {
+                        m
+                    }
+                },
         )
     }
 }
@@ -62,6 +71,8 @@ fun DuckeeAppBar(
 @Composable
 internal fun DuckeeAppBarPreview() {
     DuckeeTheme {
-        DuckeeAppBar()
+        DuckeeAppBar(
+            isBackButtonDimEnabled = true,
+        )
     }
 }
