@@ -41,7 +41,7 @@ import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.ui.RandomImageUrlGenerator
 
 @Composable
-internal fun DuckeeHorizontalNftCarousel(
+fun DuckeeHorizontalNftCarousel(
     modifier: Modifier = Modifier,
     list: ImmutableList<String>,
 ) {
