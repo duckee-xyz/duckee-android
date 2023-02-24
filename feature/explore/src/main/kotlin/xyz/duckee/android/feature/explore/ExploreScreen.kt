@@ -46,24 +46,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.feature.explore.component.ExploreImageBadge
+import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
 
 @Composable
 internal fun ExploreRoute(
     viewModel: ExploreViewModel = hiltViewModel(),
+    goSignInScreen: () -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+
+    viewModel.collectSideEffect {
+        if (it is ExploreSideEffect.GoSignInScreen) {
+            goSignInScreen()
+        }
+    }
 
     ExploreScreen(
         uiState = uiState,
         onSearchValueChanged = viewModel::onSearchValueChanged,
         onFilterClick = viewModel::onFilterClick,
+        onImageClick = viewModel::onImageClick,
     )
 }
 
@@ -73,6 +83,7 @@ internal fun ExploreScreen(
     uiState: ExploreState,
     onSearchValueChanged: (String) -> Unit,
     onFilterClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     Scaffold {
         LazyColumn(
@@ -141,7 +152,7 @@ internal fun ExploreScreen(
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clickableSingle { },
+                            .clickableSingle(onClick = { onImageClick(image) }),
                     )
                     if (isOpenSource) {
                         ExploreImageBadge(
@@ -182,6 +193,7 @@ internal fun ExploreScreenPreview() {
             uiState = ExploreState(),
             onSearchValueChanged = {},
             onFilterClick = {},
+            onImageClick = {},
         )
     }
 }

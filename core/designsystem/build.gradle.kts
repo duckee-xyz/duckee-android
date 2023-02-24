@@ -25,6 +25,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
+
     implementation(libs.material2.android)
     implementation(libs.androidx.lifecycle)
     implementation(libs.coil.compose)

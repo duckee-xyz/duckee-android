@@ -22,4 +22,6 @@ rootProject.name = "duckee-android"
 include(":app")
 include(":core:designsystem")
 include(":core:navigation")
+include(":core:ui")
 include(":feature:explore")
+include(":feature:signin")

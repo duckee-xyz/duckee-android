@@ -21,15 +21,17 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHost<ExploreState, Unit> {
+internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHost<ExploreState, ExploreSideEffect> {
 
-    override val container = container<ExploreState, Unit>(ExploreState())
+    override val container = container<ExploreState, ExploreSideEffect>(ExploreState())
 
     @OptIn(OrbitExperimental::class)
     fun onSearchValueChanged(value: String) = blockingIntent {
@@ -38,5 +40,9 @@ internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHo
 
     fun onFilterClick(filter: String) = intent {
         reduce { state.copy(selectedFilter = filter) }
+    }
+
+    fun onImageClick(image: String) = intent {
+        postSideEffect(ExploreSideEffect.GoSignInScreen)
     }
 }

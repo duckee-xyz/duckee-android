@@ -15,9 +15,12 @@
  */
 package xyz.duckee.android
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,20 +32,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
-import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 import xyz.duckee.android.core.designsystem.DuckeeBottomTab
 import xyz.duckee.android.core.navigation.ExploreDirections
 import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToExploreTab
+import xyz.duckee.android.core.navigation.navigateToSignInScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
+import xyz.duckee.android.feature.signin.navigation.signInScreen
+
+private val bottomNavigationShowRoutes = listOf(
+    exploreNavigationRoute,
+)
 
 @Composable
-fun DuckeeApp() {
-    val navController = rememberMaterialMotionNavController()
+fun DuckeeApp(
+    navController: NavHostController,
+) {
     val navBackStackEntry by navController.currentBackStackEntryFlow.collectAsStateWithLifecycle(initialValue = null)
     val currentRoute by remember(navBackStackEntry) {
         derivedStateOf { navBackStackEntry?.destination?.route }
@@ -60,20 +71,41 @@ fun DuckeeApp() {
             exitTransition = { fadeOut(animationSpec = tween(0)) },
             modifier = Modifier.zIndex(1f),
         ) {
-            exploreScreen()
+            exploreScreen(
+                goSignInScreen = navController::navigateToSignInScreen,
+            )
+            signInScreen()
         }
 
-        DuckeeBottomTab(
-            currentRoute = currentRoute.orEmpty(),
-            onClick = {
-                when (it) {
-                    exploreNavigationRoute -> navController.navigateToExploreTab()
-                }
-            },
+        val density = LocalDensity.current
+        val isBottomNavigationShowed by remember(currentRoute) {
+            derivedStateOf { bottomNavigationShowRoutes.any { currentRoute == it } }
+        }
+
+        AnimatedVisibility(
+            visible = isBottomNavigationShowed,
+            enter = fadeIn() + slideInVertically(
+                initialOffsetY = { with(density) { 120.dp.roundToPx() } },
+            ),
+            exit = fadeOut() + slideOutVertically(
+                targetOffsetY = { with(density) { 120.dp.roundToPx() } },
+            ),
             modifier = Modifier
-                .padding(bottom = 32.dp)
                 .align(Alignment.BottomCenter)
-                .zIndex(2f),
-        )
+                .zIndex(99f),
+        ) {
+            DuckeeBottomTab(
+                currentRoute = currentRoute.orEmpty(),
+                onClick = {
+                    when (it) {
+                        exploreNavigationRoute -> navController.navigateToExploreTab()
+                    }
+                },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .align(Alignment.BottomCenter)
+                    .zIndex(2f),
+            )
+        }
     }
 }

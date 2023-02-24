@@ -18,24 +18,28 @@ package xyz.duckee.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import dagger.hilt.android.AndroidEntryPoint
+import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.ui.LocalNavigationPopStack
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // WindowCompat.setDecorFitsSystemWindows(window, false)
-        // window.navigationBarColor = Color.TRANSPARENT
-//        window.setFlags(
-//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//        )
-
         setContent {
+            val navController = rememberMaterialMotionNavController()
+
             DuckeeTheme {
-                DuckeeApp()
+                CompositionLocalProvider(
+                    LocalNavigationPopStack provides { navController.popBackStack() },
+                ) {
+                    DuckeeApp(
+                        navController = navController,
+                    )
+                }
             }
         }
     }
