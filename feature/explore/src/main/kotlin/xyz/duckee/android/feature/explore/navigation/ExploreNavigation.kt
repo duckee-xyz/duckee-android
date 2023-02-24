@@ -16,6 +16,7 @@
 package xyz.duckee.android.feature.explore.navigation
 
 import androidx.navigation.NavGraphBuilder
+import xyz.duckee.android.core.navigation.DetailDirections
 import xyz.duckee.android.core.navigation.ExploreDirections
 import xyz.duckee.android.core.navigation.SignInDirections
 import xyz.duckee.android.core.navigation.transition.rootTransitionComposable
@@ -23,15 +24,18 @@ import xyz.duckee.android.feature.explore.ExploreRoute
 
 fun NavGraphBuilder.exploreScreen(
     goSignInScreen: () -> Unit,
+    goDetailScreen: (String) -> Unit,
 ) {
     rootTransitionComposable(
         routeCommand = ExploreDirections.main,
         commands = listOf(
             SignInDirections.main,
+            DetailDirections.main,
         ),
     ) {
         ExploreRoute(
             goSignInScreen = goSignInScreen,
+            goDetailScreen = goDetailScreen,
         )
     }
 }

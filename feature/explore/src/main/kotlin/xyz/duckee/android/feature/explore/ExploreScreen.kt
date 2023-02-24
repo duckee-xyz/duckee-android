@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -60,12 +61,15 @@ import xyz.duckee.android.feature.explore.contract.ExploreState
 internal fun ExploreRoute(
     viewModel: ExploreViewModel = hiltViewModel(),
     goSignInScreen: () -> Unit,
+    goDetailScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
     viewModel.collectSideEffect {
         if (it is ExploreSideEffect.GoSignInScreen) {
             goSignInScreen()
+        } else if (it is ExploreSideEffect.GoDetail) {
+            goDetailScreen(it.id)
         }
     }
 
@@ -89,6 +93,7 @@ internal fun ExploreScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
+                .statusBarsPadding()
                 .padding(it)
                 .fillMaxSize(),
         ) {
@@ -114,7 +119,8 @@ internal fun ExploreScreen(
                         value = uiState.searchValue,
                         onValueChanged = onSearchValueChanged,
                         placeHolder = "Search anything",
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp),
                     )
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),

@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.explore.contract
+package xyz.duckee.android.feature.detail.contract
 
-import androidx.compose.runtime.Stable
+import java.util.*
+import javax.annotation.concurrent.Immutable
 
-internal sealed interface ExploreSideEffect {
-
-    @Stable
-    object GoSignInScreen : ExploreSideEffect
-
-    @Stable
-    data class GoDetail(val id: String) : ExploreSideEffect
-}
+@Immutable
+internal data class DetailState(
+    val isLoading: Boolean = false,
+    val image: String = UUID.randomUUID().toString().replace("-", "").lowercase()
+        .run {
+            "https://picsum.photos/700/700?random=$this"
+        },
+)

@@ -19,10 +19,11 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.feature.detail.contract.DetailState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DetailViewModel @Inject constructor() : ViewModel(), ContainerHost<Unit, Unit> {
+internal class DetailViewModel @Inject constructor() : ViewModel(), ContainerHost<DetailState, Unit> {
 
-    override val container = container<Unit, Unit>(Unit)
+    override val container = container<DetailState, Unit>(DetailState())
 }

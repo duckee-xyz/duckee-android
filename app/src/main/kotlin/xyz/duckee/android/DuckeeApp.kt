@@ -41,8 +41,10 @@ import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import xyz.duckee.android.core.designsystem.DuckeeBottomTab
 import xyz.duckee.android.core.navigation.ExploreDirections
 import xyz.duckee.android.core.navigation.exploreNavigationRoute
+import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
+import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
 import xyz.duckee.android.feature.signin.navigation.signInScreen
 
@@ -73,8 +75,10 @@ fun DuckeeApp(
         ) {
             exploreScreen(
                 goSignInScreen = navController::navigateToSignInScreen,
+                goDetailScreen = navController::navigateToDetailScreen,
             )
             signInScreen()
+            detailScreen()
         }
 
         val density = LocalDensity.current

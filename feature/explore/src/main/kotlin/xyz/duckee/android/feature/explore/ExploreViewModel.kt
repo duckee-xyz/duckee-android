@@ -43,6 +43,7 @@ internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHo
     }
 
     fun onImageClick(image: String) = intent {
-        postSideEffect(ExploreSideEffect.GoSignInScreen)
+        postSideEffect(ExploreSideEffect.GoDetail(id = "123"))
+        // postSideEffect(ExploreSideEffect.GoSignInScreen)
     }
 }
