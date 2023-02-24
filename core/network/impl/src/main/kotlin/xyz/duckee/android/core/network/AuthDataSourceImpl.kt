@@ -16,6 +16,7 @@
 package xyz.duckee.android.core.network
 
 import com.skydoves.sandwich.ApiResponse
+import timber.log.Timber
 import xyz.duckee.android.core.network.api.AuthAPI
 import xyz.duckee.android.core.network.firebase.FirebaseAuthManager
 import xyz.duckee.android.core.network.model.ResponseSignIn
@@ -31,6 +32,7 @@ internal class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun signInWithFirebase(): ApiResponse<ResponseSignIn> {
         val idToken = firebaseAuthManager.getCurrentUserIdToken().orEmpty()
+        Timber.e("\uD83D\uDD25 [FirebaseUserIdToken] $idToken")
 
         if (idToken.isBlank()) {
             return ApiResponse.error(NullPointerException("firebase idToken == null"))
