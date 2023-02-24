@@ -33,6 +33,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(project(":core:designsystem"))
                 "implementation"(project(":core:navigation"))
                 "implementation"(project(":core:ui"))
+                "implementation"(project(":core:domain"))
+                "implementation"(project(":core:model"))
 
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
                 "implementation"(libs.findLibrary("kotlin.coroutines").get())
@@ -40,6 +42,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("navigation.materialMotion.compose").get())
                 "implementation"(libs.findLibrary("androidx.hilt.navigation.compose").get())
                 "implementation"(libs.findLibrary("coil.compose").get())
+                "implementation"(libs.findLibrary("sandwich").get())
             }
         }
     }
