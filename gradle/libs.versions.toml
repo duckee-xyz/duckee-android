@@ -64,6 +64,7 @@ compose-googlefont = { module = "androidx.compose.ui:ui-text-google-fonts", vers
 androidx-core = "androidx.core:core-ktx:1.9.0"
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 androidx-viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+androidx-startup = "androidx.startup:startup-runtime:1.1.1"
 
 # Material 2
 material2 = { module = "androidx.compose.material:material", version.ref = "compose" }
@@ -90,6 +91,7 @@ accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeho
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-authUI = "com.firebaseui:firebase-ui-auth:7.2.0"
 
 # Google Play Services
 playServices-auth = "com.google.android.gms:play-services-auth:20.4.1"
@@ -100,6 +102,9 @@ okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-serialization-converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 sandwich = { module = "com.github.skydoves:sandwich", version.ref = "sandwich" }
+
+# Logger
+timber = "com.jakewharton.timber:timber:5.0.1"
 
 [bundles]
 
