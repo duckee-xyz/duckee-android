@@ -31,4 +31,6 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.coil.compose)
     implementation(libs.accompanist.placeholder)
+
+    implementation(libs.lottie.compose)
 }
