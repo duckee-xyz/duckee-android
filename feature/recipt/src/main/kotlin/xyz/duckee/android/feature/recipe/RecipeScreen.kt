@@ -67,6 +67,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.DuckeeCharacterLoadingOverlay
@@ -80,13 +81,21 @@ import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.feature.recipe.component.RecipeAddImageButton
 import xyz.duckee.android.feature.recipe.component.RecipeModelType
+import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
 
 @Composable
 internal fun RecipeRoute(
     viewModel: RecipeViewModel = hiltViewModel(),
+    goRecipeResultScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+
+    viewModel.collectSideEffect {
+        if (it is RecipeSideEffect.GoRecipeResultScreen) {
+            goRecipeResultScreen(it.resultId)
+        }
+    }
 
     RecipeScreen(
         uiState = uiState,

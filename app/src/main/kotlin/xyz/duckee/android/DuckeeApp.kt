@@ -45,6 +45,7 @@ import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
 import xyz.duckee.android.core.navigation.navigateToReceiptScreen
+import xyz.duckee.android.core.navigation.navigateToRecipeResultScreen
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
 import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
@@ -84,7 +85,9 @@ fun DuckeeApp(
             detailScreen(
                 goReceiptScreen = navController::navigateToReceiptScreen,
             )
-            recipeScreen()
+            recipeScreen(
+                goRecipeResultScreen = navController::navigateToRecipeResultScreen,
+            )
         }
 
         val density = LocalDensity.current

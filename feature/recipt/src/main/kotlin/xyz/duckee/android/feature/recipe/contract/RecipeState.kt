@@ -19,6 +19,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import xyz.duckee.android.core.model.GenerationModels
+import xyz.duckee.android.core.ui.RandomImageUrlGenerator
 
 @Immutable
 internal data class RecipeState(
@@ -36,4 +37,9 @@ internal data class RecipeState(
     val isAdvancedPanelOpened: Boolean = false,
 
     val isGenerating: Boolean = false,
+)
+
+@Immutable
+internal data class RecipeResultState(
+    val resultImageUrl: String = RandomImageUrlGenerator.getRandomImageUrl(),
 )

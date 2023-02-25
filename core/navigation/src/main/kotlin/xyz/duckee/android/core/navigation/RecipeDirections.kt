@@ -17,6 +17,8 @@ package xyz.duckee.android.core.navigation
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 const val receiptNavigationRoute = "receipt"
 
@@ -26,10 +28,25 @@ fun NavController.navigateToReceiptScreen(id: String) {
     )
 }
 
+fun NavController.navigateToRecipeResultScreen(id: String) {
+    this.navigate(
+        RecipeDirections.result.destination.replace("{id}", id),
+    )
+}
+
 object RecipeDirections {
 
     val main = object : NavigationCommand {
         override val arguments: List<NamedNavArgument> = emptyList()
         override val destination: String = "$receiptNavigationRoute/{id}"
+    }
+
+    val result = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument> = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+            },
+        )
+        override val destination: String = "$receiptNavigationRoute/result/{id}"
     }
 }

@@ -20,15 +20,18 @@ import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 import xyz.duckee.android.core.domain.generate.GetGenerateModelsUseCase
 import xyz.duckee.android.core.model.GenerationModels
+import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
 import javax.inject.Inject
 
@@ -36,9 +39,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class RecipeViewModel @Inject constructor(
     private val getGenerateModelsUseCase: GetGenerateModelsUseCase,
-) : ViewModel(), ContainerHost<RecipeState, Unit> {
+) : ViewModel(), ContainerHost<RecipeState, RecipeSideEffect> {
 
-    override val container = container<RecipeState, Unit>(RecipeState())
+    override val container = container<RecipeState, RecipeSideEffect>(RecipeState())
 
     init {
         getGenerateModels()
@@ -85,6 +88,9 @@ internal class RecipeViewModel @Inject constructor(
 
     fun onGenerateButtonClick() = intent {
         reduce { state.copy(isGenerating = true) }
+        delay(2000)
+        reduce { state.copy(isGenerating = false) }
+        postSideEffect(RecipeSideEffect.GoRecipeResultScreen(resultId = "123"))
     }
 
     private fun getGenerateModels() = intent {
