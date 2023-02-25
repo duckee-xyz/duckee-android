@@ -69,7 +69,7 @@ internal fun RecipeModelType(
     }
 }
 
-@Preview(name = "Receipt model type component", showBackground = true, backgroundColor = 0xFF000000)
+@Preview(name = "Recipe model type component", showBackground = true, backgroundColor = 0xFF000000)
 @Composable
 internal fun RecipeModelTypePreview() {
     DuckeeTheme {

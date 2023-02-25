@@ -21,6 +21,6 @@ plugins {
 
 android {
     defaultConfig {
-        namespace = "xyz.duckee.android.feature.receipt"
+        namespace = "xyz.duckee.android.feature.recipe"
     }
 }

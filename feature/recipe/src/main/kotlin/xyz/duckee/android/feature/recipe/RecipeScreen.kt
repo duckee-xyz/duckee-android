@@ -502,9 +502,9 @@ internal fun RecipeScreen(
     }
 }
 
-@Preview(name = "Receipt screen")
+@Preview(name = "Recipe screen")
 @Composable
-internal fun ReceiptScreenPreview() {
+internal fun RecipeScreenPreview() {
     DuckeeTheme {
         RecipeScreen(
             uiState = RecipeState(),
