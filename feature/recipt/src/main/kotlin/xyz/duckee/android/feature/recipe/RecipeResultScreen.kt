@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
@@ -45,13 +46,21 @@ import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.ui.LocalNavigationPopStack
 import xyz.duckee.android.feature.recipe.contract.RecipeResultState
+import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 
 @Composable
 internal fun RecipeResultRoute(
     viewModel: RecipeResultViewModel = hiltViewModel(),
+    goRecipeMetadataScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
     val backHandler = LocalNavigationPopStack.current
+
+    viewModel.collectSideEffect {
+        if (it is RecipeSideEffect.GoRecipeMetadataScreen) {
+            goRecipeMetadataScreen(it.resultId)
+        }
+    }
 
     RecipeResultScreen(
         uiState = uiState,

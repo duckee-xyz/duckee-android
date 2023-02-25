@@ -18,11 +18,13 @@ package xyz.duckee.android.feature.recipe.navigation
 import androidx.navigation.NavGraphBuilder
 import xyz.duckee.android.core.navigation.RecipeDirections
 import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
+import xyz.duckee.android.feature.recipe.RecipeMetadataConfigRoute
 import xyz.duckee.android.feature.recipe.RecipeResultRoute
 import xyz.duckee.android.feature.recipe.RecipeRoute
 
 fun NavGraphBuilder.recipeScreen(
     goRecipeResultScreen: (String) -> Unit,
+    goRecipeMetadataScreen: (String) -> Unit,
 ) {
     sharedXTransitionComposable(
         command = RecipeDirections.main,
@@ -34,6 +36,13 @@ fun NavGraphBuilder.recipeScreen(
     sharedXTransitionComposable(
         command = RecipeDirections.result,
     ) {
-        RecipeResultRoute()
+        RecipeResultRoute(
+            goRecipeMetadataScreen = goRecipeMetadataScreen,
+        )
+    }
+    sharedXTransitionComposable(
+        command = RecipeDirections.resultMetadata,
+    ) {
+        RecipeMetadataConfigRoute()
     }
 }

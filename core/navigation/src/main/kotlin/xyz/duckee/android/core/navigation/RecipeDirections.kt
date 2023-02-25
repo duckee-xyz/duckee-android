@@ -34,6 +34,12 @@ fun NavController.navigateToRecipeResultScreen(id: String) {
     )
 }
 
+fun NavController.navigateToRecipeResultMetadataScreen(id: String) {
+    this.navigate(
+        RecipeDirections.resultMetadata.destination.replace("{id}", id),
+    )
+}
+
 object RecipeDirections {
 
     val main = object : NavigationCommand {
@@ -48,5 +54,14 @@ object RecipeDirections {
             },
         )
         override val destination: String = "$receiptNavigationRoute/result/{id}"
+    }
+
+    val resultMetadata = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument> = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+            },
+        )
+        override val destination: String = "$receiptNavigationRoute/result/{id}/metadata"
     }
 }

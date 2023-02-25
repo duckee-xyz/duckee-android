@@ -16,12 +16,15 @@
 package xyz.duckee.android.core.designsystem
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +41,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,10 +57,14 @@ fun DuckeeTextField(
     onlyNumber: Boolean = false,
     onValueChanged: (String) -> Unit,
     onFocusChanged: (Boolean) -> Unit = {},
+    keyboardHideWhenEnterKeyClicked: Boolean = false,
+    leftComponent: @Composable () -> Unit = {},
 ) {
     var focusState by remember { mutableStateOf<FocusState?>(null) }
     var isFocused by remember { mutableStateOf(false) }
     val isKeyboardVisible by rememberUpdatedState(WindowInsets.ime.getBottom(LocalDensity.current) > 0)
+
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(Unit) {
         snapshotFlow { isKeyboardVisible }
@@ -74,6 +82,11 @@ fun DuckeeTextField(
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (onlyNumber) KeyboardType.Number else KeyboardType.Text,
         ),
+        keyboardActions = KeyboardActions {
+            if (keyboardHideWhenEnterKeyClicked) {
+                focusManager.clearFocus(force = true)
+            }
+        },
         textStyle = DuckeeTheme.typography.paragraph3.copy(
             fontWeight = FontWeight.Light,
             color = Color(0xFFFBFBFB),
@@ -93,15 +106,21 @@ fun DuckeeTextField(
             }
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) { nativeTextField ->
-        if (value.isBlank()) {
-            Text(
-                text = placeHolder,
-                style = DuckeeTheme.typography.paragraph3,
-                color = Color(0xFF7C8992),
-            )
-        }
+        Row {
+            leftComponent()
 
-        nativeTextField()
+            Box {
+                if (value.isBlank()) {
+                    Text(
+                        text = placeHolder,
+                        style = DuckeeTheme.typography.paragraph3,
+                        color = Color(0xFF7C8992),
+                    )
+                }
+
+                nativeTextField()
+            }
+        }
     }
 }
 

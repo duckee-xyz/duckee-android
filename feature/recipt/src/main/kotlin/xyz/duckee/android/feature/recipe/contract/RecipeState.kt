@@ -43,3 +43,14 @@ internal data class RecipeState(
 internal data class RecipeResultState(
     val resultImageUrl: String = RandomImageUrlGenerator.getRandomImageUrl(),
 )
+
+@Immutable
+internal data class RecipeResultMetadataState(
+    val isNotForSale: Boolean = false,
+    val isOpenSource: Boolean = false,
+
+    val price: String = "",
+    val royalty: Int = 0,
+
+    val description: String = "",
+)
