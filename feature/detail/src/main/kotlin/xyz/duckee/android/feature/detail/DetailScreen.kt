@@ -57,6 +57,7 @@ import xyz.duckee.android.core.designsystem.DuckeeInformationItem
 import xyz.duckee.android.core.designsystem.DuckeeLineage
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeePromptUnlock
+import xyz.duckee.android.core.designsystem.foundation.drawColoredShadow
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.ui.RandomImageUrlGenerator
@@ -289,6 +290,13 @@ internal fun DetailScreen(
                     .navigationBarsPadding()
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp)
+                    .drawColoredShadow(
+                        color = Color.Black,
+                        alpha = 0.3f,
+                        shadowRadius = 12.dp,
+                        offsetY = 4.dp,
+                        borderRadius = 40.dp,
+                    )
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
             )

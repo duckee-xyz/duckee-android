@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import xyz.duckee.android.core.designsystem.DuckeeBottomTab
+import xyz.duckee.android.core.designsystem.foundation.drawColoredShadow
 import xyz.duckee.android.core.navigation.ExploreDirections
 import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
@@ -107,6 +108,13 @@ fun DuckeeApp(
                 },
                 modifier = Modifier
                     .padding(bottom = 32.dp)
+                    .drawColoredShadow(
+                        color = Color.Black,
+                        alpha = 0.3f,
+                        shadowRadius = 12.dp,
+                        offsetY = 4.dp,
+                        borderRadius = 40.dp,
+                    )
                     .align(Alignment.BottomCenter)
                     .zIndex(2f),
             )

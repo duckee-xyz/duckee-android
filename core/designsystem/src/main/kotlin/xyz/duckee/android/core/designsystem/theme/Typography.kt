@@ -112,7 +112,7 @@ object DuckeeTypography {
         fontSize = 14.sp,
         fontFamily = InterFont,
         fontWeight = FontWeight.Normal,
-        lineHeight = 18.sp,
+        lineHeight = 20.sp,
     )
     val paragraph5: TextStyle = TextStyle(
         fontSize = 12.sp,
