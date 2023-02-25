@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.detail.navigation
+package xyz.duckee.android.core.navigation
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.DetailDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.detail.DetailRoute
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavController
 
-fun NavGraphBuilder.detailScreen(
-    goReceiptScreen: (String) -> Unit,
-) {
-    sharedXTransitionComposable(
-        command = DetailDirections.main,
-    ) {
-        DetailRoute(
-            goReceiptScreen = goReceiptScreen,
-        )
+const val receiptNavigationRoute = "receipt"
+
+fun NavController.navigateToReceiptScreen(id: String) {
+    this.navigate(
+        ReceiptDirections.main.destination.replace("{id}", id),
+    )
+}
+
+object ReceiptDirections {
+
+    val main = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val destination: String = "$receiptNavigationRoute/{id}"
     }
 }

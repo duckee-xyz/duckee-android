@@ -18,12 +18,19 @@ package xyz.duckee.android.feature.detail
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DetailViewModel @Inject constructor() : ViewModel(), ContainerHost<DetailState, Unit> {
+internal class DetailViewModel @Inject constructor() : ViewModel(), ContainerHost<DetailState, DetailSideEffect> {
 
-    override val container = container<DetailState, Unit>(DetailState())
+    override val container = container<DetailState, DetailSideEffect>(DetailState())
+
+    fun onBuyOrTryButtonClick() = intent {
+        postSideEffect(DetailSideEffect.GoReceiptScreen)
+    }
 }

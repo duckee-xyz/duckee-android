@@ -44,9 +44,11 @@ import xyz.duckee.android.core.navigation.ExploreDirections
 import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
+import xyz.duckee.android.core.navigation.navigateToReceiptScreen
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
 import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
+import xyz.duckee.android.feature.receipt.navigation.receiptScreen
 import xyz.duckee.android.feature.signin.navigation.signInScreen
 
 private val bottomNavigationShowRoutes = listOf(
@@ -79,7 +81,10 @@ fun DuckeeApp(
                 goDetailScreen = navController::navigateToDetailScreen,
             )
             signInScreen()
-            detailScreen()
+            detailScreen(
+                goReceiptScreen = navController::navigateToReceiptScreen,
+            )
+            receiptScreen()
         }
 
         val density = LocalDensity.current

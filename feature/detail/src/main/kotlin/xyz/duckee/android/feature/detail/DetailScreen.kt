@@ -46,8 +46,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlin.math.min
 import kotlinx.collections.immutable.toPersistentList
+import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.DuckeeExpandable
@@ -63,22 +63,33 @@ import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.ui.RandomImageUrlGenerator
 import xyz.duckee.android.feature.detail.component.DetailPriceInformation
 import xyz.duckee.android.feature.detail.component.DetailProfile
+import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
+import kotlin.math.min
 
 @Composable
 internal fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel(),
+    goReceiptScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
+    viewModel.collectSideEffect {
+        if (it is DetailSideEffect.GoReceiptScreen) {
+            goReceiptScreen("1")
+        }
+    }
+
     DetailScreen(
         uiState = uiState,
+        onBuyOrTryButtonClick = viewModel::onBuyOrTryButtonClick,
     )
 }
 
 @Composable
 internal fun DetailScreen(
     uiState: DetailState,
+    onBuyOrTryButtonClick: () -> Unit,
 ) {
     Scaffold {
         Box {
@@ -285,7 +296,7 @@ internal fun DetailScreen(
                 labelStyle = DuckeeTheme.typography.title1.copy(
                     fontFamily = PromptFont,
                 ),
-                onClick = {},
+                onClick = onBuyOrTryButtonClick,
                 modifier = Modifier
                     .navigationBarsPadding()
                     .padding(horizontal = 24.dp)
@@ -310,6 +321,7 @@ internal fun DetailScreenPreview() {
     DuckeeTheme {
         DetailScreen(
             uiState = DetailState(),
+            onBuyOrTryButtonClick = {},
         )
     }
 }

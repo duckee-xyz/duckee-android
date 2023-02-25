@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.detail.navigation
+package xyz.duckee.android.feature.receipt.navigation
 
 import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.DetailDirections
+import xyz.duckee.android.core.navigation.ReceiptDirections
 import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.detail.DetailRoute
+import xyz.duckee.android.feature.receipt.ReceiptRoute
 
-fun NavGraphBuilder.detailScreen(
-    goReceiptScreen: (String) -> Unit,
-) {
+fun NavGraphBuilder.receiptScreen() {
     sharedXTransitionComposable(
-        command = DetailDirections.main,
+        command = ReceiptDirections.main,
     ) {
-        DetailRoute(
-            goReceiptScreen = goReceiptScreen,
-        )
+        ReceiptRoute()
     }
 }

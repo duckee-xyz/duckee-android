@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.detail.navigation
+package xyz.duckee.android.feature.receipt
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.DetailDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.detail.DetailRoute
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
+import javax.inject.Inject
 
-fun NavGraphBuilder.detailScreen(
-    goReceiptScreen: (String) -> Unit,
-) {
-    sharedXTransitionComposable(
-        command = DetailDirections.main,
-    ) {
-        DetailRoute(
-            goReceiptScreen = goReceiptScreen,
-        )
-    }
+@HiltViewModel
+internal class ReceiptViewModel @Inject constructor() : ViewModel(), ContainerHost<Unit, Unit> {
+
+    override val container = container<Unit, Unit>(Unit)
 }
