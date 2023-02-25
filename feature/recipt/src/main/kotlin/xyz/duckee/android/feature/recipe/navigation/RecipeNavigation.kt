@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt.navigation
+package xyz.duckee.android.feature.recipe.navigation
 
 import androidx.navigation.NavGraphBuilder
 import xyz.duckee.android.core.navigation.RecipeDirections
 import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.receipt.RecipeRoute
+import xyz.duckee.android.feature.recipe.RecipeRoute
 
 fun NavGraphBuilder.recipeScreen() {
     sharedXTransitionComposable(

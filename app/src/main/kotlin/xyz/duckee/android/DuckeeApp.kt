@@ -48,7 +48,7 @@ import xyz.duckee.android.core.navigation.navigateToReceiptScreen
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
 import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
-import xyz.duckee.android.feature.receipt.navigation.recipeScreen
+import xyz.duckee.android.feature.recipe.navigation.recipeScreen
 import xyz.duckee.android.feature.signin.navigation.signInScreen
 
 private val bottomNavigationShowRoutes = listOf(

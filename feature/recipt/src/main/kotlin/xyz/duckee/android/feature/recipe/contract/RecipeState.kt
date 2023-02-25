@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt.contract
+package xyz.duckee.android.feature.recipe.contract
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList

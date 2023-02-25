@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt
+package xyz.duckee.android.feature.recipe
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
@@ -78,9 +78,9 @@ import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PromptFont
 import xyz.duckee.android.core.model.GenerationModels
-import xyz.duckee.android.feature.receipt.component.RecipeAddImageButton
-import xyz.duckee.android.feature.receipt.component.RecipeModelType
-import xyz.duckee.android.feature.receipt.contract.RecipeState
+import xyz.duckee.android.feature.recipe.component.RecipeAddImageButton
+import xyz.duckee.android.feature.recipe.component.RecipeModelType
+import xyz.duckee.android.feature.recipe.contract.RecipeState
 
 @Composable
 internal fun RecipeRoute(

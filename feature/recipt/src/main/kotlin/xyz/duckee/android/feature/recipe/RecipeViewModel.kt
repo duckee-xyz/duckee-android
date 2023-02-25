@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt
+package xyz.duckee.android.feature.recipe
 
 import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.message
@@ -29,7 +29,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 import xyz.duckee.android.core.domain.generate.GetGenerateModelsUseCase
 import xyz.duckee.android.core.model.GenerationModels
-import xyz.duckee.android.feature.receipt.contract.RecipeState
+import xyz.duckee.android.feature.recipe.contract.RecipeState
 import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
