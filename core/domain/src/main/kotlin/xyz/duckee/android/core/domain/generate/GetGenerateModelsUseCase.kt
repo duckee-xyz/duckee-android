@@ -13,29 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.data.di
+package xyz.duckee.android.core.domain.generate
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import xyz.duckee.android.core.data.AuthRepository
-import xyz.duckee.android.core.data.AuthRepositoryImpl
+import com.skydoves.sandwich.ApiResponse
+import dagger.Reusable
 import xyz.duckee.android.core.data.GenerateRepository
-import xyz.duckee.android.core.data.GenerateRepositoryImpl
+import xyz.duckee.android.core.model.GenerationModels
+import javax.inject.Inject
 
-@Suppress("unused")
-@Module
-@InstallIn(SingletonComponent::class)
-internal interface RepositoryModule {
+@Reusable
+class GetGenerateModelsUseCase @Inject constructor(
+    private val generateRepository: GenerateRepository,
+) {
 
-    @Binds
-    fun bindsAuthRepository(
-        impl: AuthRepositoryImpl,
-    ): AuthRepository
-
-    @Binds
-    fun bindsGenerateRepository(
-        impl: GenerateRepositoryImpl,
-    ): GenerateRepository
+    suspend operator fun invoke(): ApiResponse<GenerationModels> =
+        generateRepository.getGenerateModels()
 }

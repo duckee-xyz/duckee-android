@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.navigation
+package xyz.duckee.android.core.network
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
+import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.network.model.ResponseGenerateModels
 
-const val receiptNavigationRoute = "receipt"
+interface GenerateDataSource {
 
-fun NavController.navigateToReceiptScreen(id: String) {
-    this.navigate(
-        ReceiptDirections.main.destination.replace("{id}", id),
-    )
-}
-
-object ReceiptDirections {
-
-    val main = object : NavigationCommand {
-        override val arguments: List<NamedNavArgument> = emptyList()
-        override val destination: String = "$receiptNavigationRoute/{id}"
-    }
+    suspend fun getGenerateModels(): ApiResponse<ResponseGenerateModels>
 }

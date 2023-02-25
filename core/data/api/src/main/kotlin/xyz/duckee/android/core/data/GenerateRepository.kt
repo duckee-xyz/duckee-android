@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt.navigation
+package xyz.duckee.android.core.data
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.ReceiptDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.receipt.ReceiptRoute
+import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.model.GenerationModels
 
-fun NavGraphBuilder.receiptScreen() {
-    sharedXTransitionComposable(
-        command = ReceiptDirections.main,
-    ) {
-        ReceiptRoute()
-    }
+interface GenerateRepository {
+
+    suspend fun getGenerateModels(): ApiResponse<GenerationModels>
 }

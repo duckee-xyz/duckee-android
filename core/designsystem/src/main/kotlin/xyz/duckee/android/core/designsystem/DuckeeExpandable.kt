@@ -51,6 +51,7 @@ fun DuckeeExpandable(
     title: String,
     value: String,
     isExpanded: Boolean = false,
+    withoutText: Boolean = false,
     onClick: () -> Unit,
 ) {
     Column(
@@ -82,20 +83,22 @@ fun DuckeeExpandable(
                     .rotate(arrowRotateValue),
             )
         }
-        AnimatedVisibility(visible = isExpanded) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xff2A333A))
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-            ) {
-                Text(
-                    text = value,
-                    style = DuckeeTheme.typography.paragraph4,
-                    fontWeight = FontWeight.ExtraLight,
-                    color = Color(0xFFFBFBFB),
-                )
+        if (!withoutText) {
+            AnimatedVisibility(visible = isExpanded) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xff2A333A))
+                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                ) {
+                    Text(
+                        text = value,
+                        style = DuckeeTheme.typography.paragraph4,
+                        fontWeight = FontWeight.ExtraLight,
+                        color = Color(0xFFFBFBFB),
+                    )
+                }
             }
         }
     }

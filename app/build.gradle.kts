@@ -82,5 +82,5 @@ dependencies {
     implementation(project(":feature:explore"))
     implementation(project(":feature:signin"))
     implementation(project(":feature:detail"))
-    implementation(project(":feature:receipt"))
+    implementation(project(":feature:recipt"))
 }

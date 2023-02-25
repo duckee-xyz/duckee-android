@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt
+package xyz.duckee.android.feature.receipt.navigation
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import org.orbitmvi.orbit.ContainerHost
-import org.orbitmvi.orbit.viewmodel.container
-import javax.inject.Inject
+import androidx.navigation.NavGraphBuilder
+import xyz.duckee.android.core.navigation.RecipeDirections
+import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
+import xyz.duckee.android.feature.receipt.RecipeRoute
 
-@HiltViewModel
-internal class ReceiptViewModel @Inject constructor() : ViewModel(), ContainerHost<Unit, Unit> {
-
-    override val container = container<Unit, Unit>(Unit)
+fun NavGraphBuilder.recipeScreen() {
+    sharedXTransitionComposable(
+        command = RecipeDirections.main,
+    ) {
+        RecipeRoute()
+    }
 }

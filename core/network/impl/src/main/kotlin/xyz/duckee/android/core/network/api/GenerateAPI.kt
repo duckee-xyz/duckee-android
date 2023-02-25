@@ -13,6 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.domain
+package xyz.duckee.android.core.network.api
 
-class Platform
+import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.GET
+import xyz.duckee.android.core.network.model.ResponseGenerateModels
+
+internal interface GenerateAPI {
+
+    @GET("generation/v1/models")
+    suspend fun getGenerationModels(): ApiResponse<ResponseGenerateModels>
+}

@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.receipt
+package xyz.duckee.android.core.network
 
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.network.api.GenerateAPI
+import xyz.duckee.android.core.network.model.ResponseGenerateModels
+import javax.inject.Inject
 
-@Composable
-internal fun ReceiptRoute(
-    viewModel: ReceiptViewModel = hiltViewModel(),
-) {
-    ReceiptScreen()
-}
+internal class GenerateDataSourceImpl @Inject constructor(
+    apiProvider: APIProvider,
+) : GenerateDataSource {
 
-@Composable
-fun ReceiptScreen() {
+    private val api = apiProvider[GenerateAPI::class.java]
+
+    override suspend fun getGenerateModels(): ApiResponse<ResponseGenerateModels> =
+        api.getGenerationModels()
 }

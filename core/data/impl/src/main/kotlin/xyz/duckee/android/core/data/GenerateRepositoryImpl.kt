@@ -13,29 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.network.di
+package xyz.duckee.android.core.data
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import xyz.duckee.android.core.network.AuthDataSource
-import xyz.duckee.android.core.network.AuthDataSourceImpl
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.mapSuccess
+import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.core.network.GenerateDataSource
-import xyz.duckee.android.core.network.GenerateDataSourceImpl
+import xyz.duckee.android.core.network.model.toModel
+import javax.inject.Inject
 
-@Suppress("unused")
-@Module
-@InstallIn(SingletonComponent::class)
-internal interface DataSourceModule {
+internal class GenerateRepositoryImpl @Inject constructor(
+    private val dataSource: GenerateDataSource,
+) : GenerateRepository {
 
-    @Binds
-    fun bindsAuthDataSource(
-        impl: AuthDataSourceImpl,
-    ): AuthDataSource
-
-    @Binds
-    fun bindsGenerateDataSource(
-        impl: GenerateDataSourceImpl,
-    ): GenerateDataSource
+    override suspend fun getGenerateModels(): ApiResponse<GenerationModels> =
+        dataSource.getGenerateModels().mapSuccess { toModel() }
 }
