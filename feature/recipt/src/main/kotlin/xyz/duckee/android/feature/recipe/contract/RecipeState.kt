@@ -25,6 +25,8 @@ import xyz.duckee.android.core.ui.RandomImageUrlGenerator
 internal data class RecipeState(
     val isLoading: Boolean = true,
 
+    val isImportMode: Boolean = false,
+
     val models: ImmutableList<GenerationModels.Model> = persistentListOf(),
     val selectedModel: GenerationModels.Model? = null,
 

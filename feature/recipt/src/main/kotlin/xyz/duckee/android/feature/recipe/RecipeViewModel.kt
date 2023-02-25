@@ -15,6 +15,7 @@
  */
 package xyz.duckee.android.feature.recipe
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
@@ -38,13 +39,18 @@ import javax.inject.Inject
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
 internal class RecipeViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val getGenerateModelsUseCase: GetGenerateModelsUseCase,
 ) : ViewModel(), ContainerHost<RecipeState, RecipeSideEffect> {
+
+    private val isCreateMode get() = savedStateHandle.get<Int>("id") == -1
+    private val isImportMode get() = savedStateHandle.get<Boolean>("importMode") == true
 
     override val container = container<RecipeState, RecipeSideEffect>(RecipeState())
 
     init {
         getGenerateModels()
+        checkIsImportMode()
     }
 
     fun onUseModelClick(model: GenerationModels.Model) = intent {
@@ -91,6 +97,10 @@ internal class RecipeViewModel @Inject constructor(
         delay(2000)
         reduce { state.copy(isGenerating = false) }
         postSideEffect(RecipeSideEffect.GoRecipeResultScreen(resultId = "123"))
+    }
+
+    private fun checkIsImportMode() = intent {
+        reduce { state.copy(isImportMode = isImportMode) }
     }
 
     private fun getGenerateModels() = intent {

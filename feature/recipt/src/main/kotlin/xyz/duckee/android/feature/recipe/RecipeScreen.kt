@@ -172,18 +172,22 @@ internal fun RecipeScreen(
                             .padding(horizontal = 24.dp)
                             .fillMaxWidth(),
                     )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    DuckeeQuestionInputContainer(
-                        categoryLabel = "Import",
-                        questionLabel = "Add in your image ",
-                    ) {
-                        RecipeAddImageButton(
-                            onClick = {},
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 24.dp),
-                        )
+
+                    if (uiState.isImportMode) {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        DuckeeQuestionInputContainer(
+                            categoryLabel = "Import",
+                            questionLabel = "Add in your image ",
+                        ) {
+                            RecipeAddImageButton(
+                                onClick = {},
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 24.dp),
+                            )
+                        }
                     }
+
                     Spacer(modifier = Modifier.height(28.dp))
                     DuckeeQuestionInputContainer(
                         categoryLabel = "Model",

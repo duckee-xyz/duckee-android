@@ -20,11 +20,25 @@ import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
-const val receiptNavigationRoute = "receipt"
+const val recipeNavigationRoute = "recipe"
 
-fun NavController.navigateToReceiptScreen(id: String) {
+fun NavController.navigateToRecipeTab(inclusive: Boolean = false) {
+    this.navigate(RecipeDirections.welcome.destination) {
+        popUpTo(0) {
+            saveState = !inclusive
+            this.inclusive = inclusive
+        }
+
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+fun NavController.navigateToReceiptScreen(id: String? = null, importMode: Boolean = false) {
     this.navigate(
-        RecipeDirections.main.destination.replace("{id}", id),
+        RecipeDirections.main.destination
+            .replace("{id}", if (id.orEmpty().isBlank()) "-1" else id.toString())
+            .replace("{importMode}", importMode.toString()),
     )
 }
 
@@ -47,8 +61,17 @@ fun NavController.navigateToRecipeSuccessScreen() {
 object RecipeDirections {
 
     val main = object : NavigationCommand {
-        override val arguments: List<NamedNavArgument> = emptyList()
-        override val destination: String = "$receiptNavigationRoute/{id}"
+        override val arguments: List<NamedNavArgument> = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+                defaultValue = -1
+            },
+            navArgument("importMode") {
+                type = NavType.BoolType
+                defaultValue = false
+            },
+        )
+        override val destination: String = "$recipeNavigationRoute/{id}?importMode={importMode}"
     }
 
     val result = object : NavigationCommand {
@@ -57,7 +80,7 @@ object RecipeDirections {
                 type = NavType.IntType
             },
         )
-        override val destination: String = "$receiptNavigationRoute/result/{id}"
+        override val destination: String = "$recipeNavigationRoute/result/{id}"
     }
 
     val resultMetadata = object : NavigationCommand {
@@ -66,11 +89,16 @@ object RecipeDirections {
                 type = NavType.IntType
             },
         )
-        override val destination: String = "$receiptNavigationRoute/result/{id}/metadata"
+        override val destination: String = "$recipeNavigationRoute/result/{id}/metadata"
     }
 
     val success = object : NavigationCommand {
         override val arguments: List<NamedNavArgument> = emptyList()
-        override val destination: String = "$receiptNavigationRoute/list-success"
+        override val destination: String = "$recipeNavigationRoute/list-success"
+    }
+
+    val welcome = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val destination: String = recipeNavigationRoute
     }
 }

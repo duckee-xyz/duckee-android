@@ -48,7 +48,9 @@ import xyz.duckee.android.core.navigation.navigateToReceiptScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultMetadataScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeSuccessScreen
+import xyz.duckee.android.core.navigation.navigateToRecipeTab
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
+import xyz.duckee.android.core.navigation.recipeNavigationRoute
 import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
 import xyz.duckee.android.feature.recipe.navigation.recipeScreen
@@ -56,6 +58,7 @@ import xyz.duckee.android.feature.signin.navigation.signInScreen
 
 private val bottomNavigationShowRoutes = listOf(
     exploreNavigationRoute,
+    recipeNavigationRoute,
 )
 
 @Composable
@@ -93,6 +96,7 @@ fun DuckeeApp(
                 goSuccessScreen = navController::navigateToRecipeSuccessScreen,
                 goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
                 goMyTab = {},
+                goGenerateScreen = { navController.navigateToReceiptScreen(importMode = it) },
             )
         }
 
@@ -118,6 +122,7 @@ fun DuckeeApp(
                 onClick = {
                     when (it) {
                         exploreNavigationRoute -> navController.navigateToExploreTab()
+                        recipeNavigationRoute -> navController.navigateToRecipeTab()
                     }
                 },
                 modifier = Modifier

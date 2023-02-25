@@ -17,7 +17,9 @@ package xyz.duckee.android.feature.recipe.navigation
 
 import androidx.navigation.NavGraphBuilder
 import xyz.duckee.android.core.navigation.RecipeDirections
+import xyz.duckee.android.core.navigation.transition.rootTransitionComposable
 import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
+import xyz.duckee.android.feature.recipe.RecipeGenerateWelcomeRoute
 import xyz.duckee.android.feature.recipe.RecipeListSuccessRoute
 import xyz.duckee.android.feature.recipe.RecipeMetadataConfigRoute
 import xyz.duckee.android.feature.recipe.RecipeResultRoute
@@ -29,7 +31,16 @@ fun NavGraphBuilder.recipeScreen(
     goSuccessScreen: () -> Unit,
     goMyTab: () -> Unit,
     goExploreTab: () -> Unit,
+    goGenerateScreen: (Boolean) -> Unit,
 ) {
+    rootTransitionComposable(
+        routeCommand = RecipeDirections.welcome,
+        commands = listOf(RecipeDirections.main),
+    ) {
+        RecipeGenerateWelcomeRoute(
+            goGenerateScreen = goGenerateScreen,
+        )
+    }
     sharedXTransitionComposable(
         command = RecipeDirections.main,
     ) {

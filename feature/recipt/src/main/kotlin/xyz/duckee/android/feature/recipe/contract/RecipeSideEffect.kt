@@ -38,4 +38,9 @@ internal sealed interface RecipeSideEffect {
 
     @Stable
     object GoMyTab : RecipeSideEffect
+
+    @Immutable
+    data class GoGenerateScreen(
+        val importMode: Boolean,
+    ) : RecipeSideEffect
 }
