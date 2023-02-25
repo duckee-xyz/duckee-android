@@ -40,6 +40,10 @@ fun NavController.navigateToRecipeResultMetadataScreen(id: String) {
     )
 }
 
+fun NavController.navigateToRecipeSuccessScreen() {
+    this.navigate(RecipeDirections.success.destination)
+}
+
 object RecipeDirections {
 
     val main = object : NavigationCommand {
@@ -63,5 +67,10 @@ object RecipeDirections {
             },
         )
         override val destination: String = "$receiptNavigationRoute/result/{id}/metadata"
+    }
+
+    val success = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument> = emptyList()
+        override val destination: String = "$receiptNavigationRoute/list-success"
     }
 }

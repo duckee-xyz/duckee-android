@@ -16,6 +16,7 @@
 package xyz.duckee.android.feature.recipe.contract
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
 internal sealed interface RecipeSideEffect {
 
@@ -28,4 +29,13 @@ internal sealed interface RecipeSideEffect {
     data class GoRecipeMetadataScreen(
         val resultId: String,
     ) : RecipeSideEffect
+
+    @Stable
+    object GoSuccessScreen : RecipeSideEffect
+
+    @Stable
+    object GoExploreTab : RecipeSideEffect
+
+    @Stable
+    object GoMyTab : RecipeSideEffect
 }

@@ -21,18 +21,20 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import xyz.duckee.android.feature.recipe.contract.RecipeResultMetadataState
+import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
 internal class RecipeMetadataConfigViewModel @Inject constructor() :
     ViewModel(),
-    ContainerHost<RecipeResultMetadataState, Unit> {
+    ContainerHost<RecipeResultMetadataState, RecipeSideEffect> {
 
-    override val container = container<RecipeResultMetadataState, Unit>(RecipeResultMetadataState())
+    override val container = container<RecipeResultMetadataState, RecipeSideEffect>(RecipeResultMetadataState())
 
     fun onNotForSaleButtonClick() = intent {
         reduce { state.copy(isNotForSale = state.isNotForSale.not()) }
@@ -67,5 +69,6 @@ internal class RecipeMetadataConfigViewModel @Inject constructor() :
     }
 
     fun onConfirmButtonClick() = intent {
+        postSideEffect(RecipeSideEffect.GoSuccessScreen)
     }
 }

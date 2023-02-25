@@ -47,14 +47,19 @@ import xyz.duckee.android.feature.recipe.component.RecipeMetadataPriceItem
 import xyz.duckee.android.feature.recipe.component.RecipeMetadataRoyaltyItem
 import xyz.duckee.android.feature.recipe.component.RecipeMetadataSwitchItem
 import xyz.duckee.android.feature.recipe.contract.RecipeResultMetadataState
+import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 
 @Composable
 internal fun RecipeMetadataConfigRoute(
     viewModel: RecipeMetadataConfigViewModel = hiltViewModel(),
+    goSuccessScreen: () -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
     viewModel.collectSideEffect {
+        if (it is RecipeSideEffect.GoSuccessScreen) {
+            goSuccessScreen()
+        }
     }
 
     RecipeMetadataConfigScreen(
