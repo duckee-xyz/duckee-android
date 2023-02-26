@@ -38,9 +38,6 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -86,7 +83,6 @@ internal fun CollectionScreen(
     val density = LocalDensity.current
 
     val pagerState = rememberPagerState()
-    var selectedTabIndex by remember { mutableStateOf(0) }
 
     CollapsingToolbarScaffold(
         state = state,
@@ -203,7 +199,7 @@ internal fun CollectionScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                                     .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
+                                    .clip(RoundedCornerShape(16.dp))
                             )
                         }
                     }
