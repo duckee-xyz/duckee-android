@@ -174,7 +174,7 @@ internal fun ExploreScreen(
                             borderColor = Color.White,
                             icon = {
                                 Icon(
-                                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_flow_logo),
+                                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_duck_balance),
                                     contentDescription = "flow logo",
                                     tint = Color.Unspecified,
                                     modifier = Modifier.size(24.dp),

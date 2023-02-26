@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2023 The Duckee Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M12,0L12,0A12,12 0,0 1,24 12L24,12A12,12 0,0 1,12 24L12,24A12,12 0,0 1,0 12L0,12A12,12 0,0 1,12 0z"
+      android:fillColor="#08090A"/>
+  <path
+      android:pathData="M18.594,7.207V11.812V13.557L20.238,12.685V15.92L12.064,20.25V10.663L18.594,7.207Z"
+      android:fillColor="#E6AB28"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M12.064,20.25L5.522,16.794V7.207L12.064,10.663V20.25Z"
+      android:fillColor="#E9D21B"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M18.594,7.208L12.064,10.665L5.522,7.208L12.064,3.75L18.594,7.208ZM18.594,11.814L20.238,12.687L18.594,13.559V11.814Z"
+      android:fillColor="#F9EA7E"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M15.916,17.46L20.25,15.167V17.768L15.916,20.06V17.46Z"
+      android:fillColor="#E6AB28"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M15.916,17.46L13.748,16.312L18.082,14.02L20.25,15.167L15.916,17.46Z"
+      android:fillColor="#F9EA7E"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M13.748,16.311L15.916,17.46V20.059L13.748,18.914V16.311Z"
+      android:fillColor="#E9D21B"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M15.469,12.478V10.922L14.156,11.616V13.172L15.469,12.478Z"
+      android:fillColor="#34433A"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M10.176,13.59L6.553,15.506L3.75,14.019L7.361,12.103L10.176,13.59Z"
+      android:fillColor="#E56B4B"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M6.553,15.506L10.176,13.59V14.792L6.553,16.72V15.506Z"
+      android:fillColor="#CE2020"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M3.75,14.019L6.553,15.506V16.719L3.75,15.233V14.019Z"
+      android:fillColor="#DF3131"
+      android:fillType="evenOdd"/>
+</vector>

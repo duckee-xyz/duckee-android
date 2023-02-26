@@ -20,10 +20,14 @@ import xyz.duckee.android.core.navigation.SignInDirections
 import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
 import xyz.duckee.android.feature.signin.SignInRoute
 
-fun NavGraphBuilder.signInScreen() {
+fun NavGraphBuilder.signInScreen(
+    goExploreTab: () -> Unit,
+) {
     sharedXTransitionComposable(
         command = SignInDirections.main,
     ) {
-        SignInRoute()
+        SignInRoute(
+            goExploreTab = goExploreTab,
+        )
     }
 }

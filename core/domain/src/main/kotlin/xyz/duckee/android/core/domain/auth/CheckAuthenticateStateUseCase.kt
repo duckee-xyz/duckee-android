@@ -15,23 +15,22 @@
  */
 package xyz.duckee.android.core.domain.auth
 
-import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.suspendOnSuccess
 import dagger.Reusable
-import xyz.duckee.android.core.data.AuthRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import xyz.duckee.android.core.data.PreferencesRepository
-import xyz.duckee.android.core.model.Credentials
-import xyz.duckee.android.core.model.User
 import javax.inject.Inject
 
 @Reusable
-class SignInWithGoogleUseCase @Inject constructor(
-    private val authRepository: AuthRepository,
+class CheckAuthenticateStateUseCase @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) {
 
-    suspend operator fun invoke(): ApiResponse<Pair<Credentials, User>> =
-        authRepository.signInWithFirebase().suspendOnSuccess {
-            preferencesRepository.setCredentials(data.first.accessToken, data.first.refreshToken)
+    suspend operator fun invoke(): Boolean =
+        withContext(Dispatchers.IO) {
+            val pref = preferencesRepository.preference.first()
+
+            pref.accessToken.isNotBlank() && pref.refreshToken.isNotBlank()
         }
 }
