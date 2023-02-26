@@ -13,22 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("duckee.android.library")
     id("duckee.android.hilt")
+    alias(libs.plugins.protobuf)
 }
 
 android {
     defaultConfig {
-        namespace = "xyz.duckee.android.core.data.impl"
+        namespace = "xyz.duckee.android.core.datastore.impl"
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                val java by registering {
+                    option("lite")
+                }
+                val kotlin by registering {
+                    option("lite")
+                }
+            }
+        }
     }
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:network:api"))
-    implementation(project(":core:data:api"))
     implementation(project(":core:datastore:api"))
+    implementation(project(":core:model"))
 
-    implementation(libs.sandwich)
+    implementation(libs.bundles.datastore)
+    implementation(libs.protobuf.kotlin.lite)
 }

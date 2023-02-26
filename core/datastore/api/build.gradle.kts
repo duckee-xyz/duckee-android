@@ -15,20 +15,14 @@
  */
 plugins {
     id("duckee.android.library")
-    id("duckee.android.hilt")
 }
 
 android {
     defaultConfig {
-        namespace = "xyz.duckee.android.core.data.impl"
+        namespace = "xyz.duckee.android.core.datastore.api"
     }
 }
 
 dependencies {
     implementation(project(":core:model"))
-    implementation(project(":core:network:api"))
-    implementation(project(":core:data:api"))
-    implementation(project(":core:datastore:api"))
-
-    implementation(libs.sandwich)
 }

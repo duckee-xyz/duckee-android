@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.library")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.model
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.core.data.impl"
-    }
-}
-
-dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:network:api"))
-    implementation(project(":core:data:api"))
-    implementation(project(":core:datastore:api"))
-
-    implementation(libs.sandwich)
-}
+data class Preferences(
+    val accessToken: String,
+    val refreshToken: String,
+)

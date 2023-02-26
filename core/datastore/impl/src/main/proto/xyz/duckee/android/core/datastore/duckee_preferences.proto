@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.library")
-    id("duckee.android.hilt")
-}
+syntax = "proto3";
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.core.data.impl"
-    }
-}
+option java_package = "xyz.duckee.android.core.datastore";
+option java_multiple_files = true;
 
-dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:network:api"))
-    implementation(project(":core:data:api"))
-    implementation(project(":core:datastore:api"))
-
-    implementation(libs.sandwich)
+message DuckeePreferences {
+  optional string accessToken = 1;
+  optional string refreshToken = 2;
 }

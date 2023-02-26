@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.library")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.data
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.core.data.impl"
-    }
-}
+import kotlinx.coroutines.flow.Flow
+import xyz.duckee.android.core.datastore.DuckeePreferencesDataSource
+import xyz.duckee.android.core.model.Preferences
+import javax.inject.Inject
 
-dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:network:api"))
-    implementation(project(":core:data:api"))
-    implementation(project(":core:datastore:api"))
+internal class PreferencesRepositoryImpl @Inject constructor(
+    private val dataSource: DuckeePreferencesDataSource,
+) : PreferencesRepository {
 
-    implementation(libs.sandwich)
+    override val preference: Flow<Preferences> = dataSource.preference
+
+    override suspend fun setCredentials(accessToken: String, refreshToken: String) =
+        dataSource.setCredentials(accessToken, refreshToken)
 }
