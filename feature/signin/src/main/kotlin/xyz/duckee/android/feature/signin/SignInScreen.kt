@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -89,7 +90,9 @@ internal fun SignInScreen(
     onSignInGoogleButtonClick: () -> Unit,
 ) {
     Scaffold {
-        DuckeeAppBar()
+        DuckeeAppBar(
+            modifier = Modifier.statusBarsPadding(),
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier

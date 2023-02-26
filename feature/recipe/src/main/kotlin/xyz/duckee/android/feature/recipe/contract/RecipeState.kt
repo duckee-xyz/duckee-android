@@ -35,6 +35,8 @@ internal data class RecipeState(
     val selectedSize: GenerationModels.Model.RecipeDefinitions.AvailableSize? = null,
     val selectedSampler: String = "",
     val seedNumber: String = "",
+    val guidanceScale: Int = 20,
+    val steps: Int = 30,
 
     val isAdvancedPanelOpened: Boolean = false,
 

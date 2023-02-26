@@ -17,11 +17,14 @@ package xyz.duckee.android.feature.recipe
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.generate.GetGenerationStatusUseCase
 import xyz.duckee.android.feature.recipe.contract.RecipeResultState
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import javax.inject.Inject
@@ -29,17 +32,28 @@ import javax.inject.Inject
 @HiltViewModel
 internal class RecipeResultViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val getGenerationStatusUseCase: GetGenerationStatusUseCase,
 ) : ViewModel(),
     ContainerHost<RecipeResultState, RecipeSideEffect> {
 
-    private val resultId = savedStateHandle.get<Int>("id") ?: 0
+    private val resultId = savedStateHandle.get<String>("id").orEmpty()
 
-    override
-    val container = container<RecipeResultState, RecipeSideEffect>(RecipeResultState())
+    override val container = container<RecipeResultState, RecipeSideEffect>(RecipeResultState())
+
+    init {
+        getGenerationStatus()
+    }
 
     fun onNextButtonClick() = intent {
         postSideEffect(
-            RecipeSideEffect.GoRecipeMetadataScreen(resultId.toString()),
+            RecipeSideEffect.GoRecipeMetadataScreen(resultId),
         )
+    }
+
+    private fun getGenerationStatus() = intent {
+        getGenerationStatusUseCase(resultId)
+            .suspendOnSuccess {
+                reduce { state.copy(resultImageUrl = data.resultImageUrl.orEmpty()) }
+            }
     }
 }

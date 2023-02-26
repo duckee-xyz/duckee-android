@@ -16,7 +16,9 @@
 package xyz.duckee.android.feature.explore
 
 import androidx.lifecycle.ViewModel
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
@@ -24,6 +26,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.art.GetArtFeedUseCase
 import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
@@ -32,9 +35,14 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ExploreViewModel @Inject constructor(
     private val checkAuthenticateStateUseCase: CheckAuthenticateStateUseCase,
+    private val getArtFeedUseCase: GetArtFeedUseCase,
 ) : ViewModel(), ContainerHost<ExploreState, ExploreSideEffect> {
 
     override val container = container<ExploreState, ExploreSideEffect>(ExploreState())
+
+    init {
+        getArtFeed()
+    }
 
     @OptIn(OrbitExperimental::class)
     fun onSearchValueChanged(value: String) = blockingIntent {
@@ -45,11 +53,40 @@ internal class ExploreViewModel @Inject constructor(
         reduce { state.copy(selectedFilter = filter) }
     }
 
-    fun onImageClick(image: String) = intent {
+    fun onImageClick(tokenId: String) = intent {
         if (checkAuthenticateStateUseCase()) { // if authenticated,
-            postSideEffect(ExploreSideEffect.GoDetail(id = "123"))
+            postSideEffect(ExploreSideEffect.GoDetail(id = tokenId))
         } else {
             postSideEffect(ExploreSideEffect.GoSignInScreen)
         }
+    }
+
+    fun onScrollEnd() = intent {
+        if (state.hasNext) {
+            getArtFeed()
+        }
+    }
+
+    private fun getArtFeed() = intent {
+        if (state.nextStartAfter == null) {
+            reduce { state.copy(isLoading = true) }
+        }
+
+        getArtFeedUseCase(
+            startAfter = state.nextStartAfter.takeIf { it != null }?.toInt(),
+        )
+            .suspendOnSuccess {
+                reduce {
+                    state.copy(
+                        isLoading = false,
+                        hasNext = data.hasNext,
+                        nextStartAfter = data.nextStartAfter.orEmpty(),
+                        feeds = buildList {
+                            addAll(state.feeds)
+                            addAll(data.results)
+                        }.toPersistentList(),
+                    )
+                }
+            }
     }
 }

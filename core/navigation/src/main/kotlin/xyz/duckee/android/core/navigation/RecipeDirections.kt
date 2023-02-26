@@ -77,7 +77,7 @@ object RecipeDirections {
     val result = object : NavigationCommand {
         override val arguments: List<NamedNavArgument> = listOf(
             navArgument("id") {
-                type = NavType.IntType
+                type = NavType.StringType
             },
         )
         override val destination: String = "$recipeNavigationRoute/result/{id}"
@@ -86,7 +86,7 @@ object RecipeDirections {
     val resultMetadata = object : NavigationCommand {
         override val arguments: List<NamedNavArgument> = listOf(
             navArgument("id") {
-                type = NavType.IntType
+                type = NavType.StringType
             },
         )
         override val destination: String = "$recipeNavigationRoute/result/{id}/metadata"

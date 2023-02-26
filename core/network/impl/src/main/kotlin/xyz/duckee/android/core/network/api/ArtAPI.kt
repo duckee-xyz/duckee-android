@@ -16,22 +16,16 @@
 package xyz.duckee.android.core.network.api
 
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import xyz.duckee.android.core.network.model.ResponseGenerateModels
-import xyz.duckee.android.core.network.model.ResponseGenerateTaskStatus
-import xyz.duckee.android.core.network.model.request.RequestGenerateImage
+import retrofit2.http.Query
+import xyz.duckee.android.core.network.model.ResponseArtList
 
-internal interface GenerateAPI {
+internal interface ArtAPI {
 
-    @GET("generation/v1/models")
-    suspend fun getGenerationModels(): ApiResponse<ResponseGenerateModels>
-
-    @POST("generation/v1")
-    suspend fun generateImage(@Body payload: RequestGenerateImage): ApiResponse<ResponseGenerateTaskStatus>
-
-    @GET("generation/v1/{id}")
-    suspend fun getGenerationStatus(@Path("id") id: String): ApiResponse<ResponseGenerateTaskStatus>
+    @GET("art/v1")
+    suspend fun getArtFeed(
+        @Query("start_after") startAfter: Int?,
+        @Query("limit") limit: Int?,
+        @Query("tags") tags: String?,
+    ): ApiResponse<ResponseArtList>
 }

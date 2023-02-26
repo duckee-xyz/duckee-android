@@ -17,11 +17,17 @@ package xyz.duckee.android.feature.recipe
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
@@ -30,7 +36,9 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
+import xyz.duckee.android.core.domain.generate.GenerateImageUseCase
 import xyz.duckee.android.core.domain.generate.GetGenerateModelsUseCase
+import xyz.duckee.android.core.domain.generate.GetGenerationStatusUseCase
 import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
@@ -41,12 +49,16 @@ import javax.inject.Inject
 internal class RecipeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getGenerateModelsUseCase: GetGenerateModelsUseCase,
+    private val generateImageUseCase: GenerateImageUseCase,
+    private val getGenerationStatusUseCase: GetGenerationStatusUseCase,
 ) : ViewModel(), ContainerHost<RecipeState, RecipeSideEffect> {
 
     private val isCreateMode get() = savedStateHandle.get<Int>("id") == -1
     private val isImportMode get() = savedStateHandle.get<Boolean>("importMode") == true
 
     override val container = container<RecipeState, RecipeSideEffect>(RecipeState())
+
+    private var checkGenerateStatusJob: Job? = null
 
     init {
         getGenerateModels()
@@ -57,7 +69,7 @@ internal class RecipeViewModel @Inject constructor(
         reduce {
             state.copy(
                 selectedModel = model,
-                selectedSize = null,
+                selectedSize = model.recipeDefinitions.availableSizes.first(),
                 selectedSampler = model.recipeDefinitions.defaultSampler,
                 seedNumber = "",
             )
@@ -92,11 +104,54 @@ internal class RecipeViewModel @Inject constructor(
         reduce { state.copy(seedNumber = value) }
     }
 
+    fun onGuidanceScaleValueChanged(value: Float) = blockingIntent {
+        reduce { state.copy(guidanceScale = value.toInt()) }
+    }
+
+    fun onStepsValueChanged(value: Int) = blockingIntent {
+        reduce { state.copy(steps = value) }
+    }
+
     fun onGenerateButtonClick() = intent {
         reduce { state.copy(isGenerating = true) }
-        delay(2000)
-        reduce { state.copy(isGenerating = false) }
-        postSideEffect(RecipeSideEffect.GoRecipeResultScreen(resultId = "123"))
+
+        generateImageUseCase(
+            isImported = isImportMode,
+            modelName = state.selectedModel?.name.orEmpty(),
+            prompt = state.promptValue,
+            sizeWidth = state.selectedSize?.width ?: -1,
+            sizeHeight = state.selectedSize?.height ?: -1,
+            negativePrompt = state.negativePromptValue.takeIf { it.isNotBlank() },
+            guidanceScale = state.guidanceScale.takeIf { state.selectedModel?.name != "DallE" },
+            runs = state.steps.takeIf { state.selectedModel?.name != "DallE" },
+            sampler = state.selectedSampler.takeIf { state.selectedModel?.name != "DallE" },
+            seed = state.seedNumber.takeIf { state.selectedModel?.name != "DallE" && it.isNotBlank() }?.toInt(),
+        ).suspendOnSuccess {
+            val generationId = data.id
+            Timber.d("➕ [GenerationID] $generationId")
+
+            checkGenerateStatusJob = (0..Int.MAX_VALUE)
+                .asSequence()
+                .asFlow()
+                .onEach {
+                    Timber.d("⌛ Waiting generation processing...")
+                    getGenerationStatusUseCase(generationId)
+                        .suspendOnSuccess {
+                            if (data.status == "completed") {
+                                reduce { state.copy(isGenerating = false) }
+                                postSideEffect(RecipeSideEffect.GoRecipeResultScreen(resultId = generationId))
+                                checkGenerateStatusJob?.cancel()
+                                checkGenerateStatusJob = null
+                            }
+                        }
+                    delay(1_000)
+                }
+                .launchIn(viewModelScope)
+        }.suspendOnError {
+            // Timber.e(message())
+        }.suspendOnException {
+            Timber.e(exception)
+        }
     }
 
     private fun checkIsImportMode() = intent {
@@ -106,7 +161,14 @@ internal class RecipeViewModel @Inject constructor(
     private fun getGenerateModels() = intent {
         getGenerateModelsUseCase()
             .suspendOnSuccess {
-                reduce { state.copy(models = data.models, isLoading = false) }
+                reduce {
+                    state.copy(
+                        models = data.models,
+                        isLoading = false,
+                        selectedModel = data.models.first(),
+                        selectedSize = data.models.first().recipeDefinitions.availableSizes.first(),
+                    )
+                }
             }
             .suspendOnError {
                 Timber.e(message())

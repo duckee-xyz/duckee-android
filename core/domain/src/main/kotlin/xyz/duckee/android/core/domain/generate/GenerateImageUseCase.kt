@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.data
+package xyz.duckee.android.core.domain.generate
 
-import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.model.GenerateTaskStatus
-import xyz.duckee.android.core.model.GenerationModels
+import dagger.Reusable
+import xyz.duckee.android.core.data.GenerateRepository
+import javax.inject.Inject
 
-interface GenerateRepository {
+@Reusable
+class GenerateImageUseCase @Inject constructor(
+    private val generateRepository: GenerateRepository,
+) {
 
-    suspend fun getGenerateModels(): ApiResponse<GenerationModels>
-
-    suspend fun generateImage(
+    suspend operator fun invoke(
         isImported: Boolean,
         modelName: String,
         prompt: String,
@@ -34,7 +35,16 @@ interface GenerateRepository {
         runs: Int?,
         sampler: String?,
         seed: Int?,
-    ): ApiResponse<GenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<GenerateTaskStatus>
+    ) = generateRepository.generateImage(
+        isImported,
+        modelName,
+        prompt,
+        sizeWidth,
+        sizeHeight,
+        negativePrompt,
+        guidanceScale,
+        runs,
+        sampler,
+        seed,
+    )
 }

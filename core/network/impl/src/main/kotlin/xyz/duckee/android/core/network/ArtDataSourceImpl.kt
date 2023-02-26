@@ -16,25 +16,16 @@
 package xyz.duckee.android.core.network
 
 import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.network.model.ResponseGenerateModels
-import xyz.duckee.android.core.network.model.ResponseGenerateTaskStatus
+import xyz.duckee.android.core.network.api.ArtAPI
+import xyz.duckee.android.core.network.model.ResponseArtList
+import javax.inject.Inject
 
-interface GenerateDataSource {
+internal class ArtDataSourceImpl @Inject constructor(
+    apiProvider: APIProvider,
+) : ArtDataSource {
 
-    suspend fun getGenerateModels(): ApiResponse<ResponseGenerateModels>
+    private val api = apiProvider[ArtAPI::class.java]
 
-    suspend fun generateImage(
-        isImported: Boolean,
-        modelName: String,
-        prompt: String,
-        sizeWidth: Int,
-        sizeHeight: Int,
-        negativePrompt: String?,
-        guidanceScale: Int?,
-        runs: Int?,
-        sampler: String?,
-        seed: Int?,
-    ): ApiResponse<ResponseGenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<ResponseGenerateTaskStatus>
+    override suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ResponseArtList> =
+        api.getArtFeed(startAfter, limit, tags)
 }

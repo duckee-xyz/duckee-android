@@ -17,6 +17,7 @@ package xyz.duckee.android.core.data
 
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.mapSuccess
+import xyz.duckee.android.core.model.GenerateTaskStatus
 import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.core.network.GenerateDataSource
 import xyz.duckee.android.core.network.model.toModel
@@ -28,4 +29,23 @@ internal class GenerateRepositoryImpl @Inject constructor(
 
     override suspend fun getGenerateModels(): ApiResponse<GenerationModels> =
         dataSource.getGenerateModels().mapSuccess { toModel() }
+
+    override suspend fun generateImage(
+        isImported: Boolean,
+        modelName: String,
+        prompt: String,
+        sizeWidth: Int,
+        sizeHeight: Int,
+        negativePrompt: String?,
+        guidanceScale: Int?,
+        runs: Int?,
+        sampler: String?,
+        seed: Int?,
+    ): ApiResponse<GenerateTaskStatus> =
+        dataSource.generateImage(
+            isImported, modelName, prompt, sizeWidth, sizeHeight, negativePrompt, guidanceScale, runs, sampler, seed,
+        ).mapSuccess { toModel() }
+
+    override suspend fun getGenerationStatus(id: String): ApiResponse<GenerateTaskStatus> =
+        dataSource.getGenerationStatus(id).mapSuccess { toModel() }
 }

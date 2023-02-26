@@ -199,7 +199,7 @@ internal fun CollectionScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                                     .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp))
+                                    .clip(RoundedCornerShape(16.dp)),
                             )
                         }
                     }

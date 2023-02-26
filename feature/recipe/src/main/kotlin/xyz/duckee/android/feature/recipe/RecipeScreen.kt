@@ -107,6 +107,8 @@ internal fun RecipeRoute(
         onSamplerDropdownItemClick = viewModel::onSamplerDropdownItemClick,
         onOptionalSeedNumberValueChanged = viewModel::onOptionalSeedNumberValueChanged,
         onGenerateButtonClick = viewModel::onGenerateButtonClick,
+        onGuidanceScaleValueChanged = viewModel::onGuidanceScaleValueChanged,
+        onStepsValueChanged = viewModel::onStepsValueChanged,
     )
 }
 
@@ -121,6 +123,8 @@ internal fun RecipeScreen(
     onAdvancedSettingsButtonClick: () -> Unit,
     onSamplerDropdownItemClick: (String) -> Unit,
     onOptionalSeedNumberValueChanged: (String) -> Unit,
+    onGuidanceScaleValueChanged: (Float) -> Unit,
+    onStepsValueChanged: (Int) -> Unit,
     onGenerateButtonClick: () -> Unit,
 ) {
     Scaffold {
@@ -315,6 +319,7 @@ internal fun RecipeScreen(
                                             value = selectedIndex,
                                             onValueChange = {
                                                 onSelectedIndex(it)
+                                                onGuidanceScaleValueChanged(it)
                                             },
                                             valueRange = 2.toFloat()..(
                                                 uiState.selectedModel?.recipeDefinitions?.maxGuidanceScale?.toFloat()
@@ -400,6 +405,7 @@ internal fun RecipeScreen(
                                             value = selectedIndex,
                                             onValueChange = {
                                                 onSelectedIndex(it)
+                                                onStepsValueChanged(it.toInt())
                                             },
                                             valueRange = 20f..100f,
                                             modifier = Modifier.fillMaxWidth(),
@@ -516,6 +522,8 @@ internal fun RecipeScreenPreview() {
             onSamplerDropdownItemClick = {},
             onOptionalSeedNumberValueChanged = {},
             onGenerateButtonClick = {},
+            onGuidanceScaleValueChanged = {},
+            onStepsValueChanged = {},
         )
     }
 }

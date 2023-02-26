@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.data
+package xyz.duckee.android.core.network.model
 
-import com.skydoves.sandwich.ApiResponse
+import kotlinx.serialization.Serializable
 import xyz.duckee.android.core.model.GenerateTaskStatus
-import xyz.duckee.android.core.model.GenerationModels
 
-interface GenerateRepository {
+@Serializable
+data class ResponseGenerateTaskStatus(
+    val creditsSpent: Int?,
+    val error: String?,
+    val id: String,
+    // val rawResult: String,
+    val resultImageUrl: String?,
+    val status: String,
+)
 
-    suspend fun getGenerateModels(): ApiResponse<GenerationModels>
-
-    suspend fun generateImage(
-        isImported: Boolean,
-        modelName: String,
-        prompt: String,
-        sizeWidth: Int,
-        sizeHeight: Int,
-        negativePrompt: String?,
-        guidanceScale: Int?,
-        runs: Int?,
-        sampler: String?,
-        seed: Int?,
-    ): ApiResponse<GenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<GenerateTaskStatus>
-}
+fun ResponseGenerateTaskStatus.toModel(): GenerateTaskStatus =
+    GenerateTaskStatus(
+        creditsSpent = creditsSpent,
+        error = error,
+        id = id,
+        // rawResult = rawResult,
+        resultImageUrl = resultImageUrl,
+        status = status,
+    )

@@ -21,6 +21,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -28,10 +31,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import xyz.duckee.android.core.datastore.DuckeePreferencesDataSource
 import xyz.duckee.android.core.network.APIProvider
 import xyz.duckee.android.core.network.APIProviderImpl
 import xyz.duckee.android.core.network.interceptor.APIAuthenticator
 import xyz.duckee.android.core.network.interceptor.AuthorizationHeaderInterceptor
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Suppress("unused")
@@ -75,11 +80,21 @@ internal object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         authorizationHeaderInterceptor: AuthorizationHeaderInterceptor,
         apiAuthenticator: APIAuthenticator,
+        preferencesDataSource: DuckeePreferencesDataSource,
     ): OkHttpClient =
         OkHttpClient.Builder().apply {
             authenticator(apiAuthenticator)
             addInterceptor(loggingInterceptor)
             addInterceptor(authorizationHeaderInterceptor)
+
+            readTimeout(1, TimeUnit.MINUTES)
+            writeTimeout(1, TimeUnit.MINUTES)
+
+            runBlocking(Dispatchers.IO) {
+                preferencesDataSource.preference.first().accessToken
+            }.takeIf { it.isNotBlank() }?.let {
+                authorizationHeaderInterceptor.setAccessToken(it)
+            }
         }.build()
 
     @Provides

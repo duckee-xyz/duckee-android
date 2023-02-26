@@ -16,25 +16,16 @@
 package xyz.duckee.android.core.data
 
 import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.model.GenerateTaskStatus
-import xyz.duckee.android.core.model.GenerationModels
+import com.skydoves.sandwich.mapSuccess
+import xyz.duckee.android.core.model.ArtList
+import xyz.duckee.android.core.network.ArtDataSource
+import xyz.duckee.android.core.network.model.toModel
+import javax.inject.Inject
 
-interface GenerateRepository {
+internal class ArtRepositoryImpl @Inject constructor(
+    private val artDataSource: ArtDataSource,
+) : ArtRepository {
 
-    suspend fun getGenerateModels(): ApiResponse<GenerationModels>
-
-    suspend fun generateImage(
-        isImported: Boolean,
-        modelName: String,
-        prompt: String,
-        sizeWidth: Int,
-        sizeHeight: Int,
-        negativePrompt: String?,
-        guidanceScale: Int?,
-        runs: Int?,
-        sampler: String?,
-        seed: Int?,
-    ): ApiResponse<GenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<GenerateTaskStatus>
+    override suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ArtList> =
+        artDataSource.getArtFeed(startAfter, limit, tags).mapSuccess { toModel() }
 }

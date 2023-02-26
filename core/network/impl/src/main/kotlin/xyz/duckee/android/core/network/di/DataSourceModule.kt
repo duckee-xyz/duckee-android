@@ -19,6 +19,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import xyz.duckee.android.core.network.ArtDataSource
+import xyz.duckee.android.core.network.ArtDataSourceImpl
 import xyz.duckee.android.core.network.AuthDataSource
 import xyz.duckee.android.core.network.AuthDataSourceImpl
 import xyz.duckee.android.core.network.GenerateDataSource
@@ -38,4 +40,9 @@ internal interface DataSourceModule {
     fun bindsGenerateDataSource(
         impl: GenerateDataSourceImpl,
     ): GenerateDataSource
+
+    @Binds
+    fun bindsArtDataSource(
+        impl: ArtDataSourceImpl,
+    ): ArtDataSource
 }

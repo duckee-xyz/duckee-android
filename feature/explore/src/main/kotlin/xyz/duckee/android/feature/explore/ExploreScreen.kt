@@ -31,13 +31,17 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +57,7 @@ import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.ui.isScrolledToEnd
 import xyz.duckee.android.feature.explore.component.ExploreImageBadge
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
@@ -78,6 +83,7 @@ internal fun ExploreRoute(
         onSearchValueChanged = viewModel::onSearchValueChanged,
         onFilterClick = viewModel::onFilterClick,
         onImageClick = viewModel::onImageClick,
+        onScrollEnd = viewModel::onScrollEnd,
     )
 }
 
@@ -88,9 +94,35 @@ internal fun ExploreScreen(
     onSearchValueChanged: (String) -> Unit,
     onFilterClick: (String) -> Unit,
     onImageClick: (String) -> Unit,
+    onScrollEnd: () -> Unit,
 ) {
+    val scrollState = rememberLazyListState()
+
+    val isScrollEnd by remember {
+        derivedStateOf { scrollState.isScrolledToEnd() }
+    }
+
+    LaunchedEffect(isScrollEnd) {
+        if (isScrollEnd) {
+            onScrollEnd()
+        }
+    }
+
     Scaffold {
+        if (uiState.isLoading) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 2.dp,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.Center),
+                )
+            }
+        }
+
         LazyColumn(
+            state = scrollState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .statusBarsPadding()
@@ -138,14 +170,7 @@ internal fun ExploreScreen(
                     }
                 }
             }
-            items(uiState.randomImages) { image ->
-                val isOpenSource = rememberSaveable {
-                    (0..1).random() == 0
-                }
-                val flowPrice = rememberSaveable {
-                    (1..100).random()
-                }
-
+            items(uiState.feeds) { feed ->
                 Box(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
@@ -154,13 +179,13 @@ internal fun ExploreScreen(
                         .border(width = 1.dp, color = Color(0xFF7C8992), shape = RoundedCornerShape(32.dp)),
                 ) {
                     DuckeeNetworkImage(
-                        model = image,
+                        model = feed.imageUrl,
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clickableSingle(onClick = { onImageClick(image) }),
+                            .clickableSingle(onClick = { onImageClick(feed.tokenId.toString()) }),
                     )
-                    if (isOpenSource) {
+                    if (feed.priceInFlow == 0) {
                         ExploreImageBadge(
                             label = "Open Source",
                             modifier = Modifier
@@ -169,13 +194,13 @@ internal fun ExploreScreen(
                         )
                     } else {
                         ExploreImageBadge(
-                            label = "$flowPrice",
+                            label = "${feed.priceInFlow}",
                             backgroundColor = Color.White.copy(alpha = 0.9f),
                             borderColor = Color.White,
                             icon = {
                                 Icon(
                                     painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_duck_balance),
-                                    contentDescription = "flow logo",
+                                    contentDescription = "duck logo",
                                     tint = Color.Unspecified,
                                     modifier = Modifier.size(24.dp),
                                 )
@@ -200,6 +225,7 @@ internal fun ExploreScreenPreview() {
             onSearchValueChanged = {},
             onFilterClick = {},
             onImageClick = {},
+            onScrollEnd = {},
         )
     }
 }

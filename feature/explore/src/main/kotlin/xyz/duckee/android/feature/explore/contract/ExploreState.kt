@@ -18,17 +18,17 @@ package xyz.duckee.android.feature.explore.contract
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
-import java.util.UUID
+import xyz.duckee.android.core.model.ArtList
 
 @Immutable
 internal data class ExploreState(
     val isLoading: Boolean = true,
+
     val searchValue: String = "",
-    val randomImages: ImmutableList<String> = List(100) {
-        val uuid = UUID.randomUUID().toString().replace("-", "").lowercase()
-        "https://picsum.photos/700/700?random=$uuid"
-    }.toPersistentList(),
+    val hasNext: Boolean = false,
+    val nextStartAfter: String? = null,
+    val feeds: ImmutableList<ArtList.Result> = persistentListOf(),
+
     val filters: ImmutableList<String> = persistentListOf(
         "All",
         "Anime",

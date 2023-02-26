@@ -16,25 +16,9 @@
 package xyz.duckee.android.core.data
 
 import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.model.GenerateTaskStatus
-import xyz.duckee.android.core.model.GenerationModels
+import xyz.duckee.android.core.model.ArtList
 
-interface GenerateRepository {
+interface ArtRepository {
 
-    suspend fun getGenerateModels(): ApiResponse<GenerationModels>
-
-    suspend fun generateImage(
-        isImported: Boolean,
-        modelName: String,
-        prompt: String,
-        sizeWidth: Int,
-        sizeHeight: Int,
-        negativePrompt: String?,
-        guidanceScale: Int?,
-        runs: Int?,
-        sampler: String?,
-        seed: Int?,
-    ): ApiResponse<GenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<GenerateTaskStatus>
+    suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ArtList>
 }

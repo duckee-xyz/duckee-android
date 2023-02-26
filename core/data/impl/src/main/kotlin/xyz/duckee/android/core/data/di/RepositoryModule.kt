@@ -19,6 +19,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import xyz.duckee.android.core.data.ArtRepository
+import xyz.duckee.android.core.data.ArtRepositoryImpl
 import xyz.duckee.android.core.data.AuthRepository
 import xyz.duckee.android.core.data.AuthRepositoryImpl
 import xyz.duckee.android.core.data.GenerateRepository
@@ -45,4 +47,9 @@ internal interface RepositoryModule {
     fun bindsPreferencesRepository(
         impl: PreferencesRepositoryImpl,
     ): PreferencesRepository
+
+    @Binds
+    fun bindsArtRepository(
+        impl: ArtRepositoryImpl,
+    ): ArtRepository
 }

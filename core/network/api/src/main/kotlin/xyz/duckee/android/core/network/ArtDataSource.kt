@@ -16,25 +16,13 @@
 package xyz.duckee.android.core.network
 
 import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.network.model.ResponseGenerateModels
-import xyz.duckee.android.core.network.model.ResponseGenerateTaskStatus
+import xyz.duckee.android.core.network.model.ResponseArtList
 
-interface GenerateDataSource {
+interface ArtDataSource {
 
-    suspend fun getGenerateModels(): ApiResponse<ResponseGenerateModels>
-
-    suspend fun generateImage(
-        isImported: Boolean,
-        modelName: String,
-        prompt: String,
-        sizeWidth: Int,
-        sizeHeight: Int,
-        negativePrompt: String?,
-        guidanceScale: Int?,
-        runs: Int?,
-        sampler: String?,
-        seed: Int?,
-    ): ApiResponse<ResponseGenerateTaskStatus>
-
-    suspend fun getGenerationStatus(id: String): ApiResponse<ResponseGenerateTaskStatus>
+    suspend fun getArtFeed(
+        startAfter: Int? = null,
+        limit: Int? = null,
+        tags: String? = null,
+    ): ApiResponse<ResponseArtList>
 }
