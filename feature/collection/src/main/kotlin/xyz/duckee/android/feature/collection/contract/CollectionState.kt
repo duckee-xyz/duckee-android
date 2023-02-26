@@ -16,6 +16,8 @@
 package xyz.duckee.android.feature.collection.contract
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import xyz.duckee.android.core.ui.RandomImageUrlGenerator
 
 @Immutable
@@ -23,4 +25,17 @@ internal data class CollectionState(
     val isLoading: Boolean = false,
 
     val profileImageUrl: String = RandomImageUrlGenerator.getRandomImageUrl(),
+
+    val listed: ImmutableList<String> = List(40) {
+        RandomImageUrlGenerator.getRandomImageUrl()
+    }.toPersistentList(),
+    val bought: ImmutableList<String> = List(9) {
+        RandomImageUrlGenerator.getRandomImageUrl()
+    }.toPersistentList(),
+    val notForSale: ImmutableList<String> = List(61) {
+        RandomImageUrlGenerator.getRandomImageUrl()
+    }.toPersistentList(),
+    val liked: ImmutableList<String> = List(13) {
+        RandomImageUrlGenerator.getRandomImageUrl()
+    }.toPersistentList(),
 )
