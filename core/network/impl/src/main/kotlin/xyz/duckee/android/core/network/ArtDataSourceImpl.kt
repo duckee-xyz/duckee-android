@@ -18,6 +18,8 @@ package xyz.duckee.android.core.network
 import com.skydoves.sandwich.ApiResponse
 import xyz.duckee.android.core.network.api.ArtAPI
 import xyz.duckee.android.core.network.model.ResponseArtList
+import xyz.duckee.android.core.network.model.request.RequestGenerateImage
+import xyz.duckee.android.core.network.model.request.RequestUploadArt
 import javax.inject.Inject
 
 internal class ArtDataSourceImpl @Inject constructor(
@@ -28,4 +30,50 @@ internal class ArtDataSourceImpl @Inject constructor(
 
     override suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ResponseArtList> =
         api.getArtFeed(startAfter, limit, tags)
+
+    override suspend fun uploadArt(
+        forSale: Boolean,
+        imageUrl: String,
+        description: String?,
+        priceInFlow: Int,
+        royaltyFee: Int,
+        isImported: Boolean,
+        modelName: String,
+        prompt: String,
+        sizeWidth: Int,
+        sizeHeight: Int,
+        negativePrompt: String?,
+        guidanceScale: Int?,
+        runs: Int?,
+        sampler: String?,
+        seed: Int?,
+    ): ApiResponse<Unit> =
+        api.uploadArt(
+            RequestUploadArt(
+                forSale = forSale,
+                description = description,
+                imageUrl = imageUrl,
+                liked = true,
+                parentTokenId = null,
+                priceInFlow = priceInFlow,
+                recipe = RequestGenerateImage(
+                    guidanceScale = guidanceScale,
+                    model = RequestGenerateImage.Model(
+                        importedModel = if (isImported) modelName else null,
+                        servedModelName = if (isImported) null else modelName,
+                        type = if (isImported) "imported" else "served",
+                    ),
+                    negativePrompt = negativePrompt,
+                    prompt = prompt,
+                    runs = runs,
+                    sampler = sampler,
+                    seed = seed,
+                    size = RequestGenerateImage.Size(
+                        width = sizeWidth,
+                        height = sizeHeight,
+                    ),
+                ),
+                royaltyFee = royaltyFee,
+            ),
+        )
 }

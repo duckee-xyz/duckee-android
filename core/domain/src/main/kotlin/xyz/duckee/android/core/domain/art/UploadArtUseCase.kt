@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.data
+package xyz.duckee.android.core.domain.art
 
-import com.skydoves.sandwich.ApiResponse
-import xyz.duckee.android.core.model.ArtList
+import dagger.Reusable
+import xyz.duckee.android.core.data.ArtRepository
+import javax.inject.Inject
 
-interface ArtRepository {
+@Reusable
+class UploadArtUseCase @Inject constructor(
+    private val artRepository: ArtRepository,
+) {
 
-    suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ArtList>
-
-    suspend fun uploadArt(
+    suspend operator fun invoke(
         forSale: Boolean,
         imageUrl: String,
         description: String?,
@@ -38,5 +40,21 @@ interface ArtRepository {
         runs: Int?,
         sampler: String?,
         seed: Int?,
-    ): ApiResponse<Unit>
+    ) = artRepository.uploadArt(
+        forSale,
+        imageUrl,
+        description,
+        priceInFlow,
+        royaltyFee,
+        isImported,
+        modelName,
+        prompt,
+        sizeWidth,
+        sizeHeight,
+        negativePrompt,
+        guidanceScale,
+        runs,
+        sampler,
+        seed,
+    )
 }

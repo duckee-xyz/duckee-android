@@ -23,7 +23,6 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
@@ -44,6 +43,7 @@ import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
+import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel

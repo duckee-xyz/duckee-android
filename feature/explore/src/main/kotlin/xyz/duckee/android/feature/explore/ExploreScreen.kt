@@ -123,6 +123,7 @@ internal fun ExploreScreen(
 
         LazyColumn(
             state = scrollState,
+            contentPadding = PaddingValues(bottom = 150.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .statusBarsPadding()

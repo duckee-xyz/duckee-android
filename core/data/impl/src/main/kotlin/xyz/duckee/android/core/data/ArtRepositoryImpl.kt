@@ -28,4 +28,39 @@ internal class ArtRepositoryImpl @Inject constructor(
 
     override suspend fun getArtFeed(startAfter: Int?, limit: Int?, tags: String?): ApiResponse<ArtList> =
         artDataSource.getArtFeed(startAfter, limit, tags).mapSuccess { toModel() }
+
+    override suspend fun uploadArt(
+        forSale: Boolean,
+        imageUrl: String,
+        description: String?,
+        priceInFlow: Int,
+        royaltyFee: Int,
+        isImported: Boolean,
+        modelName: String,
+        prompt: String,
+        sizeWidth: Int,
+        sizeHeight: Int,
+        negativePrompt: String?,
+        guidanceScale: Int?,
+        runs: Int?,
+        sampler: String?,
+        seed: Int?,
+    ): ApiResponse<Unit> =
+        artDataSource.uploadArt(
+            forSale,
+            imageUrl,
+            description,
+            priceInFlow,
+            royaltyFee,
+            isImported,
+            modelName,
+            prompt,
+            sizeWidth,
+            sizeHeight,
+            negativePrompt,
+            guidanceScale,
+            runs,
+            sampler,
+            seed,
+        )
 }

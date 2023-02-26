@@ -25,4 +25,22 @@ interface ArtDataSource {
         limit: Int? = null,
         tags: String? = null,
     ): ApiResponse<ResponseArtList>
+
+    suspend fun uploadArt(
+        forSale: Boolean,
+        imageUrl: String,
+        description: String? = null,
+        priceInFlow: Int,
+        royaltyFee: Int,
+        isImported: Boolean,
+        modelName: String,
+        prompt: String,
+        sizeWidth: Int,
+        sizeHeight: Int,
+        negativePrompt: String?,
+        guidanceScale: Int?,
+        runs: Int?,
+        sampler: String?,
+        seed: Int?,
+    ): ApiResponse<Unit>
 }

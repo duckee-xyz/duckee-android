@@ -50,6 +50,8 @@ internal data class RecipeResultState(
 
 @Immutable
 internal data class RecipeResultMetadataState(
+    val isLoading: Boolean = false,
+
     val isNotForSale: Boolean = false,
     val isOpenSource: Boolean = false,
 
