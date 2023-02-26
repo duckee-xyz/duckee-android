@@ -90,7 +90,9 @@ fun DuckeeApp(
                 goSignInScreen = navController::navigateToSignInScreen,
                 goDetailScreen = navController::navigateToDetailScreen,
             )
-            signInScreen()
+            signInScreen(
+                goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
+            )
             detailScreen(
                 goReceiptScreen = navController::navigateToReceiptScreen,
             )

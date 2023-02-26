@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.signin.navigation
+package xyz.duckee.android.core.network.model.request
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.SignInDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.signin.SignInRoute
+import androidx.annotation.RestrictTo
+import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.signInScreen(
-    goExploreTab: () -> Unit,
-) {
-    sharedXTransitionComposable(
-        command = SignInDirections.main,
-    ) {
-        SignInRoute(
-            goExploreTab = goExploreTab,
-        )
-    }
-}
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@Serializable
+data class RequestRefreshToken(
+    val refreshToken: String,
+)

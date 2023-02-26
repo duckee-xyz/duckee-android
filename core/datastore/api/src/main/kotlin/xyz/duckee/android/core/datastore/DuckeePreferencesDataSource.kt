@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.signin.navigation
+package xyz.duckee.android.core.datastore
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.SignInDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.signin.SignInRoute
+import kotlinx.coroutines.flow.Flow
+import xyz.duckee.android.core.model.Preferences
 
-fun NavGraphBuilder.signInScreen(
-    goExploreTab: () -> Unit,
-) {
-    sharedXTransitionComposable(
-        command = SignInDirections.main,
-    ) {
-        SignInRoute(
-            goExploreTab = goExploreTab,
-        )
-    }
+interface DuckeePreferencesDataSource {
+
+    val preference: Flow<Preferences>
+
+    suspend fun setCredentials(accessToken: String, refreshToken: String)
 }

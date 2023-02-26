@@ -56,6 +56,8 @@ internal class SignInViewModel @Inject constructor(
                     Timber.d(" -> User(${data.second})")
 
                     reduce { state.copy(isLoading = false) }
+
+                    postSideEffect(SignInSideEffect.GoExploreTab)
                 }
                 .suspendOnError {
                     signUpWithGoogleUseCase()
@@ -65,12 +67,12 @@ internal class SignInViewModel @Inject constructor(
                             Timber.d(" -> User(${data.second})")
 
                             reduce { state.copy(isLoading = false) }
+
+                            postSideEffect(SignInSideEffect.GoExploreTab)
                         }
                         .suspendOnError {
                             Timber.e(message())
-
                             postSideEffect(SignInSideEffect.ShowErrorToast)
-
                             reduce { state.copy(isLoading = false) }
                         }
                 }

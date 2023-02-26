@@ -23,5 +23,8 @@ internal sealed interface SignInSideEffect {
     object OpenFirebaseGoogleLoginPrompt : SignInSideEffect
 
     @Stable
+    object GoExploreTab : SignInSideEffect
+
+    @Stable
     object ShowErrorToast : SignInSideEffect
 }

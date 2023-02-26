@@ -23,6 +23,8 @@ import xyz.duckee.android.core.data.AuthRepository
 import xyz.duckee.android.core.data.AuthRepositoryImpl
 import xyz.duckee.android.core.data.GenerateRepository
 import xyz.duckee.android.core.data.GenerateRepositoryImpl
+import xyz.duckee.android.core.data.PreferencesRepository
+import xyz.duckee.android.core.data.PreferencesRepositoryImpl
 
 @Suppress("unused")
 @Module
@@ -38,4 +40,9 @@ internal interface RepositoryModule {
     fun bindsGenerateRepository(
         impl: GenerateRepositoryImpl,
     ): GenerateRepository
+
+    @Binds
+    fun bindsPreferencesRepository(
+        impl: PreferencesRepositoryImpl,
+    ): PreferencesRepository
 }

@@ -78,6 +78,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:network:impl"))
     implementation(project(":core:data:impl"))
+    implementation(project(":core:datastore:impl"))
 
     implementation(project(":feature:explore"))
     implementation(project(":feature:signin"))

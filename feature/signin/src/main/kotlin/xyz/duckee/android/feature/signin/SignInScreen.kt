@@ -53,6 +53,7 @@ import xyz.duckee.android.feature.signin.contract.SignInState
 @Composable
 internal fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
+    goExploreTab: () -> Unit,
 ) {
     val context = LocalContext.current
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
@@ -71,6 +72,8 @@ internal fun SignInRoute(
             googleLoginLauncher.launch(signInIntent)
         } else if (it is SignInSideEffect.ShowErrorToast) {
             Toast.makeText(context, "Sign with google failed.", Toast.LENGTH_SHORT).show()
+        } else if (it is SignInSideEffect.GoExploreTab) {
+            goExploreTab()
         }
     }
 

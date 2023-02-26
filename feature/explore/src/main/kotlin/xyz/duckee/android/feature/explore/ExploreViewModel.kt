@@ -24,12 +24,15 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHost<ExploreState, ExploreSideEffect> {
+internal class ExploreViewModel @Inject constructor(
+    private val checkAuthenticateStateUseCase: CheckAuthenticateStateUseCase,
+) : ViewModel(), ContainerHost<ExploreState, ExploreSideEffect> {
 
     override val container = container<ExploreState, ExploreSideEffect>(ExploreState())
 
@@ -43,7 +46,10 @@ internal class ExploreViewModel @Inject constructor() : ViewModel(), ContainerHo
     }
 
     fun onImageClick(image: String) = intent {
-        postSideEffect(ExploreSideEffect.GoDetail(id = "123"))
-        // postSideEffect(ExploreSideEffect.GoSignInScreen)
+        if (checkAuthenticateStateUseCase()) { // if authenticated,
+            postSideEffect(ExploreSideEffect.GoDetail(id = "123"))
+        } else {
+            postSideEffect(ExploreSideEffect.GoSignInScreen)
+        }
     }
 }

@@ -16,8 +16,10 @@
 package xyz.duckee.android.core.domain.auth
 
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.Reusable
 import xyz.duckee.android.core.data.AuthRepository
+import xyz.duckee.android.core.data.PreferencesRepository
 import xyz.duckee.android.core.model.Credentials
 import xyz.duckee.android.core.model.User
 import javax.inject.Inject
@@ -25,8 +27,11 @@ import javax.inject.Inject
 @Reusable
 class SignUpWithGoogleUseCase @Inject constructor(
     private val authRepository: AuthRepository,
+    private val preferencesRepository: PreferencesRepository,
 ) {
 
     suspend operator fun invoke(): ApiResponse<Pair<Credentials, User>> =
-        authRepository.signUpWithFirebase()
+        authRepository.signUpWithFirebase().suspendOnSuccess {
+            preferencesRepository.setCredentials(data.first.accessToken, data.first.refreshToken)
+        }
 }

@@ -18,7 +18,9 @@ package xyz.duckee.android.core.network.api
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
+import xyz.duckee.android.core.network.model.ResponseRefreshToken
 import xyz.duckee.android.core.network.model.ResponseSignIn
+import xyz.duckee.android.core.network.model.request.RequestRefreshToken
 import xyz.duckee.android.core.network.model.request.RequestSignIn
 
 internal interface AuthAPI {
@@ -28,4 +30,7 @@ internal interface AuthAPI {
 
     @POST("auth/v1/signup")
     suspend fun signUp(@Body payload: RequestSignIn): ApiResponse<ResponseSignIn>
+
+    @POST("auth/v1/refresh")
+    suspend fun refreshToken(@Body payload: RequestRefreshToken): ApiResponse<ResponseRefreshToken>
 }

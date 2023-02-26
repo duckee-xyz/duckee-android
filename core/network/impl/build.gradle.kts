@@ -33,4 +33,5 @@ dependencies {
 
     implementation(project(":core:model"))
     implementation(project(":core:network:api"))
+    implementation(project(":core:datastore:api"))
 }

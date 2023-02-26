@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.signin.navigation
+plugins {
+    id("duckee.android.library")
+}
 
-import androidx.navigation.NavGraphBuilder
-import xyz.duckee.android.core.navigation.SignInDirections
-import xyz.duckee.android.core.navigation.transition.sharedXTransitionComposable
-import xyz.duckee.android.feature.signin.SignInRoute
-
-fun NavGraphBuilder.signInScreen(
-    goExploreTab: () -> Unit,
-) {
-    sharedXTransitionComposable(
-        command = SignInDirections.main,
-    ) {
-        SignInRoute(
-            goExploreTab = goExploreTab,
-        )
+android {
+    defaultConfig {
+        namespace = "xyz.duckee.android.core.datastore.api"
     }
+}
+
+dependencies {
+    implementation(project(":core:model"))
 }
