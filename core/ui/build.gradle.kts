@@ -16,10 +16,15 @@
 plugins {
     id("duckee.android.library")
     id("duckee.android.library.compose")
+    id("duckee.android.hilt")
 }
 
 android {
     defaultConfig {
         namespace = "xyz.duckee.android.core.ui"
     }
+}
+
+dependencies {
+    implementation(project(":core:model"))
 }

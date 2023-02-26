@@ -23,6 +23,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
@@ -40,9 +41,9 @@ import xyz.duckee.android.core.domain.generate.GenerateImageUseCase
 import xyz.duckee.android.core.domain.generate.GetGenerateModelsUseCase
 import xyz.duckee.android.core.domain.generate.GetGenerationStatusUseCase
 import xyz.duckee.android.core.model.GenerationModels
+import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
-import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
@@ -51,6 +52,7 @@ internal class RecipeViewModel @Inject constructor(
     private val getGenerateModelsUseCase: GetGenerateModelsUseCase,
     private val generateImageUseCase: GenerateImageUseCase,
     private val getGenerationStatusUseCase: GetGenerationStatusUseCase,
+    private val recipeStore: RecipeStore,
 ) : ViewModel(), ContainerHost<RecipeState, RecipeSideEffect> {
 
     private val isCreateMode get() = savedStateHandle.get<Int>("id") == -1
@@ -115,17 +117,32 @@ internal class RecipeViewModel @Inject constructor(
     fun onGenerateButtonClick() = intent {
         reduce { state.copy(isGenerating = true) }
 
+        val recipe = mapOf(
+            "isImported" to isImportMode,
+            "modelName" to state.selectedModel?.name.orEmpty(),
+            "prompt" to state.promptValue,
+            "sizeWidth" to (state.selectedSize?.width ?: -1),
+            "sizeHeight" to (state.selectedSize?.height ?: -1),
+            "negativePrompt" to state.negativePromptValue.takeIf { it.isNotBlank() },
+            "guidanceScale" to state.guidanceScale.takeIf { state.selectedModel?.name != "DallE" },
+            "runs" to state.steps.takeIf { state.selectedModel?.name != "DallE" },
+            "sampler" to state.selectedSampler.takeIf { state.selectedModel?.name != "DallE" },
+            "seed" to state.seedNumber.takeIf { state.selectedModel?.name != "DallE" && it.isNotBlank() }?.toInt(),
+        )
+
+        recipeStore.saveTemporaryRecipeProperty(recipe)
+
         generateImageUseCase(
-            isImported = isImportMode,
-            modelName = state.selectedModel?.name.orEmpty(),
-            prompt = state.promptValue,
-            sizeWidth = state.selectedSize?.width ?: -1,
-            sizeHeight = state.selectedSize?.height ?: -1,
-            negativePrompt = state.negativePromptValue.takeIf { it.isNotBlank() },
-            guidanceScale = state.guidanceScale.takeIf { state.selectedModel?.name != "DallE" },
-            runs = state.steps.takeIf { state.selectedModel?.name != "DallE" },
-            sampler = state.selectedSampler.takeIf { state.selectedModel?.name != "DallE" },
-            seed = state.seedNumber.takeIf { state.selectedModel?.name != "DallE" && it.isNotBlank() }?.toInt(),
+            isImported = recipe["isImported"] as Boolean,
+            modelName = recipe["modelName"] as String,
+            prompt = recipe["prompt"] as String,
+            sizeWidth = recipe["sizeWidth"] as Int,
+            sizeHeight = recipe["sizeHeight"] as Int,
+            negativePrompt = recipe["negativePrompt"] as? String,
+            guidanceScale = recipe["guidanceScale"] as? Int,
+            runs = recipe["runs"] as? Int,
+            sampler = recipe["sampler"] as? String,
+            seed = recipe["seed"] as? Int,
         ).suspendOnSuccess {
             val generationId = data.id
             Timber.d("➕ [GenerationID] $generationId")
