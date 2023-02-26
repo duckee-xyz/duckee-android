@@ -30,6 +30,8 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import xyz.duckee.android.core.network.APIProvider
 import xyz.duckee.android.core.network.APIProviderImpl
+import xyz.duckee.android.core.network.interceptor.APIAuthenticator
+import xyz.duckee.android.core.network.interceptor.AuthorizationHeaderInterceptor
 import javax.inject.Singleton
 
 @Suppress("unused")
@@ -71,9 +73,13 @@ internal object NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
+        authorizationHeaderInterceptor: AuthorizationHeaderInterceptor,
+        apiAuthenticator: APIAuthenticator,
     ): OkHttpClient =
         OkHttpClient.Builder().apply {
+            authenticator(apiAuthenticator)
             addInterceptor(loggingInterceptor)
+            addInterceptor(authorizationHeaderInterceptor)
         }.build()
 
     @Provides

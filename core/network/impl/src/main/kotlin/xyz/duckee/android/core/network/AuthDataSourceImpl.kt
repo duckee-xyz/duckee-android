@@ -16,9 +16,11 @@
 package xyz.duckee.android.core.network
 
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.suspendOnSuccess
 import timber.log.Timber
 import xyz.duckee.android.core.network.api.AuthAPI
 import xyz.duckee.android.core.network.firebase.FirebaseAuthManager
+import xyz.duckee.android.core.network.interceptor.AuthorizationHeaderInterceptor
 import xyz.duckee.android.core.network.model.ResponseSignIn
 import xyz.duckee.android.core.network.model.request.RequestSignIn
 import javax.inject.Inject
@@ -26,6 +28,7 @@ import javax.inject.Inject
 internal class AuthDataSourceImpl @Inject constructor(
     apiProvider: APIProvider,
     private val firebaseAuthManager: FirebaseAuthManager,
+    private val authorizationHeaderInterceptor: AuthorizationHeaderInterceptor,
 ) : AuthDataSource {
 
     private val api = apiProvider[AuthAPI::class.java]
@@ -43,7 +46,9 @@ internal class AuthDataSourceImpl @Inject constructor(
                 channel = "firebase",
                 token = idToken,
             ),
-        )
+        ).suspendOnSuccess {
+            authorizationHeaderInterceptor.setAccessToken(token = data.credentials.accessToken)
+        }
     }
 
     override suspend fun signUpWithFirebase(): ApiResponse<ResponseSignIn> {
@@ -58,6 +63,8 @@ internal class AuthDataSourceImpl @Inject constructor(
                 channel = "firebase",
                 token = idToken,
             ),
-        )
+        ).suspendOnSuccess {
+            authorizationHeaderInterceptor.setAccessToken(token = data.credentials.accessToken)
+        }
     }
 }
