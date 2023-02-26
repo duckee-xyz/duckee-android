@@ -41,7 +41,9 @@ import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import xyz.duckee.android.core.designsystem.DuckeeBottomTab
 import xyz.duckee.android.core.designsystem.foundation.drawColoredShadow
 import xyz.duckee.android.core.navigation.ExploreDirections
+import xyz.duckee.android.core.navigation.collectionNavigationRoute
 import xyz.duckee.android.core.navigation.exploreNavigationRoute
+import xyz.duckee.android.core.navigation.navigateToCollectionTab
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
 import xyz.duckee.android.core.navigation.navigateToReceiptScreen
@@ -51,6 +53,7 @@ import xyz.duckee.android.core.navigation.navigateToRecipeSuccessScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeTab
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
 import xyz.duckee.android.core.navigation.recipeNavigationRoute
+import xyz.duckee.android.feature.collection.navigation.collectionScreen
 import xyz.duckee.android.feature.detail.navigation.detailScreen
 import xyz.duckee.android.feature.explore.navigation.exploreScreen
 import xyz.duckee.android.feature.recipe.navigation.recipeScreen
@@ -59,6 +62,7 @@ import xyz.duckee.android.feature.signin.navigation.signInScreen
 private val bottomNavigationShowRoutes = listOf(
     exploreNavigationRoute,
     recipeNavigationRoute,
+    collectionNavigationRoute,
 )
 
 @Composable
@@ -95,9 +99,10 @@ fun DuckeeApp(
                 goRecipeMetadataScreen = navController::navigateToRecipeResultMetadataScreen,
                 goSuccessScreen = navController::navigateToRecipeSuccessScreen,
                 goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
-                goMyTab = {},
+                goMyTab = { navController.navigateToCollectionTab(inclusive = true) },
                 goGenerateScreen = { navController.navigateToReceiptScreen(importMode = it) },
             )
+            collectionScreen()
         }
 
         val density = LocalDensity.current
@@ -123,6 +128,7 @@ fun DuckeeApp(
                     when (it) {
                         exploreNavigationRoute -> navController.navigateToExploreTab()
                         recipeNavigationRoute -> navController.navigateToRecipeTab()
+                        collectionNavigationRoute -> navController.navigateToCollectionTab()
                     }
                 },
                 modifier = Modifier

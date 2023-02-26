@@ -71,8 +71,8 @@ fun DuckeeBottomTab(
         }
         DuckeeBottomTabIcon(
             iconResource = R.drawable.icon_my_profile,
-            isActive = currentRoute.startsWith("my"),
-            onClick = { onClick("explore") },
+            isActive = currentRoute.startsWith("collection"),
+            onClick = { onClick("collection") },
         )
     }
 }

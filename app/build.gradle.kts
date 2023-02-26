@@ -83,4 +83,5 @@ dependencies {
     implementation(project(":feature:signin"))
     implementation(project(":feature:detail"))
     implementation(project(":feature:recipe"))
+    implementation(project(":feature:collection"))
 }
