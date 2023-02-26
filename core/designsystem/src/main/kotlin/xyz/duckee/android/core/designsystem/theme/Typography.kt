@@ -126,6 +126,12 @@ object DuckeeTypography {
         fontWeight = FontWeight.Normal,
         lineHeight = 18.sp,
     )
+    val paragraph6: TextStyle = TextStyle(
+        fontSize = 10.sp,
+        fontFamily = InterFont,
+        fontWeight = FontWeight.Light,
+        lineHeight = 12.sp,
+    )
 }
 
 internal val LocalDuckeeTypography = staticCompositionLocalOf { DuckeeTypography }
