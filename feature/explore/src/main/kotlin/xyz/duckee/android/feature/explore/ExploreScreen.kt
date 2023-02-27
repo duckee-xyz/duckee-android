@@ -210,7 +210,7 @@ internal fun ExploreScreen(
                             borderColor = Color.White,
                             icon = {
                                 Icon(
-                                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_duck_balance),
+                                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
                                     contentDescription = "duck logo",
                                     tint = Color.Unspecified,
                                     modifier = Modifier.size(24.dp),

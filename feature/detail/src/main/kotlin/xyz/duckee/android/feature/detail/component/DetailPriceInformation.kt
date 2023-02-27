@@ -77,7 +77,7 @@ internal fun DetailPriceInformation(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_flow_logo_white),
+                        painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
                         contentDescription = null,
                         tint = Color.Unspecified,
                     )
