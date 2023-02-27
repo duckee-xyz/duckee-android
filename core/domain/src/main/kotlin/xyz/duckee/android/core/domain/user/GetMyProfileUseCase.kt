@@ -13,26 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.network.model
+package xyz.duckee.android.core.domain.user
 
-import kotlinx.serialization.Serializable
-import xyz.duckee.android.core.model.Credentials
+import com.skydoves.sandwich.ApiResponse
+import dagger.Reusable
+import xyz.duckee.android.core.data.UserRepository
+import xyz.duckee.android.core.model.User
+import javax.inject.Inject
 
-@Serializable
-data class ResponseSignIn(
-    val credentials: Credentials,
-    val user: ResponseUser,
+@Reusable
+class GetMyProfileUseCase @Inject constructor(
+    private val userRepository: UserRepository,
 ) {
 
-    @Serializable
-    data class Credentials(
-        val accessToken: String,
-        val refreshToken: String,
-    )
+    suspend operator fun invoke(): ApiResponse<User> =
+        userRepository.getUserMe()
 }
-
-fun ResponseSignIn.Credentials.toModel() =
-    Credentials(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
-    )

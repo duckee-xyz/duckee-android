@@ -16,23 +16,8 @@
 package xyz.duckee.android.core.network.model
 
 import kotlinx.serialization.Serializable
-import xyz.duckee.android.core.model.Credentials
 
 @Serializable
-data class ResponseSignIn(
-    val credentials: Credentials,
-    val user: ResponseUser,
-) {
-
-    @Serializable
-    data class Credentials(
-        val accessToken: String,
-        val refreshToken: String,
-    )
-}
-
-fun ResponseSignIn.Credentials.toModel() =
-    Credentials(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
-    )
+data class ResponseUserDetails(
+    val userDetails: ResponseUser,
+)

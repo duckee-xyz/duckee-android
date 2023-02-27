@@ -27,6 +27,8 @@ import xyz.duckee.android.core.data.GenerateRepository
 import xyz.duckee.android.core.data.GenerateRepositoryImpl
 import xyz.duckee.android.core.data.PreferencesRepository
 import xyz.duckee.android.core.data.PreferencesRepositoryImpl
+import xyz.duckee.android.core.data.UserRepository
+import xyz.duckee.android.core.data.UserRepositoryImpl
 
 @Suppress("unused")
 @Module
@@ -52,4 +54,9 @@ internal interface RepositoryModule {
     fun bindsArtRepository(
         impl: ArtRepositoryImpl,
     ): ArtRepository
+
+    @Binds
+    fun bindsUserRepository(
+        impl: UserRepositoryImpl,
+    ): UserRepository
 }

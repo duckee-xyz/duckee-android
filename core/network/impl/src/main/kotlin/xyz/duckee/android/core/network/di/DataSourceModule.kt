@@ -25,6 +25,8 @@ import xyz.duckee.android.core.network.AuthDataSource
 import xyz.duckee.android.core.network.AuthDataSourceImpl
 import xyz.duckee.android.core.network.GenerateDataSource
 import xyz.duckee.android.core.network.GenerateDataSourceImpl
+import xyz.duckee.android.core.network.UserDataSource
+import xyz.duckee.android.core.network.UserDataSourceImpl
 
 @Suppress("unused")
 @Module
@@ -45,4 +47,9 @@ internal interface DataSourceModule {
     fun bindsArtDataSource(
         impl: ArtDataSourceImpl,
     ): ArtDataSource
+
+    @Binds
+    fun bindsUserDataSource(
+        impl: UserDataSourceImpl,
+    ): UserDataSource
 }

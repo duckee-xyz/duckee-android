@@ -46,6 +46,7 @@ internal fun DetailProfile(
     name: String,
     address: String,
     isFollowed: Boolean,
+    hideFollowButton: Boolean = false,
     onClick: () -> Unit,
 ) {
     Row(
@@ -83,22 +84,24 @@ internal fun DetailProfile(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        DuckeeButton(
-            label = if (isFollowed) "Following" else "Follow",
-            labelStyle = DuckeeTheme.typography.paragraph4,
-            labelColor = if (isFollowed) Color(0xFFFBFBFB) else Color(0xFF08090A),
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-            backgroundColor = if (isFollowed) Color(0xFF08090A) else Color(0xFFFBFBFB),
-            shape = RoundedCornerShape(8.dp),
-            onClick = onClick,
-            modifier = Modifier.let { m ->
-                if (isFollowed) {
-                    m.border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(8.dp))
-                } else {
-                    m
-                }
-            },
-        )
+        if (!hideFollowButton) {
+            DuckeeButton(
+                label = if (isFollowed) "Following" else "Follow",
+                labelStyle = DuckeeTheme.typography.paragraph4,
+                labelColor = if (isFollowed) Color(0xFFFBFBFB) else Color(0xFF08090A),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                backgroundColor = if (isFollowed) Color(0xFF08090A) else Color(0xFFFBFBFB),
+                shape = RoundedCornerShape(8.dp),
+                onClick = onClick,
+                modifier = Modifier.let { m ->
+                    if (isFollowed) {
+                        m.border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(8.dp))
+                    } else {
+                        m
+                    }
+                },
+            )
+        }
     }
 }
 

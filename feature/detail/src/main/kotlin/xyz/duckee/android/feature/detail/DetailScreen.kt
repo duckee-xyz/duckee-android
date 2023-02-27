@@ -139,7 +139,8 @@ internal fun DetailScreen(
                         profileImageUrl = uiState.details?.owner?.profileImage.orEmpty(),
                         name = uiState.details?.owner?.nickname.orEmpty(),
                         address = uiState.details?.owner?.address.orEmpty(),
-                        isFollowed = false,
+                        hideFollowButton = uiState.user?.address == uiState.details?.owner?.address,
+                        isFollowed = uiState.details?.owner?.following == true,
                         onClick = {},
                     )
                     Text(

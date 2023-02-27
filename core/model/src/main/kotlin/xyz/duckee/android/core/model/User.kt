@@ -19,4 +19,9 @@ data class User(
     val email: String,
     val id: Int,
     val profileImage: String,
+    val address: String,
+    val following: Boolean?,
+    val followerCount: Int,
+    val followingCount: Int,
+    val artCount: Int,
 )

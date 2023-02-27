@@ -44,6 +44,7 @@ data class ResponseArtDetail(
             val id: Int,
             val nickname: String,
             val profileImage: String,
+            val following: Boolean?,
         )
 
         @Serializable
@@ -106,6 +107,7 @@ fun ResponseArtDetail.ArtDetails.Owner.toModel(): ArtDetails.Owner =
         id,
         nickname,
         profileImage,
+        following,
     )
 
 fun ResponseArtDetail.ArtDetails.Token.toModel(): ArtDetails.Token =

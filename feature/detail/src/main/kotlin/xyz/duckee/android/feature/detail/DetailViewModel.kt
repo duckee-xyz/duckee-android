@@ -27,6 +27,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 import xyz.duckee.android.core.domain.art.GetArtDetailsUseCase
+import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
 import javax.inject.Inject
@@ -35,6 +36,7 @@ import javax.inject.Inject
 internal class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getArtDetailsUseCase: GetArtDetailsUseCase,
+    private val getMyProfileUseCase: GetMyProfileUseCase,
 ) : ViewModel(), ContainerHost<DetailState, DetailSideEffect> {
 
     private val tokenId = savedStateHandle.get<String>("id").orEmpty()
@@ -42,11 +44,19 @@ internal class DetailViewModel @Inject constructor(
     override val container = container<DetailState, DetailSideEffect>(DetailState())
 
     init {
+        getMyProfile()
         getArtDetails()
     }
 
     fun onBuyOrTryButtonClick() = intent {
         postSideEffect(DetailSideEffect.GoReceiptScreen)
+    }
+
+    private fun getMyProfile() = intent {
+        getMyProfileUseCase()
+            .suspendOnSuccess {
+                reduce { state.copy(user = data) }
+            }
     }
 
     private fun getArtDetails() = intent {

@@ -16,10 +16,12 @@
 package xyz.duckee.android.feature.detail.contract
 
 import xyz.duckee.android.core.model.ArtDetails
+import xyz.duckee.android.core.model.User
 import javax.annotation.concurrent.Immutable
 
 @Immutable
 internal data class DetailState(
     val isLoading: Boolean = false,
     val details: ArtDetails? = null,
+    val user: User? = null,
 )

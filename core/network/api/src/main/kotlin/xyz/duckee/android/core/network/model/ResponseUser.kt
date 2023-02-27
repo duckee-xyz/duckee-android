@@ -16,23 +16,28 @@
 package xyz.duckee.android.core.network.model
 
 import kotlinx.serialization.Serializable
-import xyz.duckee.android.core.model.Credentials
+import xyz.duckee.android.core.model.User
 
 @Serializable
-data class ResponseSignIn(
-    val credentials: Credentials,
-    val user: ResponseUser,
-) {
+data class ResponseUser(
+    val email: String,
+    val id: Int,
+    val profileImage: String,
+    val address: String,
+    val following: Boolean?,
+    val followerCount: Int,
+    val followingCount: Int,
+    val artCount: Int,
+)
 
-    @Serializable
-    data class Credentials(
-        val accessToken: String,
-        val refreshToken: String,
-    )
-}
-
-fun ResponseSignIn.Credentials.toModel() =
-    Credentials(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
+fun ResponseUser.toModel() =
+    User(
+        email = email,
+        id = id,
+        profileImage = profileImage,
+        address = address,
+        following = following,
+        followerCount = followerCount,
+        followingCount = followingCount,
+        artCount = artCount,
     )

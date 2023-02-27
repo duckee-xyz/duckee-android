@@ -13,26 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.network.model
+package xyz.duckee.android.core.network.api
 
-import kotlinx.serialization.Serializable
-import xyz.duckee.android.core.model.Credentials
+import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.GET
+import xyz.duckee.android.core.network.model.ResponseUserDetails
 
-@Serializable
-data class ResponseSignIn(
-    val credentials: Credentials,
-    val user: ResponseUser,
-) {
+internal interface UserAPI {
 
-    @Serializable
-    data class Credentials(
-        val accessToken: String,
-        val refreshToken: String,
-    )
+    @GET("user/v1/me")
+    suspend fun getUserMe(): ApiResponse<ResponseUserDetails>
 }
-
-fun ResponseSignIn.Credentials.toModel() =
-    Credentials(
-        accessToken = accessToken,
-        refreshToken = refreshToken,
-    )
