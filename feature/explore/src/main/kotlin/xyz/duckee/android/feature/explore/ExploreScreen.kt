@@ -46,10 +46,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
@@ -58,6 +60,7 @@ import xyz.duckee.android.core.designsystem.DuckeeSearchBar
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.ui.isScrolledToEnd
+import xyz.duckee.android.core.ui.observeAsState
 import xyz.duckee.android.feature.explore.component.ExploreImageBadge
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
@@ -75,6 +78,13 @@ internal fun ExploreRoute(
             goSignInScreen()
         } else if (it is ExploreSideEffect.GoDetail) {
             goDetailScreen(it.id)
+        }
+    }
+
+    val lifecycle by LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(lifecycle) {
+        if (lifecycle == Lifecycle.Event.ON_RESUME) {
+            viewModel.onResume()
         }
     }
 

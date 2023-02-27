@@ -21,13 +21,20 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.ui.ExploreDataManager
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import javax.inject.Inject
 
 @HiltViewModel
-internal class RecipeListSuccessViewModel @Inject constructor() : ViewModel(), ContainerHost<Unit, RecipeSideEffect> {
+internal class RecipeListSuccessViewModel @Inject constructor(
+    exploreDataManager: ExploreDataManager,
+) : ViewModel(), ContainerHost<Unit, RecipeSideEffect> {
 
     override val container = container<Unit, RecipeSideEffect>(Unit)
+
+    init {
+        exploreDataManager.forceRefreshWhenEnteringExploreTab()
+    }
 
     fun onCheckButtonClick() = intent {
         postSideEffect(RecipeSideEffect.GoMyTab)

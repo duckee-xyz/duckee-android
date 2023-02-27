@@ -28,6 +28,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import xyz.duckee.android.core.domain.art.GetArtFeedUseCase
 import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
+import xyz.duckee.android.core.ui.ExploreDataManager
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
 import javax.inject.Inject
@@ -36,12 +37,21 @@ import javax.inject.Inject
 internal class ExploreViewModel @Inject constructor(
     private val checkAuthenticateStateUseCase: CheckAuthenticateStateUseCase,
     private val getArtFeedUseCase: GetArtFeedUseCase,
+    private val exploreDataManager: ExploreDataManager,
 ) : ViewModel(), ContainerHost<ExploreState, ExploreSideEffect> {
 
     override val container = container<ExploreState, ExploreSideEffect>(ExploreState())
 
     init {
         getArtFeed()
+    }
+
+    fun onResume() = intent {
+        if (exploreDataManager.reloadState.value) {
+            reduce { ExploreState() }
+            getArtFeed()
+            exploreDataManager.invalidatePendingReloadState()
+        }
     }
 
     @OptIn(OrbitExperimental::class)
@@ -73,7 +83,7 @@ internal class ExploreViewModel @Inject constructor(
         }
 
         getArtFeedUseCase(
-            startAfter = state.nextStartAfter.takeIf { it != null }?.toInt(),
+            startAfter = state.nextStartAfter.takeIf { !it.isNullOrBlank() }?.toInt(),
         )
             .suspendOnSuccess {
                 reduce {
