@@ -19,7 +19,9 @@ import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
+import xyz.duckee.android.core.network.model.ResponseArtDetail
 import xyz.duckee.android.core.network.model.ResponseArtList
 import xyz.duckee.android.core.network.model.request.RequestUploadArt
 
@@ -34,4 +36,7 @@ internal interface ArtAPI {
 
     @POST("art/v1")
     suspend fun uploadArt(@Body payload: RequestUploadArt): ApiResponse<Unit>
+
+    @GET("art/v1/{tokenId}/details")
+    suspend fun getArtDetails(@Path("tokenId") tokenId: String): ApiResponse<ResponseArtDetail>
 }

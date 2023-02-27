@@ -72,7 +72,11 @@ internal fun DetailProfile(
             )
             Text(
                 text = address.run {
-                    address.substring(0, 5) + "..." + address.substring(address.length - 5, address.length)
+                    if (address.length > 10) {
+                        address.substring(0, 5) + "..." + address.substring(address.length - 5, address.length)
+                    } else {
+                        ""
+                    }
                 },
                 style = DuckeeTheme.typography.paragraph5,
                 color = Color(0xFFACB7BF),

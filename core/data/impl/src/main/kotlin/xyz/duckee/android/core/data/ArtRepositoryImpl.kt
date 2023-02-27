@@ -17,6 +17,7 @@ package xyz.duckee.android.core.data
 
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.mapSuccess
+import xyz.duckee.android.core.model.ArtDetails
 import xyz.duckee.android.core.model.ArtList
 import xyz.duckee.android.core.network.ArtDataSource
 import xyz.duckee.android.core.network.model.toModel
@@ -63,4 +64,7 @@ internal class ArtRepositoryImpl @Inject constructor(
             sampler,
             seed,
         )
+
+    override suspend fun getArtDetails(tokenId: String): ApiResponse<ArtDetails> =
+        artDataSource.getArtDetail(tokenId).mapSuccess { artDetails.toModel() }
 }

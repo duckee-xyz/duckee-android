@@ -15,14 +15,11 @@
  */
 package xyz.duckee.android.feature.detail.contract
 
-import java.util.*
+import xyz.duckee.android.core.model.ArtDetails
 import javax.annotation.concurrent.Immutable
 
 @Immutable
 internal data class DetailState(
     val isLoading: Boolean = false,
-    val image: String = UUID.randomUUID().toString().replace("-", "").lowercase()
-        .run {
-            "https://picsum.photos/700/700?random=$this"
-        },
+    val details: ArtDetails? = null,
 )

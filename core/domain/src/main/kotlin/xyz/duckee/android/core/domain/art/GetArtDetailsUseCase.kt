@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.library")
-    id("duckee.android.library.compose")
-}
+package xyz.duckee.android.core.domain.art
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.core.designsystem"
-    }
-}
+import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.data.ArtRepository
+import xyz.duckee.android.core.model.ArtDetails
+import javax.inject.Inject
 
-dependencies {
-    implementation(project(":core:ui"))
-    implementation(project(":core:model"))
+class GetArtDetailsUseCase @Inject constructor(
+    private val artRepository: ArtRepository,
+) {
 
-    implementation(libs.material2.android)
-    implementation(libs.androidx.lifecycle)
-    implementation(libs.coil.compose)
-    implementation(libs.accompanist.placeholder)
-
-    implementation(libs.lottie.compose)
+    suspend operator fun invoke(tokenId: String): ApiResponse<ArtDetails> =
+        artRepository.getArtDetails(tokenId)
 }

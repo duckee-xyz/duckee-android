@@ -16,6 +16,7 @@
 package xyz.duckee.android.core.data
 
 import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.model.ArtDetails
 import xyz.duckee.android.core.model.ArtList
 
 interface ArtRepository {
@@ -39,4 +40,6 @@ interface ArtRepository {
         sampler: String?,
         seed: Int?,
     ): ApiResponse<Unit>
+
+    suspend fun getArtDetails(tokenId: String): ApiResponse<ArtDetails>
 }

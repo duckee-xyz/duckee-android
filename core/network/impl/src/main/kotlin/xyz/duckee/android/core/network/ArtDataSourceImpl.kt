@@ -17,6 +17,7 @@ package xyz.duckee.android.core.network
 
 import com.skydoves.sandwich.ApiResponse
 import xyz.duckee.android.core.network.api.ArtAPI
+import xyz.duckee.android.core.network.model.ResponseArtDetail
 import xyz.duckee.android.core.network.model.ResponseArtList
 import xyz.duckee.android.core.network.model.request.RequestGenerateImage
 import xyz.duckee.android.core.network.model.request.RequestUploadArt
@@ -76,4 +77,7 @@ internal class ArtDataSourceImpl @Inject constructor(
                 royaltyFee = royaltyFee,
             ),
         )
+
+    override suspend fun getArtDetail(tokenId: String): ApiResponse<ResponseArtDetail> =
+        api.getArtDetails(tokenId)
 }

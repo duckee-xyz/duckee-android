@@ -27,33 +27,30 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PromptFont
-import xyz.duckee.android.core.ui.RandomImageUrlGenerator
+import xyz.duckee.android.core.model.ArtDetails
 
 @Composable
 fun DuckeeHorizontalNftCarousel(
     modifier: Modifier = Modifier,
-    list: ImmutableList<String>,
+    tokens: ImmutableList<ArtDetails.Token>,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 24.dp),
         modifier = modifier.fillMaxWidth(),
     ) {
-        items(list) {
+        items(tokens) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 DuckeeNetworkImage(
-                    model = it,
+                    model = it.imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(144.dp)
@@ -63,16 +60,15 @@ fun DuckeeHorizontalNftCarousel(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    val profileImage = rememberSaveable { RandomImageUrlGenerator.getRandomImageUrl() }
                     DuckeeNetworkImage(
-                        model = profileImage,
+                        model = it.owner.profileImage,
                         contentDescription = null,
                         modifier = Modifier
                             .size(28.dp)
                             .clip(CircleShape),
                     )
                     Text(
-                        text = "ShibaSaki",
+                        text = it.owner.nickname,
                         style = DuckeeTheme.typography.paragraph4,
                         fontFamily = PromptFont,
                         color = Color(0xFFFBFBFB),
@@ -80,19 +76,5 @@ fun DuckeeHorizontalNftCarousel(
                 }
             }
         }
-    }
-}
-
-@Preview(name = "Detail derived nft carousel component", showBackground = true, backgroundColor = 0xFF08090A)
-@Composable
-internal fun DuckeeHorizontalNftCarouselScreen() {
-    DuckeeTheme {
-        DuckeeHorizontalNftCarousel(
-            list = persistentListOf(
-                "TEST",
-                "TEST",
-                "TEST",
-            ),
-        )
     }
 }

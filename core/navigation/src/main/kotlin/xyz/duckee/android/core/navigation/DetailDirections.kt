@@ -34,7 +34,7 @@ object DetailDirections {
     val main = object : NavigationCommand {
         override val arguments: List<NamedNavArgument> = listOf(
             navArgument("id") {
-                type = NavType.IntType
+                type = NavType.StringType
             },
         )
         override val destination: String = "$detailNavigationRoute/{id}"
