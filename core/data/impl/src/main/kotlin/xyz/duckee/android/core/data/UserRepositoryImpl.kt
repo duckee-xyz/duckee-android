@@ -28,4 +28,13 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserMe(): ApiResponse<User> =
         userDataSource.getUserMe().mapSuccess { userDetails.toModel() }
+
+    override suspend fun getUser(id: String): ApiResponse<User> =
+        userDataSource.getUser(id).mapSuccess { userDetails.toModel() }
+
+    override suspend fun followUser(id: String): ApiResponse<Unit> =
+        userDataSource.followUser(id)
+
+    override suspend fun unfollowUser(id: String): ApiResponse<Unit> =
+        userDataSource.unfollowUser(id)
 }

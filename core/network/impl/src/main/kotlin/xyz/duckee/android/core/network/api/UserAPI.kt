@@ -16,11 +16,23 @@
 package xyz.duckee.android.core.network.api
 
 import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import xyz.duckee.android.core.network.model.ResponseUserDetails
 
 internal interface UserAPI {
 
     @GET("user/v1/me")
     suspend fun getUserMe(): ApiResponse<ResponseUserDetails>
+
+    @GET("user/v1/{id}")
+    suspend fun getUser(@Path("id") id: String): ApiResponse<ResponseUserDetails>
+
+    @POST("user/v1/{id}/follow")
+    suspend fun followUser(@Path("id") id: String): ApiResponse<Unit>
+
+    @DELETE("user/v1/{id}/follow")
+    suspend fun unfollowUser(@Path("id") id: String): ApiResponse<Unit>
 }

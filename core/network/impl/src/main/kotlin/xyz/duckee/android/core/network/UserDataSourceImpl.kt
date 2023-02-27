@@ -28,4 +28,13 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun getUserMe(): ApiResponse<ResponseUserDetails> =
         api.getUserMe()
+
+    override suspend fun getUser(id: String): ApiResponse<ResponseUserDetails> =
+        api.getUser(id)
+
+    override suspend fun followUser(id: String): ApiResponse<Unit> =
+        api.followUser(id)
+
+    override suspend fun unfollowUser(id: String): ApiResponse<Unit> =
+        api.unfollowUser(id)
 }

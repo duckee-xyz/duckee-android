@@ -82,6 +82,7 @@ internal fun DetailRoute(
     DetailScreen(
         uiState = uiState,
         onBuyOrTryButtonClick = viewModel::onBuyOrTryButtonClick,
+        onFollowButtonClick = viewModel::onFollowButtonClick,
     )
 }
 
@@ -89,6 +90,7 @@ internal fun DetailRoute(
 internal fun DetailScreen(
     uiState: DetailState,
     onBuyOrTryButtonClick: () -> Unit,
+    onFollowButtonClick: () -> Unit,
 ) {
     Scaffold {
         Box(
@@ -140,8 +142,8 @@ internal fun DetailScreen(
                         name = uiState.details?.owner?.nickname.orEmpty(),
                         address = uiState.details?.owner?.address.orEmpty(),
                         hideFollowButton = uiState.user?.address == uiState.details?.owner?.address,
-                        isFollowed = uiState.details?.owner?.following == true,
-                        onClick = {},
+                        isFollowed = uiState.ownerUser?.following == true,
+                        onClick = onFollowButtonClick,
                     )
                     Text(
                         text = uiState.details?.description ?: "No Description",
@@ -345,6 +347,7 @@ internal fun DetailScreenPreview() {
         DetailScreen(
             uiState = DetailState(),
             onBuyOrTryButtonClick = {},
+            onFollowButtonClick = {},
         )
     }
 }

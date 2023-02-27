@@ -27,7 +27,10 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 import xyz.duckee.android.core.domain.art.GetArtDetailsUseCase
+import xyz.duckee.android.core.domain.user.FollowUserUseCase
 import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
+import xyz.duckee.android.core.domain.user.GetUserProfileUseCase
+import xyz.duckee.android.core.domain.user.UnfollowUserUseCase
 import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
 import javax.inject.Inject
@@ -37,6 +40,9 @@ internal class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getArtDetailsUseCase: GetArtDetailsUseCase,
     private val getMyProfileUseCase: GetMyProfileUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val followUserUseCase: FollowUserUseCase,
+    private val unfollowUserUseCase: UnfollowUserUseCase,
 ) : ViewModel(), ContainerHost<DetailState, DetailSideEffect> {
 
     private val tokenId = savedStateHandle.get<String>("id").orEmpty()
@@ -52,10 +58,33 @@ internal class DetailViewModel @Inject constructor(
         postSideEffect(DetailSideEffect.GoReceiptScreen)
     }
 
+    fun onFollowButtonClick() = intent {
+        val ownerId = state.details?.owner?.id?.toString().orEmpty()
+
+        if (state.ownerUser?.following == true) {
+            unfollowUserUseCase(ownerId)
+                .suspendOnSuccess {
+                    getOwnerUserProfile(ownerId)
+                }
+        } else {
+            followUserUseCase(ownerId)
+                .suspendOnSuccess {
+                    getOwnerUserProfile(ownerId)
+                }
+        }
+    }
+
     private fun getMyProfile() = intent {
         getMyProfileUseCase()
             .suspendOnSuccess {
                 reduce { state.copy(user = data) }
+            }
+    }
+
+    private fun getOwnerUserProfile(id: String) = intent {
+        getUserProfileUseCase(id)
+            .suspendOnSuccess {
+                reduce { state.copy(ownerUser = data) }
             }
     }
 
@@ -65,6 +94,8 @@ internal class DetailViewModel @Inject constructor(
         getArtDetailsUseCase(tokenId)
             .suspendOnSuccess {
                 reduce { state.copy(isLoading = false, details = data) }
+
+                getOwnerUserProfile(data.owner.id.toString())
             }
             .suspendOnException {
                 Timber.e(exception)

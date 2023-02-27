@@ -21,4 +21,10 @@ import xyz.duckee.android.core.network.model.ResponseUserDetails
 interface UserDataSource {
 
     suspend fun getUserMe(): ApiResponse<ResponseUserDetails>
+
+    suspend fun getUser(id: String): ApiResponse<ResponseUserDetails>
+
+    suspend fun followUser(id: String): ApiResponse<Unit>
+
+    suspend fun unfollowUser(id: String): ApiResponse<Unit>
 }

@@ -21,4 +21,10 @@ import xyz.duckee.android.core.model.User
 interface UserRepository {
 
     suspend fun getUserMe(): ApiResponse<User>
+
+    suspend fun getUser(id: String): ApiResponse<User>
+
+    suspend fun followUser(id: String): ApiResponse<Unit>
+
+    suspend fun unfollowUser(id: String): ApiResponse<Unit>
 }

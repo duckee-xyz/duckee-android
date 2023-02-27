@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.feature.detail.contract
+package xyz.duckee.android.core.domain.user
 
-import xyz.duckee.android.core.model.ArtDetails
+import com.skydoves.sandwich.ApiResponse
+import dagger.Reusable
+import xyz.duckee.android.core.data.UserRepository
 import xyz.duckee.android.core.model.User
-import javax.annotation.concurrent.Immutable
+import javax.inject.Inject
 
-@Immutable
-internal data class DetailState(
-    val isLoading: Boolean = false,
-    val details: ArtDetails? = null,
-    val user: User? = null,
-    val ownerUser: User? = null,
-)
+@Reusable
+class GetUserProfileUseCase @Inject constructor(
+    private val userRepository: UserRepository,
+) {
+
+    suspend operator fun invoke(id: String): ApiResponse<User> =
+        userRepository.getUser(id)
+}
