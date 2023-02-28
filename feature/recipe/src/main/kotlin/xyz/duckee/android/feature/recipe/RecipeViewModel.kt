@@ -23,6 +23,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
@@ -43,7 +44,6 @@ import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
-import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
@@ -57,6 +57,7 @@ internal class RecipeViewModel @Inject constructor(
 
     private val isCreateMode get() = savedStateHandle.get<Int>("id") == -1
     private val isImportMode get() = savedStateHandle.get<Boolean>("importMode") == true
+    private val isTryMode get() = savedStateHandle.get<Boolean>("tryMode") == true
 
     override val container = container<RecipeState, RecipeSideEffect>(RecipeState())
 
@@ -186,9 +187,30 @@ internal class RecipeViewModel @Inject constructor(
                         selectedSize = data.models.first().recipeDefinitions.availableSizes.first(),
                     )
                 }
+
+                if (isTryMode) {
+                    fillTryRecipe()
+                }
             }
             .suspendOnError {
                 Timber.e(message())
             }
+    }
+
+    private fun fillTryRecipe() = intent {
+        val tryRecipe = recipeStore.recipeState.value
+        val selectedModel = state.models.first { it.name == tryRecipe["modelName"] as String }
+
+        reduce {
+            state.copy(
+                selectedModel = selectedModel,
+                promptValue = tryRecipe["prompt"] as String,
+                negativePromptValue = (tryRecipe["negativePrompt"] as? String).orEmpty(),
+                selectedSize = selectedModel.recipeDefinitions.availableSizes.first { it.width == tryRecipe["sizeWidth"] as Int },
+                selectedSampler = (tryRecipe["sampler"] as? String).orEmpty(),
+                seedNumber = (tryRecipe["seed"] as? Int)?.toString().orEmpty(),
+                steps = (tryRecipe["runs"] as? Int) ?: 30
+            )
+        }
     }
 }
