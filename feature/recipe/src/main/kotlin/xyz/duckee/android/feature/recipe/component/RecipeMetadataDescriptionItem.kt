@@ -49,7 +49,7 @@ internal fun RecipeMetadataDescriptionItem(
             value = value,
             placeHolder = "Description (option)",
             onValueChanged = onValueChanged,
-            onlyNumber = true,
+            onlyNumber = false,
             modifier = Modifier.fillMaxWidth(),
         )
     }
