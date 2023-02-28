@@ -46,6 +46,7 @@ internal class ArtRepositoryImpl @Inject constructor(
         runs: Int?,
         sampler: String?,
         seed: Int?,
+        parentTokenId: Int?,
     ): ApiResponse<Unit> =
         artDataSource.uploadArt(
             forSale,
@@ -63,6 +64,7 @@ internal class ArtRepositoryImpl @Inject constructor(
             runs,
             sampler,
             seed,
+            parentTokenId,
         )
 
     override suspend fun getArtDetails(tokenId: String): ApiResponse<ArtDetails> =

@@ -105,6 +105,7 @@ internal class RecipeMetadataConfigViewModel @Inject constructor(
             runs = recipe["runs"] as? Int,
             sampler = recipe["sampler"] as? String,
             seed = recipe["seed"] as? Int,
+            parentTokenId = recipe["parentTokenId"] as? Int,
         ).suspendOnSuccess {
             postSideEffect(RecipeSideEffect.GoSuccessScreen)
         }

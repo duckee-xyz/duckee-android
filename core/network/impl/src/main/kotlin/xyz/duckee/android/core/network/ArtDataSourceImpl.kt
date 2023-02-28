@@ -48,6 +48,7 @@ internal class ArtDataSourceImpl @Inject constructor(
         runs: Int?,
         sampler: String?,
         seed: Int?,
+        parentTokenId: Int?,
     ): ApiResponse<Unit> =
         api.uploadArt(
             RequestUploadArt(
@@ -55,7 +56,7 @@ internal class ArtDataSourceImpl @Inject constructor(
                 description = description,
                 imageUrl = imageUrl,
                 liked = true,
-                parentTokenId = null,
+                parentTokenId = parentTokenId,
                 priceInFlow = priceInFlow,
                 recipe = RequestGenerateImage(
                     guidanceScale = guidanceScale,

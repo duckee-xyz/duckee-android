@@ -40,6 +40,7 @@ class UploadArtUseCase @Inject constructor(
         runs: Int?,
         sampler: String?,
         seed: Int?,
+        parentTokenId: Int?,
     ) = artRepository.uploadArt(
         forSale,
         imageUrl,
@@ -56,5 +57,6 @@ class UploadArtUseCase @Inject constructor(
         runs,
         sampler,
         seed,
+        parentTokenId,
     )
 }

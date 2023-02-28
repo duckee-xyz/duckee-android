@@ -120,7 +120,7 @@ internal class RecipeViewModel @Inject constructor(
     fun onGenerateButtonClick() = intent {
         reduce { state.copy(isGenerating = true) }
 
-        val recipe = mapOf(
+        val recipe = recipeStore.recipeState.value.toMutableMap() + mapOf(
             "isImported" to isImportMode,
             "modelName" to state.selectedModel?.name.orEmpty(),
             "prompt" to state.promptValue,

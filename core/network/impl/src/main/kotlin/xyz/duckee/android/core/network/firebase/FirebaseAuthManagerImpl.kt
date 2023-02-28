@@ -15,14 +15,22 @@
  */
 package xyz.duckee.android.core.network.firebase
 
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-internal class FirebaseAuthManagerImpl @Inject constructor() : FirebaseAuthManager {
+internal class FirebaseAuthManagerImpl @Inject constructor(
+    @ApplicationContext context: Context,
+) : FirebaseAuthManager {
 
     init {
         FirebaseAuth.getInstance().signOut()
+        GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .signOut().addOnCompleteListener { }
     }
 
     override suspend fun getCurrentUserIdToken(): String? =

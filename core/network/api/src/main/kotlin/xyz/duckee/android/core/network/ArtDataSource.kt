@@ -43,6 +43,7 @@ interface ArtDataSource {
         runs: Int?,
         sampler: String?,
         seed: Int?,
+        parentTokenId: Int?,
     ): ApiResponse<Unit>
 
     suspend fun getArtDetail(tokenId: String): ApiResponse<ResponseArtDetail>

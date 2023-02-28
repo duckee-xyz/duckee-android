@@ -132,6 +132,7 @@ internal class DetailViewModel @Inject constructor(
                         "sampler" to data.recipe?.sampler.takeIf { data.recipe?.model?.servedModelName != "DallE" },
                         "seed" to data.recipe?.seed.takeIf { data.recipe?.model?.servedModelName != "DallE" }
                             ?.toInt(),
+                        "parentTokenId" to data.tokenId,
                     )
 
                     recipeStore.saveTemporaryRecipeProperty(recipe)
