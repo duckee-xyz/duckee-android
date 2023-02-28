@@ -18,8 +18,7 @@ package xyz.duckee.android.feature.collection.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,14 +36,14 @@ internal fun CollectionFollowerStatus(
     followingCount: Int,
 ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 48.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = modifier,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier
+                .defaultMinSize(minWidth = 64.dp),
         ) {
             Text(
                 text = recipeCount.toString(),
@@ -61,6 +60,7 @@ internal fun CollectionFollowerStatus(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.defaultMinSize(minWidth = 64.dp),
         ) {
             Text(
                 text = followerCount.toString(),
@@ -77,6 +77,7 @@ internal fun CollectionFollowerStatus(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.defaultMinSize(minWidth = 64.dp),
         ) {
             Text(
                 text = followingCount.toString(),

@@ -21,6 +21,7 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.ui.CollectionDataManager
 import xyz.duckee.android.core.ui.ExploreDataManager
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import javax.inject.Inject
@@ -28,12 +29,14 @@ import javax.inject.Inject
 @HiltViewModel
 internal class RecipeListSuccessViewModel @Inject constructor(
     exploreDataManager: ExploreDataManager,
+    collectionDataManager: CollectionDataManager,
 ) : ViewModel(), ContainerHost<Unit, RecipeSideEffect> {
 
     override val container = container<Unit, RecipeSideEffect>(Unit)
 
     init {
         exploreDataManager.forceRefreshWhenEnteringExploreTab()
+        collectionDataManager.forceRefreshWhenEnteringCollectionTab()
     }
 
     fun onCheckButtonClick() = intent {

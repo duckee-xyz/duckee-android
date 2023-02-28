@@ -37,27 +37,34 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeScrollableTabRow
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.ui.observeAsState
 import xyz.duckee.android.feature.collection.component.CollectionBalance
 import xyz.duckee.android.feature.collection.component.CollectionProfile
 import xyz.duckee.android.feature.collection.component.CollectionTitleBar
 import xyz.duckee.android.feature.collection.component.CollectionWallet
+import xyz.duckee.android.feature.collection.contract.CollectionFeedState
 import xyz.duckee.android.feature.collection.contract.CollectionState
 import xyz.duckee.android.feature.collection.ui.pagerTabIndicatorOffset
 
@@ -66,11 +73,29 @@ private val tabs = listOf("Listed", "Bought", "Not for sale", "Liked")
 @Composable
 internal fun CollectionRoute(
     viewModel: CollectionViewModel = hiltViewModel(),
+    listedViewModel: CollectionListedViewModel = hiltViewModel(),
+    boughtViewModel: CollectionBoughtViewModel = hiltViewModel(),
+    likedViewModel: CollectionLikedViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val listedUiState by listedViewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val boughtUiState by boughtViewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val likedUiState by likedViewModel.container.stateFlow.collectAsStateWithLifecycle()
+
+    val lifecycle by LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(lifecycle) {
+        if (lifecycle == Lifecycle.Event.ON_RESUME) {
+            listedViewModel.onResume()
+            boughtViewModel.onResume()
+            likedViewModel.onResume()
+        }
+    }
 
     CollectionScreen(
         uiState = uiState,
+        listedUiState = listedUiState,
+        boughtUiState = boughtUiState,
+        likedUiState = likedUiState,
     )
 }
 
@@ -78,6 +103,9 @@ internal fun CollectionRoute(
 @Composable
 internal fun CollectionScreen(
     uiState: CollectionState,
+    listedUiState: CollectionFeedState,
+    boughtUiState: CollectionFeedState,
+    likedUiState: CollectionFeedState,
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
     val density = LocalDensity.current
@@ -111,21 +139,27 @@ internal fun CollectionScreen(
                     .offset(y = -(320f - scrollProgress.value).dp),
             ) {
                 CollectionProfile(
-                    profileUrl = uiState.profileImageUrl,
-                    recipeCount = 123,
-                    followingCount = 1234,
-                    followerCount = 12345,
+                    profileUrl = uiState.user?.profileImage.orEmpty(),
+                    recipeCount = uiState.user?.artCount ?: 0,
+                    followingCount = uiState.user?.followingCount ?: 0,
+                    followerCount = uiState.user?.followerCount ?: 0,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 CollectionWallet(
-                    profileName = "ShibaSaki",
-                    address = "0xh5f...211g5",
+                    profileName = uiState.user?.nickname.orEmpty(),
+                    address = uiState.user?.address.orEmpty().run {
+                        if (length > 10) {
+                            substring(0, 5) + "..." + substring(length - 5, length)
+                        } else {
+                            ""
+                        }
+                    },
                     onLinkButtonClick = {},
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 CollectionBalance(
-                    balance = 14910.29,
-                    estimateBalance = 1134.0,
+                    balance = 0.0,
+                    estimateBalance = 0.0,
                     onAddButtonClick = {},
                     modifier = Modifier.padding(horizontal = 24.dp),
                 )
@@ -144,6 +178,8 @@ internal fun CollectionScreen(
                         )
                     },
                 ) {
+                    val coroutineScope = rememberCoroutineScope()
+
                     tabs.forEachIndexed { index, s ->
                         val colorValue by animateColorAsState(
                             targetValue = if ((pagerState.currentPage) == index) {
@@ -156,7 +192,11 @@ internal fun CollectionScreen(
                         )
                         Tab(
                             selected = pagerState.currentPage == index,
-                            onClick = {},
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            },
                             modifier = Modifier
                                 .padding(end = 20.dp),
                         ) {
@@ -188,12 +228,13 @@ internal fun CollectionScreen(
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 120.dp),
                 columns = GridCells
                     .Fixed(2),
+                modifier = Modifier.fillMaxSize(),
             ) {
                 when (page) {
                     0 -> {
-                        items(uiState.listed) {
+                        items(listedUiState.feeds) {
                             DuckeeNetworkImage(
-                                model = it,
+                                model = it.imageUrl,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -205,9 +246,9 @@ internal fun CollectionScreen(
                     }
 
                     1 -> {
-                        items(uiState.bought) {
+                        items(boughtUiState.feeds) {
                             DuckeeNetworkImage(
-                                model = it,
+                                model = it.imageUrl,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -217,25 +258,25 @@ internal fun CollectionScreen(
                             )
                         }
                     }
-
-                    2 -> {
-                        items(uiState.notForSale) {
-                            DuckeeNetworkImage(
-                                model = it,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
-                                    .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
-                            )
-                        }
-                    }
-
+//
+//                    2 -> {
+//                        items(uiState.notForSale) {
+//                            DuckeeNetworkImage(
+//                                model = it,
+//                                contentDescription = null,
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .aspectRatio(1f)
+//                                    .padding(6.5.dp)
+//                                    .clip(RoundedCornerShape(16.dp)),
+//                            )
+//                        }
+//                    }
+//
                     3 -> {
-                        items(uiState.liked) {
+                        items(likedUiState.feeds) {
                             DuckeeNetworkImage(
-                                model = it,
+                                model = it.imageUrl,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .fillMaxWidth()

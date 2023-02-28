@@ -16,13 +16,31 @@
 package xyz.duckee.android.feature.collection
 
 import androidx.lifecycle.ViewModel
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.feature.collection.contract.CollectionState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class CollectionViewModel @Inject constructor() : ViewModel(), ContainerHost<CollectionState, Unit> {
+internal class CollectionViewModel @Inject constructor(
+    private val getMyProfileUseCase: GetMyProfileUseCase,
+) : ViewModel(), ContainerHost<CollectionState, Unit> {
+
     override val container = container<CollectionState, Unit>(CollectionState())
+
+    init {
+        getMyProfile()
+    }
+
+    private fun getMyProfile() = intent {
+        getMyProfileUseCase()
+            .suspendOnSuccess {
+                reduce { state.copy(user = data) }
+            }
+    }
 }

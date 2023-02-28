@@ -13,16 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.model
+package xyz.duckee.android.core.ui
 
-data class User(
-    val nickname: String,
-    val email: String,
-    val id: Int,
-    val profileImage: String,
-    val address: String,
-    val following: Boolean?,
-    val followerCount: Int,
-    val followingCount: Int,
-    val artCount: Int,
-)
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class CollectionDataManager @Inject internal constructor() {
+
+    private val _reloadState = MutableStateFlow(false)
+    val reloadState = _reloadState.asStateFlow()
+
+    fun forceRefreshWhenEnteringCollectionTab() {
+        _reloadState.update { true }
+    }
+
+    fun invalidatePendingReloadState() {
+        _reloadState.update { false }
+    }
+}

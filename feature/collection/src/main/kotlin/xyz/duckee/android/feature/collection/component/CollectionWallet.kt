@@ -76,7 +76,7 @@ internal fun CollectionWallet(
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 7.dp),
             icon = {
                 Icon(
-                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_flow_logo),
+                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_duck_balance),
                     contentDescription = null,
                     tint = Color.Unspecified,
                     modifier = Modifier.size(20.dp),

@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.model
+package xyz.duckee.android.core.domain.collection
 
-data class User(
-    val nickname: String,
-    val email: String,
-    val id: Int,
-    val profileImage: String,
-    val address: String,
-    val following: Boolean?,
-    val followerCount: Int,
-    val followingCount: Int,
-    val artCount: Int,
-)
+import com.skydoves.sandwich.ApiResponse
+import dagger.Reusable
+import xyz.duckee.android.core.data.CollectionRepository
+import xyz.duckee.android.core.model.ArtList
+import javax.inject.Inject
+
+@Reusable
+class GetCollectionBoughtUseCase @Inject constructor(
+    private val collectionRepository: CollectionRepository,
+) {
+
+    suspend operator fun invoke(userId: String, startAfter: Int? = null): ApiResponse<ArtList> =
+        collectionRepository.getCollectionBought(userId, startAfter, limit = 50)
+}

@@ -13,16 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xyz.duckee.android.core.model
+package xyz.duckee.android.core.data
 
-data class User(
-    val nickname: String,
-    val email: String,
-    val id: Int,
-    val profileImage: String,
-    val address: String,
-    val following: Boolean?,
-    val followerCount: Int,
-    val followingCount: Int,
-    val artCount: Int,
-)
+import com.skydoves.sandwich.ApiResponse
+import xyz.duckee.android.core.model.ArtList
+
+interface CollectionRepository {
+
+    suspend fun getCollectionListed(
+        userId: String,
+        startAfter: Int?,
+        limit: Int?,
+    ): ApiResponse<ArtList>
+
+    suspend fun getCollectionBought(
+        userId: String,
+        startAfter: Int?,
+        limit: Int?,
+    ): ApiResponse<ArtList>
+
+    suspend fun getCollectionLiked(
+        userId: String,
+        startAfter: Int?,
+        limit: Int?,
+    ): ApiResponse<ArtList>
+}

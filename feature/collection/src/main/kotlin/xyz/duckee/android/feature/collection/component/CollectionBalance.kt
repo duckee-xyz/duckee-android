@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -52,9 +53,11 @@ internal fun CollectionBalance(
             .padding(horizontal = 20.dp, vertical = 18.dp),
     ) {
         Image(
-            painter = painterResource(id = R.drawable.icon_duck),
+            painter = painterResource(id = R.drawable.icon_duck_balance),
             contentDescription = null,
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier
+                .size(32.dp)
+                .border(width = 1.dp, color = Color.White, shape = CircleShape),
         )
         Spacer(modifier = Modifier.width(12.dp))
         Column {

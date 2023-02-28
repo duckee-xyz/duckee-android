@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 
@@ -55,7 +54,6 @@ internal fun CollectionProfile(
             recipeCount = recipeCount,
             followerCount = followerCount,
             followingCount = followingCount,
-            modifier = Modifier.scale(1.1f),
         )
         Spacer(modifier = Modifier.weight(1f))
     }

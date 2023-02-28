@@ -20,6 +20,7 @@ import xyz.duckee.android.core.model.User
 
 @Serializable
 data class ResponseUser(
+    val nickname: String,
     val email: String,
     val id: Int,
     val profileImage: String,
@@ -40,4 +41,5 @@ fun ResponseUser.toModel() =
         followerCount = followerCount,
         followingCount = followingCount,
         artCount = artCount,
+        nickname = nickname,
     )
