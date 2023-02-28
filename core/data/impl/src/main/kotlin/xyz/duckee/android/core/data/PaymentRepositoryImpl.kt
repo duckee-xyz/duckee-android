@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.data
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.mapSuccess
+import xyz.duckee.android.core.model.Payment
+import xyz.duckee.android.core.network.PaymentDataSource
+import xyz.duckee.android.core.network.model.toModel
+import javax.inject.Inject
 
-dependencies {
-    implementation(libs.stripe)
+internal class PaymentRepositoryImpl @Inject constructor(
+    private val paymentDataSource: PaymentDataSource,
+) : PaymentRepository {
+
+    override suspend fun paymentArtRecipe(artId: String): ApiResponse<Payment> =
+        paymentDataSource.paymentArtRecipe(artId).mapSuccess { toModel() }
 }

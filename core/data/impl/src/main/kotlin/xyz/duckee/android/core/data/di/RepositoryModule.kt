@@ -27,6 +27,8 @@ import xyz.duckee.android.core.data.CollectionRepository
 import xyz.duckee.android.core.data.CollectionRepositoryImpl
 import xyz.duckee.android.core.data.GenerateRepository
 import xyz.duckee.android.core.data.GenerateRepositoryImpl
+import xyz.duckee.android.core.data.PaymentRepository
+import xyz.duckee.android.core.data.PaymentRepositoryImpl
 import xyz.duckee.android.core.data.PreferencesRepository
 import xyz.duckee.android.core.data.PreferencesRepositoryImpl
 import xyz.duckee.android.core.data.UserRepository
@@ -66,4 +68,9 @@ internal interface RepositoryModule {
     fun bindsCollectionRepository(
         impl: CollectionRepositoryImpl,
     ): CollectionRepository
+
+    @Binds
+    fun bindsPaymentRepository(
+        impl: PaymentRepositoryImpl,
+    ): PaymentRepository
 }

@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.ui
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import androidx.compose.runtime.staticCompositionLocalOf
+import com.stripe.android.paymentsheet.PaymentSheet
 
-dependencies {
-    implementation(libs.stripe)
-}
+val LocalPaymentSheet = staticCompositionLocalOf<PaymentSheet?> { null }

@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.ui
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class PurchaseEventManager @Inject internal constructor() {
+
+    private val _completeState = MutableStateFlow(UUID.randomUUID().toString())
+    val completeState = _completeState.asStateFlow()
+
+    fun purchaseComplete() {
+        _completeState.update { UUID.randomUUID().toString() }
     }
-}
-
-dependencies {
-    implementation(libs.stripe)
 }

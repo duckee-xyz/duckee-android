@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.model
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import androidx.compose.runtime.Immutable
 
-dependencies {
-    implementation(libs.stripe)
-}
+@Immutable
+data class Payment(
+    val customer: String,
+    val ephemeralKey: String,
+    val paymentIntent: String,
+    val publishableKey: String,
+)

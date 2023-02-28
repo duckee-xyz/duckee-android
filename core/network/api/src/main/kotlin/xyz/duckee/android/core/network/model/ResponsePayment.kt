@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.network.model
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import kotlinx.serialization.Serializable
+import xyz.duckee.android.core.model.Payment
 
-dependencies {
-    implementation(libs.stripe)
-}
+@Serializable
+data class ResponsePayment(
+    val customer: String,
+    val ephemeralKey: String,
+    val paymentIntent: String,
+    val publishableKey: String,
+)
+
+fun ResponsePayment.toModel(): Payment =
+    Payment(customer, ephemeralKey, paymentIntent, publishableKey)

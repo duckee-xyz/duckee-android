@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.startup)
     implementation(libs.timber)
+    implementation(libs.stripe)
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))

@@ -17,9 +17,11 @@ package xyz.duckee.android.feature.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -27,10 +29,12 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import timber.log.Timber
 import xyz.duckee.android.core.domain.art.GetArtDetailsUseCase
+import xyz.duckee.android.core.domain.payment.PaymentArtRecipeUseCase
 import xyz.duckee.android.core.domain.user.FollowUserUseCase
 import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.core.domain.user.GetUserProfileUseCase
 import xyz.duckee.android.core.domain.user.UnfollowUserUseCase
+import xyz.duckee.android.core.ui.PurchaseEventManager
 import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
@@ -44,7 +48,9 @@ internal class DetailViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val followUserUseCase: FollowUserUseCase,
     private val unfollowUserUseCase: UnfollowUserUseCase,
+    private val paymentArtRecipeUseCase: PaymentArtRecipeUseCase,
     private val recipeStore: RecipeStore,
+    private val purchaseEventManager: PurchaseEventManager,
 ) : ViewModel(), ContainerHost<DetailState, DetailSideEffect> {
 
     private val tokenId = savedStateHandle.get<String>("id").orEmpty()
@@ -54,10 +60,24 @@ internal class DetailViewModel @Inject constructor(
     init {
         getMyProfile()
         getArtDetails()
+
+        viewModelScope.launch {
+            purchaseEventManager.completeState.collect {
+                getArtDetails()
+            }
+        }
     }
 
     fun onBuyOrTryButtonClick() = intent {
-        postSideEffect(DetailSideEffect.GoRecipeScreen)
+        if (state.details?.recipe != null) {
+            postSideEffect(DetailSideEffect.GoRecipeScreen)
+        } else {
+            reduce { state.copy(isLoading = true) }
+            paymentArtRecipeUseCase(state.details?.tokenId?.toString().orEmpty())
+                .suspendOnSuccess {
+                    postSideEffect(DetailSideEffect.PurchaseWithStripe(data))
+                }
+        }
     }
 
     fun onFollowButtonClick() = intent {

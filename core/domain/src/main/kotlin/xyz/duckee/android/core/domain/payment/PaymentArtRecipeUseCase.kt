@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.domain.payment
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import com.skydoves.sandwich.ApiResponse
+import dagger.Reusable
+import xyz.duckee.android.core.data.PaymentRepository
+import xyz.duckee.android.core.model.Payment
+import javax.inject.Inject
 
-dependencies {
-    implementation(libs.stripe)
+@Reusable
+class PaymentArtRecipeUseCase @Inject constructor(
+    private val paymentRepository: PaymentRepository,
+) {
+
+    suspend operator fun invoke(artId: String): ApiResponse<Payment> =
+        paymentRepository.paymentArtRecipe(artId)
 }

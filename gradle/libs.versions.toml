@@ -127,6 +127,9 @@ toolbar-compose = "me.onebone:toolbar-compose:2.3.5"
 protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 
+# Stripe Payment
+stripe = "com.stripe:stripe-android:20.19.2"
+
 [bundles]
 
 coroutines = ["kotlin-coroutines", "kotlin-coroutines-jdk8"]

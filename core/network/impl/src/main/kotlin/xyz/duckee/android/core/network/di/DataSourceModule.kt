@@ -27,6 +27,8 @@ import xyz.duckee.android.core.network.CollectionDataSource
 import xyz.duckee.android.core.network.CollectionDataSourceImpl
 import xyz.duckee.android.core.network.GenerateDataSource
 import xyz.duckee.android.core.network.GenerateDataSourceImpl
+import xyz.duckee.android.core.network.PaymentDataSource
+import xyz.duckee.android.core.network.PaymentDataSourceImpl
 import xyz.duckee.android.core.network.UserDataSource
 import xyz.duckee.android.core.network.UserDataSourceImpl
 
@@ -59,4 +61,9 @@ internal interface DataSourceModule {
     fun bindsCollectionDataSource(
         impl: CollectionDataSourceImpl,
     ): CollectionDataSource
+
+    @Binds
+    fun bindsPaymentDataSource(
+        impl: PaymentDataSourceImpl,
+    ): PaymentDataSource
 }

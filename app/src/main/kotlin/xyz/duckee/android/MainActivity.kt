@@ -21,15 +21,52 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
+import timber.log.Timber
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.ui.LocalNavigationPopStack
+import xyz.duckee.android.core.ui.LocalPaymentSheet
+import xyz.duckee.android.core.ui.PurchaseEventManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    lateinit var paymentSheet: PaymentSheet
+
+    @Inject
+    lateinit var purchaseEventManager: PurchaseEventManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        paymentSheet = PaymentSheet(this) {
+            when (it) {
+                is PaymentSheetResult.Canceled -> {
+                    Timber.e("Canceled")
+                }
+
+                is PaymentSheetResult.Failed -> {
+                    Timber.e("Error: ${it.error}")
+                }
+
+                is PaymentSheetResult.Completed -> {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(2000)
+                        purchaseEventManager.purchaseComplete()
+                    }
+
+                    purchaseEventManager.purchaseComplete()
+                    Timber.e("Completed")
+                }
+            }
+        }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -44,6 +81,7 @@ class MainActivity : ComponentActivity() {
             DuckeeTheme {
                 CompositionLocalProvider(
                     LocalNavigationPopStack provides { navController.popBackStack() },
+                    LocalPaymentSheet provides paymentSheet,
                 ) {
                     DuckeeApp(
                         navController = navController,

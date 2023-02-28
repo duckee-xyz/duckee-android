@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id("duckee.android.feature")
-    id("duckee.android.library.compose")
-    id("duckee.android.hilt")
-}
+package xyz.duckee.android.core.network.api
 
-android {
-    defaultConfig {
-        namespace = "xyz.duckee.android.feature.detail"
-    }
-}
+import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.POST
+import retrofit2.http.Path
+import xyz.duckee.android.core.network.model.ResponsePayment
 
-dependencies {
-    implementation(libs.stripe)
+internal interface PaymentAPI {
+
+    @POST("payment/v1/art/{artId}/recipe")
+    suspend fun paymentArtRecipe(@Path("artId") artId: String): ApiResponse<ResponsePayment>
 }

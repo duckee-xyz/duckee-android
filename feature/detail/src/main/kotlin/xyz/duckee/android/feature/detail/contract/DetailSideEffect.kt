@@ -15,10 +15,17 @@
  */
 package xyz.duckee.android.feature.detail.contract
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import xyz.duckee.android.core.model.Payment
 
 internal sealed interface DetailSideEffect {
 
     @Stable
     object GoRecipeScreen : DetailSideEffect
+
+    @Immutable
+    data class PurchaseWithStripe(
+        val payment: Payment,
+    ) : DetailSideEffect
 }
