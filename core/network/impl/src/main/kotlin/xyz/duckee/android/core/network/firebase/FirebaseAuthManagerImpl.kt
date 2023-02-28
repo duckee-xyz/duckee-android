@@ -16,10 +16,14 @@
 package xyz.duckee.android.core.network.firebase
 
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import kotlinx.coroutines.tasks.await
 
 internal class FirebaseAuthManagerImpl @Inject constructor() : FirebaseAuthManager {
+
+    init {
+        FirebaseAuth.getInstance().signOut()
+    }
 
     override suspend fun getCurrentUserIdToken(): String? =
         FirebaseAuth.getInstance().currentUser?.getIdToken(true)?.await()?.token
