@@ -20,5 +20,5 @@ import androidx.compose.runtime.Stable
 internal sealed interface DetailSideEffect {
 
     @Stable
-    object GoReceiptScreen : DetailSideEffect
+    object GoRecipeScreen : DetailSideEffect
 }

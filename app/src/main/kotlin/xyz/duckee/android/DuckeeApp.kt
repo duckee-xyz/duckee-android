@@ -46,7 +46,7 @@ import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToCollectionTab
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
-import xyz.duckee.android.core.navigation.navigateToReceiptScreen
+import xyz.duckee.android.core.navigation.navigateToRecipeScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultMetadataScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeSuccessScreen
@@ -94,7 +94,7 @@ fun DuckeeApp(
                 goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
             )
             detailScreen(
-                goReceiptScreen = navController::navigateToReceiptScreen,
+                goRecipeScreen = navController::navigateToRecipeScreen,
             )
             recipeScreen(
                 goRecipeResultScreen = navController::navigateToRecipeResultScreen,
@@ -102,7 +102,7 @@ fun DuckeeApp(
                 goSuccessScreen = navController::navigateToRecipeSuccessScreen,
                 goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
                 goMyTab = { navController.navigateToCollectionTab(inclusive = true) },
-                goGenerateScreen = { navController.navigateToReceiptScreen(importMode = it) },
+                goGenerateScreen = { navController.navigateToRecipeScreen(importMode = it) },
             )
             collectionScreen()
         }

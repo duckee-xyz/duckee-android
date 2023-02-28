@@ -55,7 +55,7 @@ internal class DetailViewModel @Inject constructor(
     }
 
     fun onBuyOrTryButtonClick() = intent {
-        postSideEffect(DetailSideEffect.GoReceiptScreen)
+        postSideEffect(DetailSideEffect.GoRecipeScreen)
     }
 
     fun onFollowButtonClick() = intent {
