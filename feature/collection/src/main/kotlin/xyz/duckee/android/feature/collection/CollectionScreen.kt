@@ -265,7 +265,7 @@ internal fun CollectionScreen(
                                     modifier = Modifier,
                                 )
 
-                                if (feed.priceInFlow == 0) {
+                                if (feed.priceInFlow == 0.0) {
                                     DuckeeArtBadgeSmall(
                                         label = "Open Source",
                                         modifier = Modifier

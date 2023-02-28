@@ -171,7 +171,7 @@ internal fun DetailScreen(
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 DetailPriceInformation(
-                    price = uiState.details?.priceInFlow ?: 0,
+                    price = uiState.details?.priceInFlow ?: 0.0,
                     soldAmount = 0,
                     royalty = uiState.details?.royaltyFee?.toInt() ?: 0,
                 )

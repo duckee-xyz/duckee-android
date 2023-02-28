@@ -16,20 +16,28 @@
 package xyz.duckee.android.feature.recipe
 
 import androidx.lifecycle.ViewModel
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
+import xyz.duckee.android.feature.recipe.contract.RecipeWelcomeState
 import javax.inject.Inject
 
 @HiltViewModel
-internal class RecipeGenerateWelcomeViewModel @Inject constructor() :
-    ViewModel(),
-    ContainerHost<Unit, RecipeSideEffect> {
+internal class RecipeGenerateWelcomeViewModel @Inject constructor(
+    private val getMyProfileUseCase: GetMyProfileUseCase,
+) : ViewModel(), ContainerHost<RecipeWelcomeState, RecipeSideEffect> {
 
-    override val container = container<Unit, RecipeSideEffect>(Unit)
+    override val container = container<RecipeWelcomeState, RecipeSideEffect>(RecipeWelcomeState())
+
+    init {
+        getMyProfile()
+    }
 
     fun onGenerateButtonClick() = intent {
         postSideEffect(
@@ -45,5 +53,12 @@ internal class RecipeGenerateWelcomeViewModel @Inject constructor() :
                 importMode = true,
             ),
         )
+    }
+
+    private fun getMyProfile() = intent {
+        getMyProfileUseCase()
+            .suspendOnSuccess {
+                reduce { state.copy(user = data) }
+            }
     }
 }

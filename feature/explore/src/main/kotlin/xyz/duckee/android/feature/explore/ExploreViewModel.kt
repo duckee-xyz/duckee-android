@@ -16,6 +16,7 @@
 package xyz.duckee.android.feature.explore
 
 import androidx.lifecycle.ViewModel
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -26,6 +27,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import xyz.duckee.android.core.domain.art.GetArtFeedUseCase
 import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
 import xyz.duckee.android.core.ui.ExploreDataManager
@@ -97,6 +99,9 @@ internal class ExploreViewModel @Inject constructor(
                         }.toPersistentList(),
                     )
                 }
+            }
+            .suspendOnException {
+                Timber.e(exception)
             }
     }
 }

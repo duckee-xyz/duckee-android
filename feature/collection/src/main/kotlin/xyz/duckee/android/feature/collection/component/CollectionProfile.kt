@@ -49,11 +49,11 @@ internal fun CollectionProfile(
                 .size(72.dp)
                 .clip(CircleShape),
         )
-        Spacer(modifier = Modifier.weight(1f))
         CollectionFollowerStatus(
             recipeCount = recipeCount,
             followerCount = followerCount,
             followingCount = followingCount,
+            modifier = Modifier.padding(start = 48.dp, end = 24.dp),
         )
         Spacer(modifier = Modifier.weight(1f))
     }

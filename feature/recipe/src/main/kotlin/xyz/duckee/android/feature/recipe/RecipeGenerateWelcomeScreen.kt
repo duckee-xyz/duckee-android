@@ -15,9 +15,13 @@
  */
 package xyz.duckee.android.feature.recipe
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,23 +31,30 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
+import xyz.duckee.android.feature.recipe.contract.RecipeWelcomeState
 
 @Composable
 internal fun RecipeGenerateWelcomeRoute(
     viewModel: RecipeGenerateWelcomeViewModel = hiltViewModel(),
     goGenerateScreen: (Boolean) -> Unit,
 ) {
+    val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+
     viewModel.collectSideEffect {
         if (it is RecipeSideEffect.GoGenerateScreen) {
             goGenerateScreen(it.importMode)
@@ -51,6 +62,7 @@ internal fun RecipeGenerateWelcomeRoute(
     }
 
     RecipeGenerateWelcomeScreen(
+        uiState = uiState,
         onGenerateButtonClick = viewModel::onGenerateButtonClick,
         onImportButtonClick = viewModel::onImportButtonClick,
     )
@@ -58,68 +70,80 @@ internal fun RecipeGenerateWelcomeRoute(
 
 @Composable
 internal fun RecipeGenerateWelcomeScreen(
+    uiState: RecipeWelcomeState,
     onGenerateButtonClick: () -> Unit,
     onImportButtonClick: () -> Unit,
 ) {
     Scaffold {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Let’s Generate\n" +
-                    "Your Own \uD83D\uDDBC NFT",
-                style = DuckeeTheme.typography.h2,
-                fontWeight = FontWeight.Medium,
-                color = Color.White,
-                textAlign = TextAlign.Center,
+        Box {
+            Image(
+                painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.background_generate),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize(),
             )
-            Spacer(modifier = Modifier.height(28.dp))
-            Text(
-                text = "You have",
-                style = DuckeeTheme.typography.title1,
-                fontWeight = FontWeight.Light,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                text = "0 Duck",
-                style = DuckeeTheme.typography.title1,
-                fontWeight = FontWeight.Medium,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(54.dp))
-            DuckeeButton(
-                label = "Generate",
-                labelColor = Color(0xFF08090A),
-                labelStyle = DuckeeTheme.typography.title1,
-                backgroundColor = Color.White,
-                contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
-                onClick = onGenerateButtonClick,
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(24.dp)),
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            DuckeeButton(
-                label = "Import",
-                labelColor = Color(0xFFFBFBFB),
-                labelStyle = DuckeeTheme.typography.title1,
-                backgroundColor = Color.Transparent,
-                contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
-                onClick = onImportButtonClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(24.dp)),
-            )
-            Spacer(modifier = Modifier.height(80.dp))
-            Spacer(modifier = Modifier.weight(1f))
+                    .fillMaxSize()
+                    .padding(it),
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "Let’s Generate\n" +
+                        "Your Own \uD83D\uDDBC NFT",
+                    style = DuckeeTheme.typography.h2,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = "You have",
+                        style = DuckeeTheme.typography.title1,
+                        fontWeight = FontWeight.Light,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = "${uiState.user?.creditBalance ?: "-"} Credit",
+                        style = DuckeeTheme.typography.title1,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(54.dp))
+                DuckeeButton(
+                    label = "Generate",
+                    labelColor = Color(0xFF08090A),
+                    labelStyle = DuckeeTheme.typography.title1,
+                    backgroundColor = Color.White,
+                    contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
+                    onClick = onGenerateButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                        .border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(24.dp)),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                DuckeeButton(
+                    label = "Import",
+                    labelColor = Color(0xFFFBFBFB),
+                    labelStyle = DuckeeTheme.typography.title1,
+                    backgroundColor = Color.Black.copy(alpha = 0.8f),
+                    contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
+                    onClick = onImportButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                        .border(width = 1.dp, color = Color(0xFF49565E), shape = RoundedCornerShape(24.dp)),
+                )
+                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.weight(1f))
+            }
         }
     }
 }

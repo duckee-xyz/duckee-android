@@ -48,7 +48,7 @@ fun DuckeeAppBar(
             .fillMaxWidth()
             .height(50.dp),
     ) {
-        Spacer(modifier = Modifier.width(14.dp))
+        Spacer(modifier = Modifier.width(6.dp))
         Icon(
             painter = painterResource(id = R.drawable.icon_back),
             contentDescription = "Back button",

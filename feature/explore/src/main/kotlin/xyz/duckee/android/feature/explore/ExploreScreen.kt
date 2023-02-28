@@ -22,12 +22,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -50,11 +53,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.orbitmvi.orbit.compose.collectSideEffect
-import xyz.duckee.android.core.designsystem.DuckeeArtBadgeSmall
+import xyz.duckee.android.core.designsystem.DuckeeArtBadge
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
@@ -141,15 +145,37 @@ internal fun ExploreScreen(
                 .fillMaxSize(),
         ) {
             item {
-                Text(
-                    text = "\uD83D\uDC24 Explore \uD83E\uDDE0 AI\n" +
-                        "Generated NFT \uD83D\uDCAB",
-                    style = DuckeeTheme.typography.h1,
-                    color = Color.White,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp, start = 12.dp, end = 12.dp),
-                )
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(top = 16.dp, start = 12.dp),
+                    ) {
+                        Icon(
+                            painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.duck),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Explore \uD83E\uDDE0 AI",
+                            style = DuckeeTheme.typography.h1,
+                            lineHeight = 36.sp,
+                            color = Color.White,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 12.dp),
+                        )
+                    }
+                    Text(
+                        text = "Generated NFT \uD83D\uDCAB",
+                        style = DuckeeTheme.typography.h1,
+                        lineHeight = 36.sp,
+                        color = Color.White,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp, end = 12.dp),
+                    )
+                }
             }
             stickyHeader {
                 Column(
@@ -196,24 +222,25 @@ internal fun ExploreScreen(
                             .fillMaxSize()
                             .clickableSingle(onClick = { onImageClick(feed.tokenId.toString()) }),
                     )
-                    if (feed.priceInFlow == 0) {
-                        DuckeeArtBadgeSmall(
+                    if (feed.priceInFlow == 0.0) {
+                        DuckeeArtBadge(
                             label = "Open Source",
                             modifier = Modifier
                                 .padding(12.dp)
                                 .align(Alignment.BottomStart),
                         )
                     } else {
-                        DuckeeArtBadgeSmall(
-                            label = "${feed.priceInFlow}",
+                        DuckeeArtBadge(
+                            label = String.format("%.2f", feed.priceInFlow.toFloat()),
                             backgroundColor = Color.White.copy(alpha = 0.9f),
                             borderColor = Color.White,
+                            contentPadding = PaddingValues(start = 12.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
                             icon = {
                                 Icon(
                                     painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
                                     contentDescription = "duck logo",
                                     tint = Color.Unspecified,
-                                    modifier = Modifier.size(16.dp),
+                                    modifier = Modifier.size(24.dp),
                                 )
                             },
                             modifier = Modifier

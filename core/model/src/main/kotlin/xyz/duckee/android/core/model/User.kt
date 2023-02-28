@@ -25,4 +25,6 @@ data class User(
     val followerCount: Int?,
     val followingCount: Int?,
     val artCount: Int?,
+    val creditBalance: Double?,
+    val usdcBalance: Double?,
 )

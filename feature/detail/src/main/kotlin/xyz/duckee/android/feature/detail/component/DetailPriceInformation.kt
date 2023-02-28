@@ -45,7 +45,7 @@ import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 @Composable
 internal fun DetailPriceInformation(
     modifier: Modifier = Modifier,
-    price: Int,
+    price: Double,
     soldAmount: Long,
     royalty: Int,
 ) {
@@ -91,7 +91,7 @@ internal fun DetailPriceInformation(
                     }
 
                     Text(
-                        text = if (price == 0) "Free" else "$price",
+                        text = if (price == 0.0) "Free" else "$price",
                         style = DuckeeTheme.typography.h4,
                         color = Color(0xFFFBFBFB),
                     )
@@ -156,7 +156,7 @@ internal fun DetailPriceInformation(
 internal fun DetailPriceInformationPreview() {
     DuckeeTheme {
         DetailPriceInformation(
-            price = 23,
+            price = 23.0,
             soldAmount = 0,
             royalty = 5,
         )

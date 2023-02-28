@@ -69,7 +69,7 @@ internal class RecipeMetadataConfigViewModel @Inject constructor(
     }
 
     fun onPriceChange(price: String) = blockingIntent {
-        val onlyNumberRegex = "^[0-9]*\$".toRegex()
+        val onlyNumberRegex = "^[0-9]*(\\.[0-9]{1,4})?\$".toRegex()
 
         if (onlyNumberRegex.matches(price)) {
             reduce { state.copy(price = price) }
@@ -93,7 +93,7 @@ internal class RecipeMetadataConfigViewModel @Inject constructor(
             forSale = !state.isNotForSale,
             imageUrl = generateResult?.resultImageUrl.orEmpty(),
             description = state.description,
-            priceInFlow = state.price.takeIf { !state.isNotForSale && !state.isOpenSource }?.toInt() ?: 0,
+            priceInFlow = state.price.takeIf { !state.isNotForSale && !state.isOpenSource }?.toDouble() ?: 0.0,
             royaltyFee = state.royalty.takeIf { !state.isNotForSale && !state.isOpenSource }?.toInt() ?: 0,
             isImported = recipe["isImported"] as Boolean,
             modelName = recipe["modelName"] as String,

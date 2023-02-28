@@ -36,7 +36,7 @@ internal class ArtDataSourceImpl @Inject constructor(
         forSale: Boolean,
         imageUrl: String,
         description: String?,
-        priceInFlow: Int,
+        priceInFlow: Double,
         royaltyFee: Int,
         isImported: Boolean,
         modelName: String,

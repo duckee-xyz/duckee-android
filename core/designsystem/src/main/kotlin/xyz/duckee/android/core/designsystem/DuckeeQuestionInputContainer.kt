@@ -43,13 +43,13 @@ fun DuckeeQuestionInputContainer(
             text = categoryLabel,
             style = DuckeeTheme.typography.paragraph5,
             color = Color(0xFF7C8992),
-            modifier = Modifier.padding(horizontal = 24.dp),
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
         Text(
             text = questionLabel,
             style = DuckeeTheme.typography.h5,
             color = Color(0xFFFFFFFF),
-            modifier = Modifier.padding(horizontal = 24.dp),
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
         Spacer(modifier = Modifier.height(16.dp))
         content()

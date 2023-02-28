@@ -31,7 +31,7 @@ interface ArtDataSource {
         forSale: Boolean,
         imageUrl: String,
         description: String? = null,
-        priceInFlow: Int,
+        priceInFlow: Double,
         royaltyFee: Int,
         isImported: Boolean,
         modelName: String,

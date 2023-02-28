@@ -24,7 +24,7 @@ data class RequestUploadArt(
     val imageUrl: String,
     val liked: Boolean,
     val parentTokenId: Int?,
-    val priceInFlow: Int,
+    val priceInFlow: Double,
     val recipe: RequestGenerateImage,
     val royaltyFee: Int,
 )

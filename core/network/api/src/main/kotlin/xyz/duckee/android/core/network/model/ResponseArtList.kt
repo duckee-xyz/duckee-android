@@ -33,7 +33,7 @@ data class ResponseArtList(
         val imageUrl: String,
         val liked: Boolean,
         val owner: Owner,
-        val priceInFlow: Int,
+        val priceInFlow: Double,
         val royaltyFee: Double,
         val tokenId: Int,
     ) {

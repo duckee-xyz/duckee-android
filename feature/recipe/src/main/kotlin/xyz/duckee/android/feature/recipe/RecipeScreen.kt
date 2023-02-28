@@ -179,12 +179,12 @@ internal fun RecipeScreen(
                         .imePadding(),
                 ) {
                     Text(
-                        text = "Set your Recipe \uD83D\uDCAB",
-                        fontWeight = FontWeight.Medium,
+                        text = "Make Your Recipe \uD83D\uDCAB",
+                        fontWeight = FontWeight.Normal,
                         style = DuckeeTheme.typography.h2,
                         color = Color(0xFFFBFBFB),
                         modifier = Modifier
-                            .padding(horizontal = 24.dp)
+                            .padding(horizontal = 12.dp)
                             .fillMaxWidth(),
                     )
 
@@ -198,7 +198,7 @@ internal fun RecipeScreen(
                                 onClick = onImportButtonClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 24.dp),
+                                    .padding(horizontal = 12.dp),
                             )
                         }
                     }
@@ -210,7 +210,7 @@ internal fun RecipeScreen(
                     ) {
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = PaddingValues(horizontal = 24.dp),
+                            contentPadding = PaddingValues(horizontal = 12.dp),
                             modifier = Modifier.fillMaxWidth(),
                         ) {
                             items(uiState.models) { model ->
@@ -240,7 +240,7 @@ internal fun RecipeScreen(
                                 }
                             },
                             modifier = Modifier
-                                .padding(horizontal = 24.dp)
+                                .padding(horizontal = 12.dp)
                                 .fillMaxWidth()
                                 .defaultMinSize(minHeight = 80.dp)
                                 .onGloballyPositioned { position ->
@@ -268,7 +268,7 @@ internal fun RecipeScreen(
                                     }
                                 },
                                 modifier = Modifier
-                                    .padding(horizontal = 24.dp)
+                                    .padding(horizontal = 12.dp)
                                     .fillMaxWidth()
                                     .defaultMinSize(minHeight = 80.dp)
                                     .onGloballyPositioned { position ->
@@ -445,7 +445,7 @@ internal fun RecipeScreen(
                                             }
                                         },
                                         modifier = Modifier
-                                            .padding(horizontal = 24.dp)
+                                            .padding(horizontal = 12.dp)
                                             .fillMaxWidth(),
                                     )
                                 }
@@ -492,7 +492,7 @@ internal fun RecipeScreen(
                     DuckeeButton(
                         label = "5 Credit to Generate",
                         labelColor = if (isGenerateButtonEnabled) Color(0xFF08090A) else Color(0xFF7C8992),
-                        labelStyle = DuckeeTheme.typography.title1,
+                        labelStyle = DuckeeTheme.typography.title1.copy(fontWeight = FontWeight.Medium),
                         backgroundColor = if (isGenerateButtonEnabled) Color(0xFFFBFBFB) else Color(0xFF49565E),
                         isEnabled = isGenerateButtonEnabled,
                         onClick = onGenerateButtonClick,

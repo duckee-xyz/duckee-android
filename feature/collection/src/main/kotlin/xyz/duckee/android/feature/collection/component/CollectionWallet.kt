@@ -57,6 +57,7 @@ internal fun CollectionWallet(
             Text(
                 text = profileName,
                 style = DuckeeTheme.typography.title1,
+                fontWeight = FontWeight.Medium,
                 color = Color.White,
             )
             Text(
@@ -68,15 +69,18 @@ internal fun CollectionWallet(
         }
         Spacer(modifier = Modifier.weight(1f))
         DuckeeButton(
-            label = "Bring your own wallet",
-            labelStyle = DuckeeTheme.typography.paragraph5,
+            label = "Bring Your Own Wallet",
+            labelStyle = DuckeeTheme.typography.paragraph5.copy(
+                fontWeight = FontWeight.Medium,
+            ),
+            iconSpacing = 6.dp,
             labelColor = Color.White,
             backgroundColor = Color(0xFF244728),
             shape = RoundedCornerShape(8.dp),
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 7.dp),
             icon = {
                 Icon(
-                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_duck_balance),
+                    painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_flow_logo),
                     contentDescription = null,
                     tint = Color.Unspecified,
                     modifier = Modifier.size(20.dp),

@@ -29,6 +29,8 @@ data class ResponseUser(
     val followerCount: Int?,
     val followingCount: Int?,
     val artCount: Int?,
+    val usdcBalance: Double?,
+    val creditBalance: Double?,
 )
 
 fun ResponseUser.toModel() =
@@ -42,4 +44,6 @@ fun ResponseUser.toModel() =
         followingCount = followingCount,
         artCount = artCount,
         nickname = nickname,
+        usdcBalance = usdcBalance,
+        creditBalance = creditBalance,
     )

@@ -19,7 +19,13 @@ import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import xyz.duckee.android.core.model.GenerationModels
+import xyz.duckee.android.core.model.User
 import xyz.duckee.android.core.ui.RandomImageUrlGenerator
+
+@Immutable
+internal data class RecipeWelcomeState(
+    val user: User? = null,
+)
 
 @Immutable
 internal data class RecipeState(

@@ -63,9 +63,9 @@ fun DuckeeBottomTab(
                     .background(Color(0xFF08090A)),
             )
             DuckeeBottomTabIcon(
-                iconResource = R.drawable.icon_plus_square,
+                iconResource = R.drawable.icon_plus_with_border,
                 isActive = currentRoute.startsWith("recipe"),
-                iconSize = 28.dp,
+                iconSize = 20.dp,
                 onClick = { onClick("recipe") },
             )
         }

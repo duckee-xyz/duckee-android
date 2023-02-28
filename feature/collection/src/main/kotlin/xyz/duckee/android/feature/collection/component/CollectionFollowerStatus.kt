@@ -18,7 +18,6 @@ package xyz.duckee.android.feature.collection.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 
 @Composable
 internal fun CollectionFollowerStatus(
@@ -41,54 +41,60 @@ internal fun CollectionFollowerStatus(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
             modifier = Modifier
-                .defaultMinSize(minWidth = 64.dp),
+                .weight(1f),
         ) {
             Text(
                 text = recipeCount.toString(),
-                style = DuckeeTheme.typography.paragraph4,
+                style = DuckeeTheme.typography.paragraph3,
                 fontWeight = FontWeight.Medium,
+                fontFamily = PPObjectSans,
                 color = Color.White,
             )
             Text(
                 text = "Recipe",
                 style = DuckeeTheme.typography.paragraph5,
+                fontFamily = PPObjectSans,
                 color = Color(0xFFACB7BF),
             )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier.defaultMinSize(minWidth = 64.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = followerCount.toString(),
-                style = DuckeeTheme.typography.paragraph4,
+                style = DuckeeTheme.typography.paragraph3,
                 fontWeight = FontWeight.Medium,
+                fontFamily = PPObjectSans,
                 color = Color.White,
             )
             Text(
                 text = "Follower",
                 style = DuckeeTheme.typography.paragraph5,
                 color = Color(0xFFACB7BF),
+                fontFamily = PPObjectSans,
             )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier.defaultMinSize(minWidth = 64.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = followingCount.toString(),
-                style = DuckeeTheme.typography.paragraph4,
+                style = DuckeeTheme.typography.paragraph3,
                 fontWeight = FontWeight.Medium,
+                fontFamily = PPObjectSans,
                 color = Color.White,
             )
             Text(
                 text = "Following",
                 style = DuckeeTheme.typography.paragraph5,
                 color = Color(0xFFACB7BF),
+                fontFamily = PPObjectSans,
             )
         }
     }

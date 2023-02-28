@@ -25,7 +25,7 @@ data class ArtDetails(
     val liked: Boolean,
     val owner: Owner,
     val parentToken: Token?,
-    val priceInFlow: Int,
+    val priceInFlow: Double,
     val recipe: Recipe?,
     val royaltyFee: Double,
     val tokenId: Int,
@@ -46,7 +46,7 @@ data class ArtDetails(
         val imageUrl: String,
         val liked: Boolean,
         val owner: Owner,
-        val priceInFlow: Int,
+        val priceInFlow: Double,
         val royaltyFee: Double,
         val tokenId: Int,
     )

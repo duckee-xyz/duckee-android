@@ -34,7 +34,7 @@ internal class ArtRepositoryImpl @Inject constructor(
         forSale: Boolean,
         imageUrl: String,
         description: String?,
-        priceInFlow: Int,
+        priceInFlow: Double,
         royaltyFee: Int,
         isImported: Boolean,
         modelName: String,
