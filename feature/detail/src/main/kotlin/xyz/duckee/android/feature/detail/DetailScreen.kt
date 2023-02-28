@@ -167,7 +167,7 @@ internal fun DetailScreen(
                         fontWeight = FontWeight.ExtraLight,
                     ),
                     color = Color(0xFFFBFBFB),
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 DetailPriceInformation(
@@ -182,7 +182,7 @@ internal fun DetailScreen(
                         text = "Lineage",
                         style = DuckeeTheme.typography.h6,
                         color = Color(0xFFFBFBFB),
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     DuckeeLineage(
@@ -197,26 +197,26 @@ internal fun DetailScreen(
                         text = "Derived Art NFTs",
                         style = DuckeeTheme.typography.h6,
                         color = Color(0xFFFBFBFB),
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
 
                     DuckeeHorizontalNftCarousel(
                         tokens = uiState.details.derivedTokens,
                     )
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
 
-                Spacer(modifier = Modifier.height(44.dp))
                 Text(
                     text = "NFT Details",
                     style = DuckeeTheme.typography.h6,
                     color = Color(0xFFFBFBFB),
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 DuckeeInformation {
                     DuckeeInformationItem(
-                        title = "Mint address",
+                        title = "Mint Address",
                         value = "0xbda...f6a6e",
                     )
                     DuckeeInformationItem(
@@ -243,20 +243,20 @@ internal fun DetailScreen(
                     text = "Recipe",
                     style = DuckeeTheme.typography.h6,
                     color = Color(0xFFFBFBFB),
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (uiState.details?.recipe == null) {
                     DuckeePromptUnlock()
                 } else {
-                    var isExpanded1 by remember { mutableStateOf(false) }
+                    var isExpanded1 by remember { mutableStateOf(true) }
                     DuckeeExpandable(
                         title = "Prompt",
                         value = uiState.details.recipe?.prompt.orEmpty(),
                         isExpanded = isExpanded1,
                         onClick = { isExpanded1 = !isExpanded1 },
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -267,7 +267,7 @@ internal fun DetailScreen(
                             value = "female Sailor moonassimilated by alien fungus, intricate Three-point lighting ortrait, by Ching Yeh and Greg Rutkowski, detailed cyberpunk in the style of GitS 1995",
                             isExpanded = isExpanded2,
                             onClick = { isExpanded2 = !isExpanded2 },
-                            modifier = Modifier.padding(horizontal = 24.dp),
+                            modifier = Modifier.padding(horizontal = 12.dp),
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -278,7 +278,7 @@ internal fun DetailScreen(
                         value = uiState.details.recipe?.model?.servedModelName.orEmpty(),
                         isExpanded = isExpanded3,
                         onClick = { isExpanded3 = !isExpanded3 },
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     var isExpanded4 by remember { mutableStateOf(false) }
@@ -287,7 +287,7 @@ internal fun DetailScreen(
                         value = "${uiState.details.recipe?.size?.width} x ${uiState.details.recipe?.size?.height}",
                         isExpanded = isExpanded4,
                         onClick = { isExpanded4 = !isExpanded4 },
-                        modifier = Modifier.padding(horizontal = 24.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -329,12 +329,13 @@ internal fun DetailScreen(
 
             DuckeeButton(
                 label = if (uiState.details?.recipe == null) {
-                    "Buy to unlock this recipe"
+                    "Buy To Unlock This Recipe"
                 } else {
-                    "Try this Recipe"
+                    "Try This Recipe"
                 },
                 labelStyle = DuckeeTheme.typography.title1.copy(
                     fontFamily = PPObjectSans,
+                    fontWeight = FontWeight.Medium,
                 ),
                 onClick = onBuyOrTryButtonClick,
                 modifier = Modifier

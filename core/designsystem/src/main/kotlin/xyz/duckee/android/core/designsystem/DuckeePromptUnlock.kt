@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
@@ -44,7 +45,7 @@ fun DuckeePromptUnlock(
 ) {
     Box(
         modifier = modifier
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 12.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .border(width = 1.dp, color = Color(0xFF2A333A), shape = RoundedCornerShape(16.dp)),
@@ -74,6 +75,7 @@ fun DuckeePromptUnlock(
                 text = "Purchase to Unlock\n" +
                     "How It Created",
                 style = DuckeeTheme.typography.h5,
+                fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
                 color = Color(0xFFFBFBFB),
             )

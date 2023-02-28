@@ -72,6 +72,7 @@ fun DuckeeExpandable(
             Text(
                 text = title,
                 style = DuckeeTheme.typography.paragraph4,
+                fontWeight = FontWeight.Medium,
                 color = Color(0xFFD0D7DD),
             )
             Icon(
@@ -93,9 +94,9 @@ fun DuckeeExpandable(
                         .padding(horizontal = 20.dp, vertical = 16.dp),
                 ) {
                     Text(
-                        text = value,
+                        text = value.trim(),
                         style = DuckeeTheme.typography.paragraph4,
-                        fontWeight = FontWeight.ExtraLight,
+                        fontWeight = FontWeight.Normal,
                         color = Color(0xFFFBFBFB),
                     )
                 }

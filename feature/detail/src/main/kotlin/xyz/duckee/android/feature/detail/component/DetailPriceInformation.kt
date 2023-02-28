@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -57,18 +58,23 @@ internal fun DetailPriceInformation(
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 36.dp),
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.onGloballyPositioned {
-                    itemHeight = with(density) { it.size.height.toDp() }
-                },
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        itemHeight = with(density) { it.size.height.toDp() }
+                    }
+                    .weight(1f),
             ) {
                 Text(
                     text = "Listing Price",
                     style = DuckeeTheme.typography.paragraph5,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Normal,
                     color = Color(0xFF7C8992),
                 )
                 Row(
@@ -76,11 +82,14 @@ internal fun DetailPriceInformation(
                         .spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                    )
+                    if (price > 0) {
+                        Icon(
+                            painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                        )
+                    }
+
                     Text(
                         text = if (price == 0) "Free" else "$price",
                         style = DuckeeTheme.typography.h4,
@@ -98,11 +107,13 @@ internal fun DetailPriceInformation(
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = "Sold Amount",
                     style = DuckeeTheme.typography.paragraph5,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Normal,
                     color = Color(0xFF7C8992),
                 )
                 Text(
@@ -121,11 +132,13 @@ internal fun DetailPriceInformation(
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = "Royalty",
                     style = DuckeeTheme.typography.paragraph5,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Normal,
                     color = Color(0xFF7C8992),
                 )
                 Text(

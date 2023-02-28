@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.DuckeeButton
@@ -53,7 +54,7 @@ internal fun DetailProfile(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 20.dp),
+            .padding(horizontal = 12.dp, vertical = 20.dp),
     ) {
         DuckeeNetworkImage(
             model = profileImageUrl,
@@ -69,6 +70,7 @@ internal fun DetailProfile(
             Text(
                 text = name,
                 style = DuckeeTheme.typography.h5,
+                fontWeight = FontWeight.Medium,
                 color = Color.White,
             )
             Text(

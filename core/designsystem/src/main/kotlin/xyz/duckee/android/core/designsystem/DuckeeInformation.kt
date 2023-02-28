@@ -40,7 +40,7 @@ fun DuckeeInformation(
     Column(
         verticalArrangement = Arrangement.spacedBy(6.dp),
         modifier = modifier
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 12.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0xff2A333A))
@@ -64,7 +64,7 @@ fun DuckeeInformationItem(
         Text(
             text = title,
             style = DuckeeTheme.typography.paragraph4,
-            fontWeight = FontWeight.ExtraLight,
+            fontWeight = FontWeight.Normal,
             color = Color(0xFFFBFBFB),
         )
         Text(
