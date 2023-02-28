@@ -293,7 +293,7 @@ internal fun RecipeScreen(
                                 DuckeeQuestionInputContainer(
                                     categoryLabel = "Guidance Scale",
                                     questionLabel = "How much the image looks closer\n" +
-                                            "to the prompt?",
+                                        "to the prompt?",
                                 ) {
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -319,9 +319,9 @@ internal fun RecipeScreen(
                                                 onGuidanceScaleValueChanged(it)
                                             },
                                             valueRange = 2.toFloat()..(
-                                                    uiState.selectedModel?.recipeDefinitions?.maxGuidanceScale?.toFloat()
-                                                        ?: 2f
-                                                    ),
+                                                uiState.selectedModel?.recipeDefinitions?.maxGuidanceScale?.toFloat()
+                                                    ?: 2f
+                                                ),
                                             modifier = Modifier.fillMaxWidth(),
                                             colors = SliderDefaults.colors(
                                                 thumbColor = Color(0xFFFBFBFB),

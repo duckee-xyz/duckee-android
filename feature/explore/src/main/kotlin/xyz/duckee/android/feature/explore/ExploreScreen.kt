@@ -54,6 +54,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.orbitmvi.orbit.compose.collectSideEffect
+import xyz.duckee.android.core.designsystem.DuckeeArtBadge
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
@@ -61,7 +62,6 @@ import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.ui.isScrolledToEnd
 import xyz.duckee.android.core.ui.observeAsState
-import xyz.duckee.android.feature.explore.component.ExploreImageBadge
 import xyz.duckee.android.feature.explore.contract.ExploreSideEffect
 import xyz.duckee.android.feature.explore.contract.ExploreState
 
@@ -197,14 +197,14 @@ internal fun ExploreScreen(
                             .clickableSingle(onClick = { onImageClick(feed.tokenId.toString()) }),
                     )
                     if (feed.priceInFlow == 0) {
-                        ExploreImageBadge(
+                        DuckeeArtBadge(
                             label = "Open Source",
                             modifier = Modifier
                                 .padding(16.dp)
                                 .align(Alignment.BottomStart),
                         )
                     } else {
-                        ExploreImageBadge(
+                        DuckeeArtBadge(
                             label = "${feed.priceInFlow}",
                             backgroundColor = Color.White.copy(alpha = 0.9f),
                             borderColor = Color.White,

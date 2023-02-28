@@ -22,7 +22,9 @@ import xyz.duckee.android.core.navigation.SignInDirections
 import xyz.duckee.android.core.navigation.transition.rootTransitionComposable
 import xyz.duckee.android.feature.collection.CollectionRoute
 
-fun NavGraphBuilder.collectionScreen() {
+fun NavGraphBuilder.collectionScreen(
+    goDetailScreen: (String) -> Unit,
+) {
     rootTransitionComposable(
         routeCommand = CollectDirections.main,
         commands = listOf(
@@ -30,6 +32,8 @@ fun NavGraphBuilder.collectionScreen() {
             DetailDirections.main,
         ),
     ) {
-        CollectionRoute()
+        CollectionRoute(
+            goDetailScreen = { goDetailScreen(it.toString()) },
+        )
     }
 }

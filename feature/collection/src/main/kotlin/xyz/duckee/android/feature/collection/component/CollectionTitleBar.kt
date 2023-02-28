@@ -48,7 +48,7 @@ fun CollectionTitleBar(
             .padding(horizontal = 24.dp),
     ) {
         Text(
-            text = "\uD83D\uDCD2 Collection",
+            text = "Collection",
             style = DuckeeTheme.typography.h5,
             fontWeight = FontWeight.Medium,
             color = Color(0xFFFBFBFB),

@@ -20,21 +20,27 @@ import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
+import xyz.duckee.android.feature.collection.contract.CollectionSideEffect
 import xyz.duckee.android.feature.collection.contract.CollectionState
 import javax.inject.Inject
 
 @HiltViewModel
 internal class CollectionViewModel @Inject constructor(
     private val getMyProfileUseCase: GetMyProfileUseCase,
-) : ViewModel(), ContainerHost<CollectionState, Unit> {
+) : ViewModel(), ContainerHost<CollectionState, CollectionSideEffect> {
 
-    override val container = container<CollectionState, Unit>(CollectionState())
+    override val container = container<CollectionState, CollectionSideEffect>(CollectionState())
 
     init {
         getMyProfile()
+    }
+
+    fun onArtClick(tokenId: Int) = intent {
+        postSideEffect(CollectionSideEffect.GoDetailScreen(tokenId))
     }
 
     private fun getMyProfile() = intent {

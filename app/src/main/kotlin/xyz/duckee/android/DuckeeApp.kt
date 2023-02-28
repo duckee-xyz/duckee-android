@@ -107,7 +107,9 @@ fun DuckeeApp(
                 goMyTab = { navController.navigateToCollectionTab(inclusive = true) },
                 goGenerateScreen = { navController.navigateToRecipeScreen(importMode = it) },
             )
-            collectionScreen()
+            collectionScreen(
+                goDetailScreen = navController::navigateToDetailScreen,
+            )
         }
 
         val density = LocalDensity.current

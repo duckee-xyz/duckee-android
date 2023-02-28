@@ -27,12 +27,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
@@ -40,11 +42,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -56,8 +60,12 @@ import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
+import org.orbitmvi.orbit.compose.collectSideEffect
+import xyz.duckee.android.core.designsystem.DuckeeArtBadgeSmall
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeScrollableTabRow
+import xyz.duckee.android.core.designsystem.R
+import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.ui.observeAsState
 import xyz.duckee.android.feature.collection.component.CollectionBalance
@@ -65,6 +73,7 @@ import xyz.duckee.android.feature.collection.component.CollectionProfile
 import xyz.duckee.android.feature.collection.component.CollectionTitleBar
 import xyz.duckee.android.feature.collection.component.CollectionWallet
 import xyz.duckee.android.feature.collection.contract.CollectionFeedState
+import xyz.duckee.android.feature.collection.contract.CollectionSideEffect
 import xyz.duckee.android.feature.collection.contract.CollectionState
 import xyz.duckee.android.feature.collection.ui.pagerTabIndicatorOffset
 
@@ -76,6 +85,7 @@ internal fun CollectionRoute(
     listedViewModel: CollectionListedViewModel = hiltViewModel(),
     boughtViewModel: CollectionBoughtViewModel = hiltViewModel(),
     likedViewModel: CollectionLikedViewModel = hiltViewModel(),
+    goDetailScreen: (Int) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
     val listedUiState by listedViewModel.container.stateFlow.collectAsStateWithLifecycle()
@@ -91,11 +101,18 @@ internal fun CollectionRoute(
         }
     }
 
+    viewModel.collectSideEffect {
+        if (it is CollectionSideEffect.GoDetailScreen) {
+            goDetailScreen(it.tokenId)
+        }
+    }
+
     CollectionScreen(
         uiState = uiState,
         listedUiState = listedUiState,
         boughtUiState = boughtUiState,
         likedUiState = likedUiState,
+        onArtClick = viewModel::onArtClick,
     )
 }
 
@@ -106,6 +123,7 @@ internal fun CollectionScreen(
     listedUiState: CollectionFeedState,
     boughtUiState: CollectionFeedState,
     likedUiState: CollectionFeedState,
+    onArtClick: (Int) -> Unit,
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
     val density = LocalDensity.current
@@ -232,16 +250,47 @@ internal fun CollectionScreen(
             ) {
                 when (page) {
                     0 -> {
-                        items(listedUiState.feeds) {
-                            DuckeeNetworkImage(
-                                model = it.imageUrl,
-                                contentDescription = null,
+                        items(listedUiState.feeds) { feed ->
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                                     .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
-                            )
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .clickableSingle { onArtClick(feed.tokenId) },
+                            ) {
+                                DuckeeNetworkImage(
+                                    model = feed.imageUrl,
+                                    contentDescription = null,
+                                    modifier = Modifier,
+                                )
+
+                                if (feed.priceInFlow == 0) {
+                                    DuckeeArtBadgeSmall(
+                                        label = "Open Source",
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .align(Alignment.BottomStart),
+                                    )
+                                } else {
+                                    DuckeeArtBadgeSmall(
+                                        label = "${feed.priceInFlow}",
+                                        backgroundColor = Color.White.copy(alpha = 0.9f),
+                                        borderColor = Color.White,
+                                        icon = {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.icon_usdc),
+                                                contentDescription = "duck logo",
+                                                tint = Color.Unspecified,
+                                                modifier = Modifier.size(16.dp),
+                                            )
+                                        },
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .align(Alignment.BottomStart),
+                                    )
+                                }
+                            }
                         }
                     }
 
@@ -254,7 +303,8 @@ internal fun CollectionScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                                     .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .clickableSingle { onArtClick(it.tokenId) },
                             )
                         }
                     }
@@ -282,7 +332,8 @@ internal fun CollectionScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                                     .padding(6.5.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .clickableSingle { onArtClick(it.tokenId) },
                             )
                         }
                     }
