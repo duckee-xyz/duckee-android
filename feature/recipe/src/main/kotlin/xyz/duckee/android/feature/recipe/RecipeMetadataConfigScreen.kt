@@ -173,7 +173,7 @@ internal fun RecipeMetadataConfigScreen(
         }
 
         if (uiState.isLoading) {
-            DuckeeCharacterLoadingOverlay()
+            DuckeeCharacterLoadingOverlay(loadingMessage = "Minting an NFT…")
         }
     }
 }

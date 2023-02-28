@@ -44,7 +44,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
-import xyz.duckee.android.core.designsystem.DuckeeLoadingOverlay
+import xyz.duckee.android.core.designsystem.DuckeeCharacterLoadingOverlay
 import xyz.duckee.android.core.designsystem.R
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.designsystem.theme.PPObjectSans
@@ -128,7 +128,7 @@ internal fun SignInScreen(
         }
 
         if (uiState.isLoading) {
-            DuckeeLoadingOverlay()
+            DuckeeCharacterLoadingOverlay(loadingMessage = "Creating Account…")
         }
     }
 }

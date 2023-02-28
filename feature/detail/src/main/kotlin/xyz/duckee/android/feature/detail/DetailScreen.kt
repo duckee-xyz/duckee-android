@@ -50,6 +50,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
+import kotlin.math.min
 import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
@@ -69,7 +70,6 @@ import xyz.duckee.android.feature.detail.component.DetailPriceInformation
 import xyz.duckee.android.feature.detail.component.DetailProfile
 import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
-import kotlin.math.min
 
 @Composable
 internal fun DetailRoute(
@@ -355,7 +355,7 @@ internal fun DetailScreen(
         }
 
         if (uiState.isLoading) {
-            DuckeeCharacterLoadingOverlay()
+            DuckeeCharacterLoadingOverlay(loadingMessage = "Printing some USDC… ")
         }
     }
 }

@@ -17,9 +17,12 @@ package xyz.duckee.android.feature.collection
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +35,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -68,7 +72,7 @@ import xyz.duckee.android.core.designsystem.R
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
 import xyz.duckee.android.core.ui.observeAsState
-import xyz.duckee.android.feature.collection.component.CollectionBalance
+import xyz.duckee.android.feature.collection.component.CollectionCreditContainer
 import xyz.duckee.android.feature.collection.component.CollectionProfile
 import xyz.duckee.android.feature.collection.component.CollectionTitleBar
 import xyz.duckee.android.feature.collection.component.CollectionWallet
@@ -175,12 +179,38 @@ internal fun CollectionScreen(
                     onLinkButtonClick = {},
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                CollectionBalance(
-                    balance = 0.0,
-                    estimateBalance = 0.0,
-                    onAddButtonClick = {},
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(horizontal = 12.dp),
-                )
+                ) {
+                    CollectionCreditContainer(
+                        title = "Your AI Credit",
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_duck_balance),
+                                contentDescription = null,
+                                tint = Color.Unspecified,
+                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape)
+                            )
+                        },
+                        balance = uiState.user?.creditBalance ?: 0.0,
+                        modifier = Modifier.weight(1f),
+                    )
+                    CollectionCreditContainer(
+                        title = "Your Revenue",
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_usdc),
+                                contentDescription = null,
+                                tint = Color.Unspecified,
+                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape)
+                            )
+                        },
+                        balance = uiState.user?.usdcBalance ?: 0.0,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 DuckeeScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,

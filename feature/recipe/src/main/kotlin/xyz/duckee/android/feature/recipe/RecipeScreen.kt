@@ -510,7 +510,7 @@ internal fun RecipeScreen(
         }
 
         if (uiState.isGenerating) {
-            DuckeeCharacterLoadingOverlay()
+            DuckeeCharacterLoadingOverlay(loadingMessage = "Heating My CPU…")
         }
     }
 }
