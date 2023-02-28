@@ -34,11 +34,12 @@ fun NavController.navigateToRecipeTab(inclusive: Boolean = false) {
     }
 }
 
-fun NavController.navigateToRecipeScreen(id: String? = null, importMode: Boolean = false) {
+fun NavController.navigateToRecipeScreen(id: String? = null, importMode: Boolean = false, tryMode: Boolean = false) {
     this.navigate(
         RecipeDirections.main.destination
             .replace("{id}", if (id.orEmpty().isBlank()) "-1" else id.toString())
-            .replace("{importMode}", importMode.toString()),
+            .replace("{importMode}", importMode.toString())
+            .replace("{tryMode}", tryMode.toString()),
     )
 }
 
@@ -70,8 +71,12 @@ object RecipeDirections {
                 type = NavType.BoolType
                 defaultValue = false
             },
+            navArgument("tryMode") {
+                type = NavType.BoolType
+                defaultValue = false
+            },
         )
-        override val destination: String = "$recipeNavigationRoute/{id}?importMode={importMode}"
+        override val destination: String = "$recipeNavigationRoute/{id}?importMode={importMode}&tryMode={tryMode}"
     }
 
     val result = object : NavigationCommand {

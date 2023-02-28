@@ -46,9 +46,9 @@ import xyz.duckee.android.core.navigation.exploreNavigationRoute
 import xyz.duckee.android.core.navigation.navigateToCollectionTab
 import xyz.duckee.android.core.navigation.navigateToDetailScreen
 import xyz.duckee.android.core.navigation.navigateToExploreTab
-import xyz.duckee.android.core.navigation.navigateToRecipeScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultMetadataScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeResultScreen
+import xyz.duckee.android.core.navigation.navigateToRecipeScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeSuccessScreen
 import xyz.duckee.android.core.navigation.navigateToRecipeTab
 import xyz.duckee.android.core.navigation.navigateToSignInScreen
@@ -94,7 +94,7 @@ fun DuckeeApp(
                 goExploreTab = { navController.navigateToExploreTab(inclusive = true) },
             )
             detailScreen(
-                goRecipeScreen = navController::navigateToRecipeScreen,
+                goRecipeScreen = { navController.navigateToRecipeScreen(tryMode = true) },
             )
             recipeScreen(
                 goRecipeResultScreen = navController::navigateToRecipeResultScreen,

@@ -69,13 +69,13 @@ import kotlin.math.min
 @Composable
 internal fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel(),
-    goRecipeScreen: (String) -> Unit,
+    goRecipeScreen: () -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
 
     viewModel.collectSideEffect {
         if (it is DetailSideEffect.GoRecipeScreen) {
-            goRecipeScreen("1")
+            goRecipeScreen()
         }
     }
 

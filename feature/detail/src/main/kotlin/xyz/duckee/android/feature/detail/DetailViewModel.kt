@@ -31,6 +31,7 @@ import xyz.duckee.android.core.domain.user.FollowUserUseCase
 import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.core.domain.user.GetUserProfileUseCase
 import xyz.duckee.android.core.domain.user.UnfollowUserUseCase
+import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.detail.contract.DetailSideEffect
 import xyz.duckee.android.feature.detail.contract.DetailState
 import javax.inject.Inject
@@ -43,6 +44,7 @@ internal class DetailViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val followUserUseCase: FollowUserUseCase,
     private val unfollowUserUseCase: UnfollowUserUseCase,
+    private val recipeStore: RecipeStore,
 ) : ViewModel(), ContainerHost<DetailState, DetailSideEffect> {
 
     private val tokenId = savedStateHandle.get<String>("id").orEmpty()
@@ -96,6 +98,24 @@ internal class DetailViewModel @Inject constructor(
                 reduce { state.copy(isLoading = false, details = data) }
 
                 getOwnerUserProfile(data.owner.id.toString())
+
+                if (data.recipe != null) {
+                    val recipe = mapOf(
+                        "isImported" to false,
+                        "modelName" to data.recipe?.model?.servedModelName.orEmpty(),
+                        "prompt" to data.recipe?.prompt.orEmpty(),
+                        "sizeWidth" to (data.recipe?.size?.width ?: -1),
+                        "sizeHeight" to (data.recipe?.size?.height ?: -1),
+                        "negativePrompt" to data.recipe?.negativePrompt.takeIf { it?.isNotBlank() == true },
+                        "guidanceScale" to data.recipe?.guidanceScale.takeIf { data.recipe?.model?.servedModelName != "DallE" },
+                        "runs" to data.recipe?.runs.takeIf { data.recipe?.model?.servedModelName != "DallE" },
+                        "sampler" to data.recipe?.sampler.takeIf { data.recipe?.model?.servedModelName != "DallE" },
+                        "seed" to data.recipe?.seed.takeIf { data.recipe?.model?.servedModelName != "DallE" }
+                            ?.toInt(),
+                    )
+
+                    recipeStore.saveTemporaryRecipeProperty(recipe)
+                }
             }
             .suspendOnException {
                 Timber.e(exception)

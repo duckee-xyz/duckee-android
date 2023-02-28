@@ -16,8 +16,8 @@
 package xyz.duckee.android.core.network.firebase
 
 import com.google.firebase.auth.FirebaseAuth
-import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 internal class FirebaseAuthManagerImpl @Inject constructor() : FirebaseAuthManager {
 
