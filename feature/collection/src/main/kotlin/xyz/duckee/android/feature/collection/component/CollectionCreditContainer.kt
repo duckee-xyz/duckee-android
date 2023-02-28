@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 The Duckee Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package xyz.duckee.android.feature.collection.component
 
 import androidx.compose.foundation.border
@@ -28,12 +43,11 @@ internal fun CollectionCreditContainer(
     balance: Double,
     iconSpacing: Dp = 12.dp,
 ) {
-
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
             .border(width = 1.dp, color = Color(0xFF2A333A), shape = RoundedCornerShape(8.dp))
-            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
     ) {
         Text(
             text = title,

@@ -191,7 +191,7 @@ internal fun CollectionScreen(
                                 painter = painterResource(id = R.drawable.icon_duck_balance),
                                 contentDescription = null,
                                 tint = Color.Unspecified,
-                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape)
+                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape),
                             )
                         },
                         balance = uiState.user?.creditBalance ?: 0.0,
@@ -204,7 +204,7 @@ internal fun CollectionScreen(
                                 painter = painterResource(id = R.drawable.icon_usdc),
                                 contentDescription = null,
                                 tint = Color.Unspecified,
-                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape)
+                                modifier = Modifier.border(width = 1.dp, color = Color.White, shape = CircleShape),
                             )
                         },
                         balance = uiState.user?.usdcBalance ?: 0.0,

@@ -24,7 +24,6 @@ import androidx.core.view.WindowCompat
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -36,6 +35,7 @@ import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
 import xyz.duckee.android.core.ui.LocalNavigationPopStack
 import xyz.duckee.android.core.ui.LocalPaymentSheet
 import xyz.duckee.android.core.ui.PurchaseEventManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
