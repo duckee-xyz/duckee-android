@@ -23,7 +23,6 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
@@ -44,6 +43,7 @@ import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.core.ui.RecipeStore
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 import xyz.duckee.android.feature.recipe.contract.RecipeState
+import javax.inject.Inject
 
 @OptIn(OrbitExperimental::class)
 @HiltViewModel
@@ -74,6 +74,8 @@ internal class RecipeViewModel @Inject constructor(
                 selectedModel = model,
                 selectedSize = model.recipeDefinitions.availableSizes.first(),
                 selectedSampler = model.recipeDefinitions.defaultSampler,
+                guidanceScale = model.recipeDefinitions.defaultGuidanceScale.toInt(),
+                steps = model.recipeDefinitions.defaultRuns,
                 seedNumber = "",
             )
         }
@@ -209,7 +211,7 @@ internal class RecipeViewModel @Inject constructor(
                 selectedSize = selectedModel.recipeDefinitions.availableSizes.first { it.width == tryRecipe["sizeWidth"] as Int },
                 selectedSampler = (tryRecipe["sampler"] as? String).orEmpty(),
                 seedNumber = (tryRecipe["seed"] as? Int)?.toString().orEmpty(),
-                steps = (tryRecipe["runs"] as? Int) ?: 30
+                steps = (tryRecipe["runs"] as? Int) ?: 30,
             )
         }
     }

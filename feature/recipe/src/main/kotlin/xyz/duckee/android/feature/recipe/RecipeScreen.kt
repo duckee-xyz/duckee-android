@@ -303,10 +303,7 @@ internal fun RecipeScreen(
                                             .padding(horizontal = 48.dp),
                                     ) {
                                         val (selectedIndex, onSelectedIndex) = remember {
-                                            mutableStateOf(
-                                                uiState.selectedModel?.recipeDefinitions?.defaultGuidanceScale?.toFloat()
-                                                    ?: 2f,
-                                            )
+                                            mutableStateOf(uiState.guidanceScale.toFloat())
                                         }
 
                                         Text(
@@ -390,8 +387,7 @@ internal fun RecipeScreen(
                                     ) {
                                         val (selectedIndex, onSelectedIndex) = remember {
                                             mutableStateOf(
-                                                uiState.selectedModel?.recipeDefinitions?.defaultRuns?.toFloat()
-                                                    ?: 20f,
+                                                uiState.steps.toFloat(),
                                             )
                                         }
 
