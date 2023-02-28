@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
@@ -58,6 +59,9 @@ internal class SignInViewModel @Inject constructor(
                     reduce { state.copy(isLoading = false) }
 
                     postSideEffect(SignInSideEffect.GoExploreTab)
+                }
+                .suspendOnException {
+                    Timber.e(exception)
                 }
                 .suspendOnError {
                     signUpWithGoogleUseCase()

@@ -22,7 +22,7 @@ data class User(
     val profileImage: String,
     val address: String,
     val following: Boolean?,
-    val followerCount: Int,
-    val followingCount: Int,
-    val artCount: Int,
+    val followerCount: Int?,
+    val followingCount: Int?,
+    val artCount: Int?,
 )

@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import xyz.duckee.android.core.designsystem.DuckeeBottomTab
 import xyz.duckee.android.core.designsystem.foundation.drawColoredShadow
@@ -67,6 +69,7 @@ private val bottomNavigationShowRoutes = listOf(
 
 @Composable
 fun DuckeeApp(
+    isAuthenticated: suspend () -> Boolean,
     navController: NavHostController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryFlow.collectAsStateWithLifecycle(initialValue = null)
@@ -111,6 +114,7 @@ fun DuckeeApp(
         val isBottomNavigationShowed by remember(currentRoute) {
             derivedStateOf { bottomNavigationShowRoutes.any { currentRoute == it } }
         }
+        val coroutineScope = rememberCoroutineScope()
 
         AnimatedVisibility(
             visible = isBottomNavigationShowed,
@@ -129,8 +133,25 @@ fun DuckeeApp(
                 onClick = {
                     when (it) {
                         exploreNavigationRoute -> navController.navigateToExploreTab()
-                        recipeNavigationRoute -> navController.navigateToRecipeTab()
-                        collectionNavigationRoute -> navController.navigateToCollectionTab()
+                        recipeNavigationRoute -> {
+                            coroutineScope.launch {
+                                if (!isAuthenticated()) {
+                                    navController.navigateToSignInScreen()
+                                } else {
+                                    navController.navigateToRecipeTab()
+                                }
+                            }
+                        }
+
+                        collectionNavigationRoute -> {
+                            coroutineScope.launch {
+                                if (!isAuthenticated()) {
+                                    navController.navigateToSignInScreen()
+                                } else {
+                                    navController.navigateToCollectionTab()
+                                }
+                            }
+                        }
                     }
                 },
                 modifier = Modifier

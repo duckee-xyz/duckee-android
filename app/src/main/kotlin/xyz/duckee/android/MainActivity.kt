@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 import timber.log.Timber
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.domain.auth.CheckAuthenticateStateUseCase
 import xyz.duckee.android.core.ui.LocalNavigationPopStack
 import xyz.duckee.android.core.ui.LocalPaymentSheet
 import xyz.duckee.android.core.ui.PurchaseEventManager
@@ -39,6 +40,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var paymentSheet: PaymentSheet
+
+    @Inject
+    lateinit var checkAuthenticateStateUseCase: CheckAuthenticateStateUseCase
 
     @Inject
     lateinit var purchaseEventManager: PurchaseEventManager
@@ -84,6 +88,7 @@ class MainActivity : ComponentActivity() {
                     LocalPaymentSheet provides paymentSheet,
                 ) {
                     DuckeeApp(
+                        isAuthenticated = { checkAuthenticateStateUseCase() },
                         navController = navController,
                     )
                 }
