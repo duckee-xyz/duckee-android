@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
@@ -63,17 +64,20 @@ fun DuckeeSearchBar(
         BasicTextField(
             value = value,
             onValueChange = onValueChanged,
-            textStyle = DuckeeTheme.typography.paragraph4.copy(
+            textStyle = DuckeeTheme.typography.paragraph3.copy(
                 color = Color.White,
+                fontWeight = FontWeight.Normal,
             ),
             singleLine = true,
             cursorBrush = SolidColor(Color.White),
             modifier = Modifier.weight(1f),
         ) { nativeTextField ->
-            if (value.isBlank()) {
+            if (value.isEmpty()) {
                 Text(
                     text = placeHolder,
-                    style = DuckeeTheme.typography.paragraph4,
+                    style = DuckeeTheme.typography.paragraph3.copy(
+                        fontWeight = FontWeight.Normal,
+                    ),
                     color = Color(0xFF7C8992),
                 )
             }

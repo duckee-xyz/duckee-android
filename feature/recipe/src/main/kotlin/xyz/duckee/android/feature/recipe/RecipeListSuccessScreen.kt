@@ -37,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.orbitmvi.orbit.compose.collectSideEffect
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
 
 @Composable
@@ -103,7 +103,7 @@ internal fun RecipeListSuccessScreen(
             DuckeeButton(
                 label = "List another NFT",
                 labelColor = Color(0xFFFBFBFB),
-                labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PromptFont),
+                labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PPObjectSans),
                 backgroundColor = Color.Transparent,
                 contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
                 onClick = onExploreButtonClick,

@@ -47,7 +47,7 @@ import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.DuckeeLoadingOverlay
 import xyz.duckee.android.core.designsystem.R
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.feature.signin.contract.SignInSideEffect
 import xyz.duckee.android.feature.signin.contract.SignInState
 
@@ -109,7 +109,7 @@ internal fun SignInScreen(
             DuckeeButton(
                 label = "Sign with Google",
                 labelStyle = DuckeeTheme.typography.title1.copy(
-                    fontFamily = PromptFont,
+                    fontFamily = PPObjectSans,
                 ),
                 icon = {
                     Icon(

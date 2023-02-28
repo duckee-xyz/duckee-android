@@ -43,7 +43,7 @@ import xyz.duckee.android.core.designsystem.DuckeeAppBar
 import xyz.duckee.android.core.designsystem.DuckeeButton
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.core.ui.LocalNavigationPopStack
 import xyz.duckee.android.feature.recipe.contract.RecipeResultState
 import xyz.duckee.android.feature.recipe.contract.RecipeSideEffect
@@ -115,7 +115,7 @@ internal fun RecipeResultScreen(
             DuckeeButton(
                 label = "Edit settings",
                 labelColor = Color(0xFFFBFBFB),
-                labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PromptFont),
+                labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PPObjectSans),
                 backgroundColor = Color.Transparent,
                 contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
                 onClick = onEditSettingButtonClick,

@@ -15,6 +15,7 @@
  */
 package xyz.duckee.android.feature.recipe
 
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -116,6 +117,12 @@ internal class RecipeViewModel @Inject constructor(
     fun onStepsValueChanged(value: Int) = blockingIntent {
         reduce { state.copy(steps = value) }
     }
+
+    fun onImportButtonClick() = intent {
+        postSideEffect(RecipeSideEffect.OpenPhotoPicker)
+    }
+
+    fun onPhotoPickerResult(uri: Uri?) = intent {}
 
     fun onGenerateButtonClick() = intent {
         reduce { state.copy(isGenerating = true) }

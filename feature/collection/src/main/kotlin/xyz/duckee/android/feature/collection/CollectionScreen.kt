@@ -179,13 +179,13 @@ internal fun CollectionScreen(
                     balance = 0.0,
                     estimateBalance = 0.0,
                     onAddButtonClick = {},
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 DuckeeScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,
                     backgroundColor = Color.Transparent,
-                    edgePadding = 24.dp,
+                    edgePadding = 12.dp,
                     indicator = { tabPositions ->
                         TabRowDefaults.Indicator(
                             Modifier
@@ -243,7 +243,7 @@ internal fun CollectionScreen(
             state = pagerState,
         ) { page ->
             LazyVerticalGrid(
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 120.dp),
+                contentPadding = PaddingValues(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 120.dp),
                 columns = GridCells
                     .Fixed(2),
                 modifier = Modifier.fillMaxSize(),

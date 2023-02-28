@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 
 @Composable
 fun DuckeeFilterChip(
@@ -43,7 +44,9 @@ fun DuckeeFilterChip(
         } else {
             Color(0xFFFBFBFB)
         },
-        style = DuckeeTheme.typography.paragraph4,
+        style = DuckeeTheme.typography.paragraph4.copy(
+            fontFamily = PPObjectSans,
+        ),
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .clickableSingle(onClick = onClick)

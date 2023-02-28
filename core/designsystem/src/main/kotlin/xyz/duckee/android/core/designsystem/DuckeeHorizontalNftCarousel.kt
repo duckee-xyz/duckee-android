@@ -34,7 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.core.model.ArtDetails
 
 @Composable
@@ -44,7 +44,7 @@ fun DuckeeHorizontalNftCarousel(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 24.dp),
+        contentPadding = PaddingValues(horizontal = 12.dp),
         modifier = modifier.fillMaxWidth(),
     ) {
         items(tokens) {
@@ -70,7 +70,7 @@ fun DuckeeHorizontalNftCarousel(
                     Text(
                         text = it.owner.nickname,
                         style = DuckeeTheme.typography.paragraph4,
-                        fontFamily = PromptFont,
+                        fontFamily = PPObjectSans,
                         color = Color(0xFFFBFBFB),
                     )
                 }

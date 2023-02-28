@@ -44,14 +44,13 @@ val supportWeight = listOf(
     FontWeight.W900,
 )
 
-val PromptFont = FontFamily(
-    supportWeight.map {
-        Font(
-            googleFont = GoogleFont("Prompt"),
-            fontProvider = googleFontProvider,
-            weight = it,
-        )
-    },
+val PPObjectSans = FontFamily(
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_thin, weight = FontWeight.Thin),
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_black, weight = FontWeight.Black),
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_bold, weight = FontWeight.Bold),
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_light, weight = FontWeight.Light),
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_medium, weight = FontWeight.Medium),
+    androidx.compose.ui.text.font.Font(R.font.pp_object_sans_regular, weight = FontWeight.Normal),
 )
 
 val InterFont = FontFamily(
@@ -68,42 +67,42 @@ val InterFont = FontFamily(
 object DuckeeTypography {
     val h1: TextStyle = TextStyle(
         fontSize = 36.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 44.sp,
         letterSpacing = (-0.01).sp,
     )
     val h2: TextStyle = TextStyle(
         fontSize = 32.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 40.sp,
         letterSpacing = (-0.01).sp,
     )
     val h4: TextStyle = TextStyle(
         fontSize = 24.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 30.sp,
         letterSpacing = (-0.01).sp,
     )
     val h5: TextStyle = TextStyle(
         fontSize = 20.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 30.sp,
         letterSpacing = (-0.01).sp,
     )
     val h6: TextStyle = TextStyle(
         fontSize = 16.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 20.sp,
         letterSpacing = (-0.01).sp,
     )
     val title1: TextStyle = TextStyle(
         fontSize = 18.sp,
-        fontFamily = PromptFont,
+        fontFamily = PPObjectSans,
         fontWeight = FontWeight.Normal,
         lineHeight = 20.sp,
         letterSpacing = (-0.01).sp,

@@ -48,7 +48,7 @@ internal fun CollectionWallet(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 12.dp),
     ) {
         Column(
             verticalArrangement = Arrangement

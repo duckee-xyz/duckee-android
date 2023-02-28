@@ -43,4 +43,7 @@ internal sealed interface RecipeSideEffect {
     data class GoGenerateScreen(
         val importMode: Boolean,
     ) : RecipeSideEffect
+
+    @Immutable
+    object OpenPhotoPicker : RecipeSideEffect
 }

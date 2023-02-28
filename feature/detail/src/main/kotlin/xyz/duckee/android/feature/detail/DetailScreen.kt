@@ -63,7 +63,7 @@ import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeePromptUnlock
 import xyz.duckee.android.core.designsystem.foundation.drawColoredShadow
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.core.ui.LocalPaymentSheet
 import xyz.duckee.android.feature.detail.component.DetailPriceInformation
 import xyz.duckee.android.feature.detail.component.DetailProfile
@@ -334,7 +334,7 @@ internal fun DetailScreen(
                     "Try this Recipe"
                 },
                 labelStyle = DuckeeTheme.typography.title1.copy(
-                    fontFamily = PromptFont,
+                    fontFamily = PPObjectSans,
                 ),
                 onClick = onBuyOrTryButtonClick,
                 modifier = Modifier

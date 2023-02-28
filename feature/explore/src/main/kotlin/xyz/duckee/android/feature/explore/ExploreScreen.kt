@@ -54,7 +54,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.orbitmvi.orbit.compose.collectSideEffect
-import xyz.duckee.android.core.designsystem.DuckeeArtBadge
+import xyz.duckee.android.core.designsystem.DuckeeArtBadgeSmall
 import xyz.duckee.android.core.designsystem.DuckeeFilterChip
 import xyz.duckee.android.core.designsystem.DuckeeNetworkImage
 import xyz.duckee.android.core.designsystem.DuckeeSearchBar
@@ -148,7 +148,7 @@ internal fun ExploreScreen(
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 24.dp, end = 24.dp),
+                        .padding(top = 16.dp, start = 12.dp, end = 12.dp),
                 )
             }
             stickyHeader {
@@ -156,18 +156,18 @@ internal fun ExploreScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
                         .background(Color(0xFF08090A))
-                        .padding(top = 16.dp, bottom = 24.dp),
+                        .padding(top = 16.dp, bottom = 12.dp),
                 ) {
                     DuckeeSearchBar(
                         value = uiState.searchValue,
                         onValueChanged = onSearchValueChanged,
-                        placeHolder = "Search anything",
+                        placeHolder = "Search Anything",
                         modifier = Modifier
-                            .padding(horizontal = 24.dp),
+                            .padding(horizontal = 12.dp),
                     )
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(horizontal = 24.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp),
                     ) {
                         items(uiState.filters) { filter ->
                             DuckeeFilterChip(
@@ -184,7 +184,7 @@ internal fun ExploreScreen(
             items(uiState.feeds) { feed ->
                 Box(
                     modifier = Modifier
-                        .padding(horizontal = 24.dp)
+                        .padding(horizontal = 12.dp)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(32.dp))
                         .border(width = 1.dp, color = Color(0xFF7C8992), shape = RoundedCornerShape(32.dp)),
@@ -197,14 +197,14 @@ internal fun ExploreScreen(
                             .clickableSingle(onClick = { onImageClick(feed.tokenId.toString()) }),
                     )
                     if (feed.priceInFlow == 0) {
-                        DuckeeArtBadge(
+                        DuckeeArtBadgeSmall(
                             label = "Open Source",
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(12.dp)
                                 .align(Alignment.BottomStart),
                         )
                     } else {
-                        DuckeeArtBadge(
+                        DuckeeArtBadgeSmall(
                             label = "${feed.priceInFlow}",
                             backgroundColor = Color.White.copy(alpha = 0.9f),
                             borderColor = Color.White,
@@ -213,11 +213,11 @@ internal fun ExploreScreen(
                                     painter = painterResource(id = xyz.duckee.android.core.designsystem.R.drawable.icon_usdc),
                                     contentDescription = "duck logo",
                                     tint = Color.Unspecified,
-                                    modifier = Modifier.size(24.dp),
+                                    modifier = Modifier.size(16.dp),
                                 )
                             },
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(12.dp)
                                 .align(Alignment.BottomStart),
                         )
                     }

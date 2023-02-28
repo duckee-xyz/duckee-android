@@ -15,6 +15,9 @@
  */
 package xyz.duckee.android.feature.recipe
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -77,7 +80,7 @@ import xyz.duckee.android.core.designsystem.DuckeeSlider
 import xyz.duckee.android.core.designsystem.DuckeeTextField
 import xyz.duckee.android.core.designsystem.foundation.clickableSingle
 import xyz.duckee.android.core.designsystem.theme.DuckeeTheme
-import xyz.duckee.android.core.designsystem.theme.PromptFont
+import xyz.duckee.android.core.designsystem.theme.PPObjectSans
 import xyz.duckee.android.core.model.GenerationModels
 import xyz.duckee.android.feature.recipe.component.RecipeAddImageButton
 import xyz.duckee.android.feature.recipe.component.RecipeModelType
@@ -90,10 +93,16 @@ internal fun RecipeRoute(
     goRecipeResultScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = viewModel::onPhotoPickerResult,
+    )
 
     viewModel.collectSideEffect {
         if (it is RecipeSideEffect.GoRecipeResultScreen) {
             goRecipeResultScreen(it.resultId)
+        } else if (it is RecipeSideEffect.OpenPhotoPicker) {
+            photoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
 
@@ -109,6 +118,7 @@ internal fun RecipeRoute(
         onGenerateButtonClick = viewModel::onGenerateButtonClick,
         onGuidanceScaleValueChanged = viewModel::onGuidanceScaleValueChanged,
         onStepsValueChanged = viewModel::onStepsValueChanged,
+        onImportButtonClick = viewModel::onImportButtonClick,
     )
 }
 
@@ -126,6 +136,7 @@ internal fun RecipeScreen(
     onGuidanceScaleValueChanged: (Float) -> Unit,
     onStepsValueChanged: (Int) -> Unit,
     onGenerateButtonClick: () -> Unit,
+    onImportButtonClick: () -> Unit,
 ) {
     Scaffold {
         Column(
@@ -184,7 +195,7 @@ internal fun RecipeScreen(
                             questionLabel = "Add in your image ",
                         ) {
                             RecipeAddImageButton(
-                                onClick = {},
+                                onClick = onImportButtonClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 24.dp),
@@ -446,7 +457,7 @@ internal fun RecipeScreen(
                         DuckeeButton(
                             label = if (uiState.isAdvancedPanelOpened) "Close Advanced settings" else "+  Advanced settings",
                             labelColor = Color(0xFFFBFBFB),
-                            labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PromptFont),
+                            labelStyle = DuckeeTheme.typography.paragraph4.copy(fontFamily = PPObjectSans),
                             backgroundColor = Color.Transparent,
                             contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 14.dp),
                             isEnabled = uiState.selectedModel != null,
@@ -520,6 +531,7 @@ internal fun RecipeScreenPreview() {
             onGenerateButtonClick = {},
             onGuidanceScaleValueChanged = {},
             onStepsValueChanged = {},
+            onImportButtonClick = {},
         )
     }
 }
