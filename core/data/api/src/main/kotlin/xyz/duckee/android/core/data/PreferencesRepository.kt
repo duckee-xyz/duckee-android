@@ -23,4 +23,5 @@ interface PreferencesRepository {
     val preference: Flow<Preferences>
 
     suspend fun setCredentials(accessToken: String, refreshToken: String)
+    suspend fun clearCredentials()
 }

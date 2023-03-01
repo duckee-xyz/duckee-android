@@ -23,6 +23,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import xyz.duckee.android.core.domain.auth.SignOutUseCase
 import xyz.duckee.android.core.domain.user.GetMyProfileUseCase
 import xyz.duckee.android.feature.collection.contract.CollectionSideEffect
 import xyz.duckee.android.feature.collection.contract.CollectionState
@@ -31,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class CollectionViewModel @Inject constructor(
     private val getMyProfileUseCase: GetMyProfileUseCase,
+    private val signOutUseCase: SignOutUseCase,
 ) : ViewModel(), ContainerHost<CollectionState, CollectionSideEffect> {
 
     override val container = container<CollectionState, CollectionSideEffect>(CollectionState())
@@ -41,6 +43,10 @@ internal class CollectionViewModel @Inject constructor(
 
     fun onArtClick(tokenId: Int) = intent {
         postSideEffect(CollectionSideEffect.GoDetailScreen(tokenId))
+    }
+
+    fun onSettingClick() = intent {
+        signOutUseCase()
     }
 
     private fun getMyProfile() = intent {

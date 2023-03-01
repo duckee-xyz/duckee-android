@@ -117,6 +117,7 @@ internal fun CollectionRoute(
         boughtUiState = boughtUiState,
         likedUiState = likedUiState,
         onArtClick = viewModel::onArtClick,
+        onSettingClick = viewModel::onSettingClick,
     )
 }
 
@@ -128,6 +129,7 @@ internal fun CollectionScreen(
     boughtUiState: CollectionFeedState,
     likedUiState: CollectionFeedState,
     onArtClick: (Int) -> Unit,
+    onSettingClick: () -> Unit,
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
     val density = LocalDensity.current
@@ -149,7 +151,7 @@ internal fun CollectionScreen(
             )
 
             CollectionTitleBar(
-                onSettingClick = {},
+                onSettingClick = onSettingClick,
                 modifier = Modifier
                     .height(50.dp)
                     .offset(y = -(320f - scrollProgress.value).dp),

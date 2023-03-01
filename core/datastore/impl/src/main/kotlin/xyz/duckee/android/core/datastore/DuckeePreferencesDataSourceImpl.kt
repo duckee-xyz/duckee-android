@@ -53,4 +53,17 @@ internal class DuckeePreferencesDataSourceImpl @Inject constructor(
             Timber.e(e)
         }
     }
+
+    override suspend fun clearCredentials() {
+        try {
+            duckeePreferences.updateData {
+                it.copy {
+                    clearAccessToken()
+                    clearRefreshToken()
+                }
+            }
+        } catch (e: IOException) {
+            Timber.e(e)
+        }
+    }
 }
