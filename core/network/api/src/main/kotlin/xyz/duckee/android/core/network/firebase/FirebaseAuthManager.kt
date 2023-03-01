@@ -15,10 +15,13 @@
  */
 package xyz.duckee.android.core.network.firebase
 
+import android.content.Context
 import androidx.annotation.RestrictTo
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 interface FirebaseAuthManager {
 
     suspend fun getCurrentUserIdToken(): String?
+
+    suspend fun signOut(context: Context)
 }

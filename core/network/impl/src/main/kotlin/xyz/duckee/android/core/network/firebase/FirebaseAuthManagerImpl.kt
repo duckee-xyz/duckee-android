@@ -16,8 +16,14 @@
 package xyz.duckee.android.core.network.firebase
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResultCallback
+import com.google.android.gms.common.api.Status
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
@@ -35,4 +41,61 @@ internal class FirebaseAuthManagerImpl @Inject constructor(
 
     override suspend fun getCurrentUserIdToken(): String? =
         FirebaseAuth.getInstance().currentUser?.getIdToken(true)?.await()?.token
+
+    override suspend fun signOut(context: Context) {
+        FirebaseAuth.getInstance().signOut()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("440981286435-b04tte58tegtilqr6gr42os4d2uuaoeu.apps.googleusercontent.com")
+            .requestEmail()
+            .build();
+
+        // Build a GoogleApiClient with access to the Google Sign-In API and the options specified by gso.
+        val googleApiClient = GoogleApiClient.Builder(context)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+            .build();
+
+        GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .signOut().addOnCompleteListener {
+
+                googleApiClient.connect()
+                googleApiClient.registerConnectionCallbacks(object :
+                    GoogleApiClient.ConnectionCallbacks {
+                    override fun onConnected(bundle: Bundle?) {
+                        if (googleApiClient.isConnected) {
+                            Auth.GoogleSignInApi.signOut(googleApiClient)
+                                .setResultCallback(object : ResultCallback<Status?> {
+                                    override fun onResult(status: Status) {
+                                        // FIXME: restart for sign out
+                                        val pm = context.packageManager
+                                        val intent =
+                                            pm.getLaunchIntentForPackage(context.packageName)
+                                        val mainIntent =
+                                            Intent.makeRestartActivityTask(intent!!.component)
+                                        context.startActivity(mainIntent)
+                                        Runtime.getRuntime().exit(0)
+                                    }
+                                })
+                        }
+                    }
+
+                    override fun onConnectionSuspended(i: Int) {
+                        // FIXME: restart for sign out
+                        val pm = context.packageManager
+                        val intent = pm.getLaunchIntentForPackage(context.packageName)
+                        val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
+                        context.startActivity(mainIntent)
+                        Runtime.getRuntime().exit(0)
+                    }
+                })
+                // FIXME: restart for sign out
+                val pm = context.packageManager
+                val intent = pm.getLaunchIntentForPackage(context.packageName)
+                val mainIntent = Intent.makeRestartActivityTask(intent!!.component)
+                context.startActivity(mainIntent)
+                Runtime.getRuntime().exit(0)
+            }
+    }
+
+
 }

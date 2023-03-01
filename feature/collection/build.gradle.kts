@@ -29,4 +29,5 @@ dependencies {
     implementation(libs.toolbar.compose)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
+    implementation(project(mapOf("path" to ":core:network:api")))
 }
