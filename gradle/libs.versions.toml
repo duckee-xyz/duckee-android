@@ -103,6 +103,7 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-authUI = "com.firebaseui:firebase-ui-auth:7.2.0"
+firebase-dynamicLink = { module = "com.google.firebase:firebase-dynamic-links-ktx" }
 
 # Google Play Services
 playServices-auth = "com.google.android.gms:play-services-auth:20.4.1"

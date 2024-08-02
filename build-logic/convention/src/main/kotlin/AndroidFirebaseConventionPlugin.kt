@@ -30,6 +30,7 @@ class AndroidFirebaseConventionPlugin : Plugin<Project> {
                 "implementation"(platform(libs.findLibrary("firebase.bom").get()))
                 "implementation"(libs.findLibrary("firebase.auth").get())
                 "implementation"(libs.findLibrary("firebase.authUI").get())
+                "implementation"(libs.findLibrary("firebase.dynamicLink").get())
             }
         }
     }

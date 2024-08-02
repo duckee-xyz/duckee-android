@@ -15,12 +15,19 @@
  */
 package xyz.duckee.android
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavHostController
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +53,8 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var purchaseEventManager: PurchaseEventManager
+
+    private var navigationController: NavHostController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +93,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberMaterialMotionNavController()
 
+            LaunchedEffect(navController) {
+                navigationController = navController
+            }
+
             DuckeeTheme {
                 CompositionLocalProvider(
                     LocalNavigationPopStack provides { navController.popBackStack() },
@@ -96,5 +109,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData: PendingDynamicLinkData? ->
+                pendingDynamicLinkData?.link?.let { deepLink ->
+                    // Handle Deeplink with Jetpack NavigationComponent
+                    navigationController?.navigate(deepLink)
+                }
+            }
+            .addOnFailureListener(this) { e ->
+                Timber.tag("[DuckeeMainActivity]").w(e, "getDynamicLink:onFailure") }
     }
 }
