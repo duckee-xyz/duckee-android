@@ -118,6 +118,14 @@ class MainActivity : ComponentActivity() {
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData: PendingDynamicLinkData? ->
                 pendingDynamicLinkData?.link?.let { deepLink ->
+                    // e.g. route /recipe/:id
+                    val recipePattern = "/recipe/(\\d+)".toRegex()
+                    val matchResult = recipePattern.find(deepLink.toString())
+                    matchResult?.let { result ->
+                        val recipeId = result.groupValues[1]
+                        val route = "recipe/$recipeId"
+                        navigationController?.navigate(route)
+                    }
                     // Handle Deeplink with Jetpack NavigationComponent
                     navigationController?.navigate(deepLink)
                 }
